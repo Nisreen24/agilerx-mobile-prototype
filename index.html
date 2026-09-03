@@ -4114,7 +4114,7 @@
   // ================= Settings (individual-level) + More hub =================
   // Pharmacist identity — defaults for the prototype; Sign up overrides name/pharmacy.
   var PROFILE = { name: "Priya Sharma", creds: "RPh", pharmacy: "Lakeview Pharmacy" };
-  try { var savedProf = JSON.parse(sessionStorage.getItem("agilerx.profile") || "null"); if (savedProf) PROFILE = savedProf; } catch (e) {}
+  try { var savedProf = JSON.parse(localStorage.getItem("agilerx.profile") || "null"); if (savedProf) PROFILE = savedProf; } catch (e) {}
 
   // Persisted preferences. `aiStyle` is the INDIVIDUAL preference only (the
   // organization-level enforcement tier is a separate admin feature, not built).
@@ -4199,7 +4199,7 @@
       });
     });
     document.getElementById("stSignOut").addEventListener("click", function () {
-      try { sessionStorage.removeItem("agilerx.signedin"); } catch (e) {}
+      try { sessionStorage.removeItem("agilerx.signedin"); localStorage.removeItem("agilerx.signedin"); } catch (e) {}
       showScreen("scrHome");
       goAuth("in");
     });
@@ -4662,7 +4662,12 @@
       if (/@offline\.test$/i.test(email)) return authError("network", email);
       if (pass === "wrong") return authError("creds", email);
       PROFILE.email = email;
-      try { sessionStorage.setItem("agilerx.profile", JSON.stringify(PROFILE)); sessionStorage.setItem("agilerx.signedin", "1"); } catch (e) {}
+      try {
+        localStorage.setItem("agilerx.profile", JSON.stringify(PROFILE));
+        var keep = document.querySelector("#authRow input[type=checkbox]");
+        if (!keep || keep.checked) { localStorage.setItem("agilerx.signedin", "1"); sessionStorage.removeItem("agilerx.signedin"); }
+        else { sessionStorage.setItem("agilerx.signedin", "1"); localStorage.removeItem("agilerx.signedin"); }
+      } catch (e) {}
       document.getElementById("auPass").value = "";
       formValidate(AUTH);
       if (SETUP.done) enterApp(); else showSetup();
@@ -4752,13 +4757,13 @@
 
   // ================= 0.5 Staff (shared by setup step 4 and Settings) =================
   var STAFF = [];
-  try { STAFF = JSON.parse(sessionStorage.getItem("agilerx.staff") || "null") || []; } catch (e) {}
+  try { STAFF = JSON.parse(localStorage.getItem("agilerx.staff") || "null") || []; } catch (e) {}
   function staffOwner() {
     var own = STAFF.filter(function (x) { return x.owner; })[0];
     if (!own) { own = { name: PROFILE.name, creds: PROFILE.creds, email: PROFILE.email || "priya@lakeviewpharmacy.ca", status: "Active", owner: true }; STAFF.unshift(own); saveStaff(); }
     return own;
   }
-  function saveStaff() { try { sessionStorage.setItem("agilerx.staff", JSON.stringify(STAFF)); } catch (e) {} }
+  function saveStaff() { try { localStorage.setItem("agilerx.staff", JSON.stringify(STAFF)); } catch (e) {} }
   function initialsOf(name) { var n = name.trim().split(/\s+/); return ((n[0] || "?")[0] + (n.length > 1 ? n[n.length - 1][0] : "")).toUpperCase(); }
   var staffFlash = "";
   function staffHtml() {
@@ -4800,8 +4805,8 @@
 
   // ================= 0.3 / 0.4 First-time pharmacy setup =================
   var SETUP = { step: 1, agreed: false, pharm: { name: "", address: "", phone: "" }, fw: "idle", done: false, prefilled: false };
-  try { var savedSetup = JSON.parse(sessionStorage.getItem("agilerx.setup") || "null"); if (savedSetup) SETUP = savedSetup; } catch (e) {}
-  function saveSetup() { try { sessionStorage.setItem("agilerx.setup", JSON.stringify(SETUP)); } catch (e) {} }
+  try { var savedSetup = JSON.parse(localStorage.getItem("agilerx.setup") || "null"); if (savedSetup) SETUP = savedSetup; } catch (e) {}
+  function saveSetup() { try { localStorage.setItem("agilerx.setup", JSON.stringify(SETUP)); } catch (e) {} }
   var SETUP_STEPS = 5;
   var PHONE_RE = /^\+?[\d\s().-]{10,}$/;
   function showSetup(step) {
@@ -4883,7 +4888,7 @@
 
     function sync() { var g = setupGate(); document.getElementById("suNext").disabled = g.length > 0; document.getElementById("suGate").innerHTML = gateHtml(g); saveSetup(); }
     var bk = document.getElementById("suBack"); if (bk) bk.addEventListener("click", function () { SETUP.step--; saveSetup(); renderSetup(); });
-    var so = document.getElementById("suSignOut"); if (so) so.addEventListener("click", function () { try { sessionStorage.removeItem("agilerx.signedin"); } catch (e) {} goAuth(); });
+    var so = document.getElementById("suSignOut"); if (so) so.addEventListener("click", function () { try { sessionStorage.removeItem("agilerx.signedin"); localStorage.removeItem("agilerx.signedin"); } catch (e) {} goAuth(); });
     var ag = document.getElementById("suAgree"); if (ag) ag.addEventListener("change", function () { SETUP.agreed = ag.checked; sync(); });
     [["suName", "name", "suNameErr", function (v) { return !!v.trim(); }], ["suAddr", "address", "suAddrErr", function (v) { return !!v.trim(); }], ["suPhone", "phone", "suPhoneErr", function (v) { return PHONE_RE.test(v.trim()); }]].forEach(function (f) {
       var inp = document.getElementById(f[0]); if (!inp) return;
@@ -4903,7 +4908,7 @@
       else {
         SETUP.done = true; saveSetup();
         PROFILE.pharmacy = SETUP.pharm.name || PROFILE.pharmacy;
-        try { sessionStorage.setItem("agilerx.profile", JSON.stringify(PROFILE)); } catch (e) {}
+        try { localStorage.setItem("agilerx.profile", JSON.stringify(PROFILE)); } catch (e) {}
         showScreen("scrHome"); enterApp();
       }
     });
@@ -4934,7 +4939,7 @@
       function pick() {
         var x = STAFF.filter(function (y) { return y.email === row.getAttribute("data-sw"); })[0];
         PROFILE = { name: x.name, creds: x.creds || "RPh", pharmacy: PROFILE.pharmacy, email: x.email };
-        try { sessionStorage.setItem("agilerx.profile", JSON.stringify(PROFILE)); } catch (e) {}
+        try { localStorage.setItem("agilerx.profile", JSON.stringify(PROFILE)); } catch (e) {}
         closeSheet(); renderSettings();
       }
       row.addEventListener("click", pick);
@@ -4978,7 +4983,7 @@
     };
     formBind(spec, unlock);
     document.getElementById("lkForm").addEventListener("submit", function (e) { e.preventDefault(); unlock(); });
-    document.getElementById("lkOut").addEventListener("click", function () { try { sessionStorage.removeItem("agilerx.signedin"); } catch (e) {} goAuth(); });
+    document.getElementById("lkOut").addEventListener("click", function () { try { sessionStorage.removeItem("agilerx.signedin"); localStorage.removeItem("agilerx.signedin"); } catch (e) {} goAuth(); });
     setPreApp("lock");
     setTimeout(function () { var i = document.getElementById("lkPass"); if (i) i.focus(); }, 50);
   }
@@ -4988,7 +4993,7 @@
   (function gate() {
     var h = location.hash.slice(1);
     var onboarded = false, signed = false;
-    try { onboarded = !!sessionStorage.getItem("agilerx.onboarded"); signed = !!sessionStorage.getItem("agilerx.signedin"); } catch (e) {}
+    try { onboarded = !!sessionStorage.getItem("agilerx.onboarded"); signed = !!(localStorage.getItem("agilerx.signedin") || sessionStorage.getItem("agilerx.signedin")); } catch (e) {}
     if (h === "onboarding") { showOb(0); setPreApp("onb"); return; }
     if (h === "signin" || h === "signup") { goAuth(); return; }
     if (h === "reset") { showReset("request", ""); return; }
