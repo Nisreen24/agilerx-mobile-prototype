@@ -349,10 +349,11 @@
     position: absolute;
     right: 13px;
     top: 50%;
-    width: 7px;
-    height: 7px;
-    border-right: 1.8px solid #C4C1D9;
-    border-bottom: 1.8px solid #C4C1D9;
+    width: 8px;
+    height: 8px;
+    border-right: 2.6px solid #C4C1D9;
+    border-bottom: 2.6px solid #C4C1D9;
+    border-radius: 1.5px;
     transform: translateY(-50%) rotate(-45deg);
   }
   .txn[role="button"]:hover { background: #F8F7FC; }
@@ -1164,7 +1165,7 @@
     gap: 6px;
     box-shadow: 0 10px 24px rgba(139, 124, 246, 0.32);
   }
-  .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+  .btn-primary:disabled { opacity: 1; background: #DDDAF0; color: #7A7894; cursor: not-allowed; box-shadow: none; }
   .btn-primary:not(:disabled):active { transform: scale(0.98); }
 
   /* ---------- More hub + Settings (locked tokens only) ---------- */
@@ -1254,6 +1255,173 @@
   .opt.on .opt-sub { color: #8B7CF6; opacity: 0.75; }
   .opt:first-child { border-radius: 16px 16px 0 0; }
   .opt:last-child { border-radius: 0 0 16px 16px; }
+  /* Safety dashboard: the 4 key numbers, large (client spec: numbers only, no log) */
+  .dash-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+  .dash-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 16px;
+    min-height: 148px;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  /* One compact block: value left + icon right, title full-width below,
+     supporting text under it. Naturally grouped — no stretched zones. */
+  .dash-top { display: flex; align-items: center; justify-content: space-between; align-self: stretch; gap: 8px; }
+  .dash-tile .sum-ic { flex-shrink: 0; }
+  .dash-tile .dv { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; color: #2B2A44; white-space: nowrap; }
+  .dash-tile .dl { font-size: 14px; font-weight: 700; color: #2B2A44; line-height: 1.3; margin-top: 11px; }
+  .dash-tile .ds { font-size: 12px; color: #8A88A3; line-height: 1.45; margin-top: 6px; }
+  .dash-tile.warn { background: #fdf5e6; border: 1px solid #f6d3a0; }
+  .dash-tile.warn .dv { color: #b8791a; }
+  .dash-tile.warn .sum-ic { background: #fdf0dc; color: #f6a723; }
+  .dash-tile:hover { background: #F8F7FC; }
+  .dash-tile.warn:hover { background: #fdf0dc; }
+  .dash-tile:active { transform: scale(0.98); }
+  /* Consolidated action plans */
+  .cqi-disc { min-height: 44px; padding: 10px 16px; font-size: 12.5px; font-weight: 700; color: #8B7CF6; border-color: #CFC7F5; }
+  .plan-row { display: flex; gap: 12px; padding: 12px 14px; align-items: flex-start; }
+  .plan-row + .plan-row { border-top: 1px solid #ECEAF5; }
+  .plan-chk {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #CFC7F5;
+    background: none;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .plan-chk:hover { border-color: #8B7CF6; }
+  .plan-row.done .plan-chk { background: #1db871; border-color: #1db871; }
+  .plan-row .pt { font-size: 13.5px; font-weight: 600; color: #2B2A44; line-height: 1.4; }
+  .plan-row.done .pt { color: #8A88A3; text-decoration: line-through; }
+  .plan-row .ps { font-size: 11.5px; color: #8A88A3; margin-top: 2px; }
+  .plan-row[role="button"] { cursor: pointer; }
+  .steptabs.sm .chip { font-size: 12px; padding: 7px 11px; }
+  .frow { display: flex; gap: 8px; margin-top: 10px; }
+  /* Incidents filter redesign: quick kind pills + More-filters sheet + active chips */
+  .qf-row { display: flex; gap: 8px; margin-top: 12px; }
+  .qf {
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1.5px solid #ECEAF5;
+    background: #FDFCFF;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6E6C88;
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .qf:hover { border-color: #DDD9F0; }
+  .qf:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .qf:active { transform: scale(0.96); }
+  .qf.on { background: #EEEBFC; border-color: #CFC7F5; color: #8B7CF6; }
+  .moref {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 40px;
+    margin-top: 8px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1.5px solid #DDD9F0;
+    background: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: #3A3956;
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .moref:hover { border-color: #CFC7F5; }
+  .moref:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .moref:active { transform: scale(0.96); }
+  .fbadge {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: #8B7CF6;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .afrow { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .afrow::-webkit-scrollbar { display: none; }
+  .afchip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1.5px solid #CFC7F5;
+    background: #EEEBFC;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #8B7CF6;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .afchip:hover { border-color: #8B7CF6; }
+  .afchip:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .afchip:active { transform: scale(0.96); }
+  .afchip .x { font-size: 15px; line-height: 1; font-weight: 700; }
+  .sh-sel {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 6px;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 1.5px solid #ECEAF5;
+    background: #FDFCFF;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2B2A44;
+  }
+  .sh-sel:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 1px; }
+  .fsel {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #ECEAF5;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6E6C88;
+  }
+  .sl-note { font-size: 11.5px; font-weight: 600; color: #b8791a; margin-top: 5px; }
+  .age-note { font-size: 11.5px; font-weight: 700; color: #e0403d; margin-top: 3px; }
+  .age-note.amber { color: #b8791a; }
+  #incPage { padding-bottom: 320px; }
+  .due { flex-shrink: 0; font-size: 11.5px; font-weight: 700; color: #8A88A3; margin-top: 2px; white-space: nowrap; }
+  .due.over { color: #e0403d; }
+  .cqi-ask { margin-top: 8px; }
+  .savedhint { font-size: 11px; font-weight: 600; color: #1db871; margin-left: 8px; }
+  .plan-meta { padding: 0 14px 10px 46px; }
+  /* AI caption — global (was scoped to .sug-card, which made it invisible elsewhere) */
+  .ai-cap { font-size: 12px; color: #8A88A3; }
+  .ai-cap b { color: #7c5cd6; font-weight: 700; }
 
   /* ---------- Calendar (reuses .segl, .ntf-group, .txn rows, .next-fixed) ---------- */
   .page.cal { padding-bottom: 190px; }
@@ -1346,8 +1514,10 @@
   /* Agile Pharmas logo (temporary brand — recreated as SVG from the supplied
      logo image until a final AgileRx asset lands in Assets/) */
   .brand { display: flex; align-items: center; gap: 9px; font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
-  .brand .logo { width: 30px; height: 26px; display: flex; align-items: center; }
+  .brand .logo { width: 34px; height: 28px; display: flex; align-items: center; }
+  .brand .logo img { width: 100%; height: auto; display: block; }
   .brand .logo svg { display: block; }
+  .brand .wm { letter-spacing: -0.01em; }
   .brand .a { color: #2B6CEA; }
   .brand .p { color: #21BF7A; }
   .ob-h {
@@ -1503,7 +1673,44 @@
     cursor: pointer;
   }
   .btn-grad svg { display: none; }
-  .btn-grad::after { content: " →"; white-space: pre; }
+  .btn-grad::after {
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    margin-left: 9px;
+    background: currentColor;
+    clip-path: path("M2.6 2.3 C2.2 1.5 3 0.7 3.85 1.05 L11.1 4.9 C11.95 5.35 11.95 6.65 11.1 7.1 L3.85 10.95 C3 11.3 2.2 10.5 2.6 9.7 L4.6 6 Z");
+  }
+  .tri {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    margin-left: 6px;
+    vertical-align: -1px;
+    background: currentColor;
+    clip-path: path("M2.6 2.3 C2.2 1.5 3 0.7 3.85 1.05 L11.1 4.9 C11.95 5.35 11.95 6.65 11.1 7.1 L3.85 10.95 C3 11.3 2.2 10.5 2.6 9.7 L4.6 6 Z");
+  }
+  .chv {
+    display: inline-block;
+    width: 9px;
+    height: 12px;
+    margin: 0 2px;
+    vertical-align: -1px;
+    background: currentColor;
+    clip-path: path("M1.7 1.6 C1.1 2.2 1.1 3.1 1.7 3.7 L4 6 L1.7 8.3 C1.1 8.9 1.1 9.8 1.7 10.4 C2.3 11 3.2 11 3.8 10.4 L7.2 7.05 C7.8 6.45 7.8 5.55 7.2 4.95 L3.8 1.6 C3.2 1 2.3 1 1.7 1.6 Z");
+  }
+  .chv.left { transform: scaleX(-1); }
+  .chvl {
+    display: inline-block;
+    width: 9px;
+    height: 12px;
+    margin: 0 2px;
+    vertical-align: -1px;
+    background: currentColor;
+    clip-path: path("M1.7 1.6 C1.1 2.2 1.1 3.1 1.7 3.7 L4 6 L1.7 8.3 C1.1 8.9 1.1 9.8 1.7 10.4 C2.3 11 3.2 11 3.8 10.4 L7.2 7.05 C7.8 6.45 7.8 5.55 7.2 4.95 L3.8 1.6 C3.2 1 2.3 1 1.7 1.6 Z");
+    transform: scaleX(-1);
+  }
   .btn-grad:not(:disabled):active { transform: scale(0.98); }
   .btn-grad:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
   .ob-skip {
@@ -1624,7 +1831,7 @@
   /* Staff list (0.5) */
   .staff-row .stat-pill { margin-left: auto; flex-shrink: 0; }
   .staff-row .who .d { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  /* Identity row → switch pharmacist (0.6) */
+  /* Identity row <i class=tri></i> switch pharmacist (0.6) */
   button.id-card { width: 100%; border: none; background: none; text-align: left; font-family: inherit; cursor: pointer; border-radius: 16px 16px 0 0; }
   button.id-card:hover { background: #F8F7FC; }
   button.id-card:active { background: #F1EFF9; }
@@ -1640,6 +1847,8 @@
     border-radius: 22px 22px 0 0;
     padding: 10px 20px 28px;
     z-index: 41;
+    max-height: 82vh;
+    overflow-y: auto;
     box-shadow: 0 -12px 40px rgba(58, 50, 110, 0.18);
     animation: sheetIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
@@ -1769,7 +1978,7 @@
         <div class="card txn-card mv" style="margin-top:14px">
           <div class="txn" role="button" tabindex="0" id="homeInc">
             <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.7 3.3c-.75-1.3-2.65-1.3-3.4 0L1.2 19a2 2 0 0 0 1.7 3h18.2a2 2 0 0 0 1.7-3L13.7 3.3z"></path><line x1="12" y1="9" x2="12" y2="14"></line><circle cx="12" cy="17.5" r="0.6" fill="currentColor"></circle></svg></span>
-            <div class="who"><div class="n">Incident reporting</div><div class="d">Record a medication event · anonymous · 2 min</div></div>
+            <div class="who"><div class="n">Incident reporting</div><div class="d">Dashboard · event log · action plans · CQI</div></div>
           </div>
         </div>
 
@@ -1841,10 +2050,13 @@
     <div class="scroll" id="scrBook" hidden><div class="page pf" id="bookPage"></div></div>
     <div class="scroll" id="scrIncidents" hidden><div class="page cal" id="incPage"></div></div>
     <div class="scroll" id="scrIncDetail" hidden><div class="page" id="incDetailPage"></div></div>
+    <div class="scroll" id="scrSafety" hidden><div class="page cal" id="safetyPage"></div></div>
+    <div class="scroll" id="scrPlans" hidden><div class="page" id="plansPage"></div></div>
+    <div class="scroll" id="scrCQI" hidden><div class="page" id="cqiPage"></div></div>
 
     <!-- ============ ONBOARDING (3 screens) ============ -->
     <section class="pre" id="onb" aria-label="Onboarding">
-      <div class="brand"><span class="logo"><svg width="30" height="26" viewBox="0 0 36 30" fill="none" aria-hidden="true"><circle cx="13" cy="15" r="9" stroke="#2B6CEA" stroke-width="3.4"/><circle cx="23" cy="15" r="9" stroke="#21BF7A" stroke-width="3.4"/><path d="M15.3 6.3 A9 9 0 0 1 20.4 9.8" stroke="#2B6CEA" stroke-width="3.4" stroke-linecap="round"/></svg></span><span><span class="a">Agile</span> <span class="p">Pharmas</span></span></div>
+      <div class="brand"><span class="logo"><svg width="34" height="28" viewBox="0 0 42 34" fill="none" aria-hidden="true"><rect x="3.4" y="12" width="21.5" height="19" rx="9.5" stroke="#21BF7A" stroke-width="3.6"/><rect x="17.1" y="12" width="21.5" height="19" rx="9.5" stroke="#2B6CEA" stroke-width="3.6"/><circle cx="8" cy="6.4" r="3.1" fill="#AFC9F2"/><circle cx="16.4" cy="6.4" r="3.1" fill="#5B93E8"/><circle cx="24.8" cy="6.4" r="3.1" fill="#2B6CEA"/></svg></span><span class="wm"><span class="a">Agile</span><span class="p">Rx</span></span></div>
 
       <div id="onbSlides">
         <div class="onb-slide" data-i="0">
@@ -1893,9 +2105,14 @@
       <button class="ob-skip" id="obSkip" type="button">Skip</button>
     </section>
 
-    <!-- ============ AUTH — 0.1 Sign in (sales-led: no public sign-up) ============ -->
+    <!-- ============ Landing — Sign in / Sign up choice ============ -->
+    <section class="pre" id="land" aria-label="Welcome" hidden></section>
+    <!-- ============ Sign up (create account → pharmacy setup) ============ -->
+    <section class="pre" id="signup" aria-label="Create your account" hidden></section>
+
+    <!-- ============ AUTH — 0.1 Sign in ============ -->
     <section class="pre" id="auth" aria-label="Sign in" hidden>
-      <div class="brand"><span class="logo"><svg width="30" height="26" viewBox="0 0 36 30" fill="none" aria-hidden="true"><circle cx="13" cy="15" r="9" stroke="#2B6CEA" stroke-width="3.4"/><circle cx="23" cy="15" r="9" stroke="#21BF7A" stroke-width="3.4"/><path d="M15.3 6.3 A9 9 0 0 1 20.4 9.8" stroke="#2B6CEA" stroke-width="3.4" stroke-linecap="round"/></svg></span><span><span class="a">Agile</span> <span class="p">Pharmas</span></span></div>
+      <div class="brand"><span class="logo"><svg width="34" height="28" viewBox="0 0 42 34" fill="none" aria-hidden="true"><rect x="3.4" y="12" width="21.5" height="19" rx="9.5" stroke="#21BF7A" stroke-width="3.6"/><rect x="17.1" y="12" width="21.5" height="19" rx="9.5" stroke="#2B6CEA" stroke-width="3.6"/><circle cx="8" cy="6.4" r="3.1" fill="#AFC9F2"/><circle cx="16.4" cy="6.4" r="3.1" fill="#5B93E8"/><circle cx="24.8" cy="6.4" r="3.1" fill="#2B6CEA"/></svg></span><span class="wm"><span class="a">Agile</span><span class="p">Rx</span></span></div>
       <h1 class="ob-h">Welcome back.</h1>
       <p class="ob-p">Sign in to your pharmacy workspace.</p>
       <div class="auth-banner ok" id="authBanner" role="status" hidden></div>
@@ -1974,7 +2191,7 @@
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); upgrade.click(); }
   });
 
-  // Step-tab bars: drag-to-scroll (mouse + touch) and vertical-wheel → horizontal.
+  // Step-tab bars: drag-to-scroll (mouse + touch) and vertical-wheel <i class=tri></i> horizontal.
   document.addEventListener("pointerdown", function (e) {
     var bar = e.target.closest(".steptabs");
     if (!bar) return;
@@ -2212,10 +2429,10 @@
   var activeFilter = "all";
 
   // ================= Navigation =================
-  var SCREENS = ["scrHome", "scrPatients", "scrPatient", "scrModules", "scrSession", "scrBilling", "scrNotifs", "scrMore", "scrSettings", "scrCalendar", "scrBook", "scrIncidents", "scrIncDetail"];
+  var SCREENS = ["scrHome", "scrPatients", "scrPatient", "scrModules", "scrSession", "scrBilling", "scrNotifs", "scrMore", "scrSettings", "scrCalendar", "scrBook", "scrIncidents", "scrIncDetail", "scrSafety", "scrPlans", "scrCQI"];
   var tabs = document.querySelectorAll(".tab");
   var sessionReturn = null; // where Back on the session screen goes
-  var TAB_OF = { scrHome: 0, scrCalendar: 1, scrBook: 1, scrMore: 3, scrSettings: 3, scrIncidents: 3, scrIncDetail: 3 }; // everything else lights "Patients"
+  var TAB_OF = { scrHome: 0, scrCalendar: 1, scrBook: 1, scrMore: 3, scrSettings: 3, scrIncidents: 3, scrIncDetail: 3, scrSafety: 3, scrPlans: 3, scrCQI: 3 }; // everything else lights "Patients"
 
   function showScreen(id) {
     SCREENS.forEach(function (s) { document.getElementById(s).hidden = (s !== id); });
@@ -2269,9 +2486,9 @@
   }
   document.getElementById("patSearch").addEventListener("input", renderPatients);
 
-  var backSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+  var backSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 19 8 12 15 5"></polyline></svg>';
 
-  var chevR = '<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>';
+  var chevR = '<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 5 16 12 9 19"></polyline></svg>';
   var ICON = {
     pill: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"></path><path d="m8.5 8.5 7 7"></path></svg>',
     heart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.4 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.1 3 5.5l7 7z"></path><line x1="12" y1="8" x2="12" y2="13"></line><line x1="9.5" y1="10.5" x2="14.5" y2="10.5"></line></svg>',
@@ -2471,6 +2688,7 @@
     else if (sessionReturn === "scrHome") showScreen("scrHome");
     else if (sessionReturn === "scrCalendar") renderCalendar();
     else if (sessionReturn === "scrIncidents") renderIncidents();
+    else if (sessionReturn === "scrSafety") renderSafety();
     else { renderPatients(); showScreen("scrPatients"); }
   }
 
@@ -2584,8 +2802,8 @@
       pfStepHtml(p, s) +
       '<div class="next-fixed"><div id="pfGate">' + gateHtml(gate) + "</div>" +
       '<button class="btn-primary" id="pfNext"' + (gate.length ? " disabled" : "") + ">" +
-      (s.step === 5 ? "Continue to worksheet →" : "Next →") + "</button></div>";
-    // Update the gate/button in place while typing (no re-render → focus is kept).
+      (s.step === 5 ? "Continue to worksheet <i class=tri></i>" : "Next <i class=tri></i>") + "</button></div>";
+    // Update the gate/button in place while typing (no re-render <i class=tri></i> focus is kept).
     function pfSync() {
       var g = pfGate(s);
       document.getElementById("pfNext").disabled = g.length > 0;
@@ -2688,7 +2906,7 @@
           "&nbsp;Sign in full screen</button>" +
         '<button class="pd-link" id="sigClear">Clear signature</button></div>' +
       '<div class="next-fixed"><div id="ackGate">' + gateHtml([phone ? "pharmacist signature" : "patient signature"]) + "</div>" +
-        '<button class="btn-primary" id="ackNext" disabled>Confirm &amp; continue →</button></div>';
+        '<button class="btn-primary" id="ackNext" disabled>Confirm &amp; continue <i class=tri></i></button></div>';
 
     document.getElementById("ackBack").addEventListener("click", function () {
       s.done = false; s.step = 5; renderPF(p);
@@ -2761,7 +2979,7 @@
       var r = canvas.getBoundingClientRect();
       if (!rotated) return { x: e.clientX - r.left, y: e.clientY - r.top };
       // Canvas is rotated 90° clockwise: on-screen the canvas's x-axis runs
-      // top→bottom and its y-axis runs right→left. Map screen → canvas space.
+      // top<i class=tri></i>bottom and its y-axis runs right<i class=tri></i>left. Map screen <i class=tri></i> canvas space.
       var sx = e.clientX - r.left, sy = e.clientY - r.top;
       var vw = r.width, vh = r.height; // visual (rotated) box: vw = canvas h, vh = canvas w
       var s = w / vh;                   // account for any layout scaling
@@ -2806,7 +3024,7 @@
           '<button class="pd-link" id="sfClear">Clear</button>' +
         "</div>" +
         '<div class="sigwrap sig-full-wrap"><canvas class="sigpad" id="sfPad"></canvas><div class="sighint" id="sfHint">Sign here</div></div>' +
-        '<button class="btn-primary" id="sfDone" disabled>Done →</button>' +
+        '<button class="btn-primary" id="sfDone" disabled>Done <i class=tri></i></button>' +
       "</div>";
     document.querySelector(".screen").appendChild(ov);
     var pad = attachSigPad(document.getElementById("sfPad"), document.getElementById("sfHint"), initialDataUrl, function (inked) {
@@ -2847,7 +3065,7 @@
           (s.modality === "Phone" ? "Signed by pharmacist · over the phone · " : "Signed by patient · ") + a.at + "</span></div>" +
       "</div>" +
       '<div class="note" style="margin:14px 0 0">Worksheet: review each of ' + p.meds.length + " medications, then interactions, care plan and documentation.</div>" +
-      '<div class="next-fixed"><button class="btn-primary" id="wsNext">Start medication review →</button></div>';
+      '<div class="next-fixed"><button class="btn-primary" id="wsNext">Start medication review <i class=tri></i></button></div>';
     document.getElementById("wsBack").addEventListener("click", function () {
       a.done = false; renderAck(p);
     });
@@ -3159,7 +3377,7 @@
             '<button class="btn-primary" id="mrOtcSave" style="width:auto;padding:10px 18px;font-size:13px">Add</button></div></div>' : "")
         : "") +
       '<div class="next-fixed"><div id="mrGate">' + gateHtml(mrGate()) + "</div>" +
-        '<button class="btn-primary" id="mrNext"' + (mrGate().length ? " disabled" : "") + ">" + (i === total - 1 ? "Continue →" : "Next →") + "</button></div>";
+        '<button class="btn-primary" id="mrNext"' + (mrGate().length ? " disabled" : "") + ">" + (i === total - 1 ? "Continue <i class=tri></i>" : "Next <i class=tri></i>") + "</button></div>";
 
     // §19 gate for this medication: what blocks Next.
     function mrGate() {
@@ -3272,7 +3490,7 @@
               "</div>";
           }).join("") + "</div>") +
       '<div class="next-fixed">' + gateHtml(needAck ? ["review " + needAck + (needAck === 1 ? " interaction" : " interactions") + " with the patient"] : []) +
-        '<button class="btn-primary" id="ixNext"' + (needAck ? " disabled" : "") + ">Next →</button></div>";
+        '<button class="btn-primary" id="ixNext"' + (needAck ? " disabled" : "") + ">Next <i class=tri></i></button></div>";
     document.getElementById("ixBack").addEventListener("click", function () { w.medIdx = p.meds.length - 1; renderMedReview(p); });
     el.querySelectorAll("[data-ixopen]").forEach(function (b) {
       b.addEventListener("click", function () { w.ixAck[b.getAttribute("data-ixopen")] = true; renderInteractions(p); });
@@ -3348,7 +3566,7 @@
         '<div class="qc-row"><span class="ql">COVID-19 vaccine received?</span>' + yn("covid") + "</div>" +
       "</div>" +
       '<div class="next-fixed"><div id="dtpGate">' + gateHtml(dtpGate()) + "</div>" +
-        '<button class="btn-primary" id="dtpNext"' + (dtpGate().length ? " disabled" : "") + ">Next →</button></div>";
+        '<button class="btn-primary" id="dtpNext"' + (dtpGate().length ? " disabled" : "") + ">Next <i class=tri></i></button></div>";
     function dtpGate() {
       var qc = [];
       if (!q.otc) qc.push("OTC medicines");
@@ -3425,7 +3643,7 @@
       '<div class="sigwrap"><canvas class="sigpad" id="pmrSig" style="height:150px"></canvas><div class="sighint" id="pmrHint">Sign here</div></div>' +
       '<div class="sigrow" style="justify-content:space-between"><button class="pd-link" id="pmrSigFull" style="margin-left:0">Sign in full screen</button><button class="pd-link" id="pmrSigClear">Clear</button></div>' +
       '<div class="card check-card" style="margin-top:14px"><label class="check-row"><input type="checkbox" id="pmrConfirm"' + (r.confirmed ? " checked" : "") + ">I reviewed this record with the patient and provided a copy</label></div>" +
-      '<div class="next-fixed"><div id="pmrGate"></div><button class="btn-primary" id="pmrNext" disabled>Continue to Notify →</button></div>';
+      '<div class="next-fixed"><div id="pmrGate"></div><button class="btn-primary" id="pmrNext" disabled>Continue to Notify <i class=tri></i></button></div>';
 
     function pmrGate() {
       var items = [];
@@ -3520,7 +3738,7 @@
           "<span>On signing, a notification will be faxed to <b>" + provName + "</b> (simulated) and a follow-up task created.</span></div>"
         : '<div class="note" style="margin:16px 0 0">No provider notification needed — this form will still be completed and filed for documentation.</div>') +
       '<div class="next-fixed"><div id="nfGate">' + gateHtml(noteEmpty ? ["follow-up action for " + provName] : []) + "</div>" +
-        '<button class="btn-primary" id="nfDone"' + (noteEmpty ? " disabled" : "") + ">Complete MedsCheck →</button></div>";
+        '<button class="btn-primary" id="nfDone"' + (noteEmpty ? " disabled" : "") + ">Complete MedsCheck <i class=tri></i></button></div>";
 
     document.getElementById("nfBack").addEventListener("click", function () {
       if (s.worksheet && s.worksheet.done3) renderPMR(p);
@@ -3660,15 +3878,15 @@
   }
   renderReady();
 
-  // Home quick-action tiles → module pages (patient search inside).
+  // Home quick-action tiles <i class=tri></i> module pages (patient search inside).
   var homeQuick = document.querySelectorAll("#scrHome .quick-grid .tile");
   var homeMap = { 0: "medscheck", 1: "ailments", 3: "vaccines" };
   Object.keys(homeMap).forEach(function (i) {
     homeQuick[i].addEventListener("click", function () { enterSession(homeMap[i], null, "scrHome"); });
   });
   var homeInc = document.getElementById("homeInc");
-  homeInc.addEventListener("click", function () { renderIncidents("scrHome"); });
-  homeInc.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); renderIncidents("scrHome"); } });
+  homeInc.addEventListener("click", function () { renderSafety("scrHome"); });
+  homeInc.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); renderSafety("scrHome"); } });
   homeQuick[2].addEventListener("click", function () { renderBilling(); });
 
   // ================= Notifications =================
@@ -3677,10 +3895,10 @@
   // Simulated program: nothing leaves the device; NIDR sync is a status flip.
   // Records NEVER store a patient id/name — entering via a patient only
   // pre-fills de-identified context (age band, medication quick-picks).
-  var INC_TYPES = ["Incorrect drug", "Incorrect quantity", "Incorrect patient", "Incorrect label", "Incorrect concentration/strength", "Incorrect dose/frequency", "Other"];
+  var INC_TYPES = ["Incorrect drug", "Incorrect quantity", "Incorrect patient", "Incorrect label", "Incorrect concentration/strength", "Incorrect dose/frequency", "Drug interaction", "Known allergy", "Incorrect duration", "Deteriorated / expired product", "Other"];
   var INC_STAGES = ["Prescribing", "Rx order entry", "Preparation / dispensing", "Administration", "Monitoring / follow-up"];
   var INC_DISC = ["Pharmacist", "Pharmacy technician", "Patient", "Prescriber", "Other"];
-  var INC_PRESC = ["Family physician", "Specialist", "Nurse practitioner", "Dentist"];
+  var INC_PRESC = ["Family physician", "Specialist", "Nurse practitioner", "Pharmacist", "Dentist", "Midwife", "Optometrist", "Unknown"];
   var INC_ASSOC = ["Central fill", "Compliance packaging", "Compounded medication", "Injection by pharmacy professional", "Transition of care", "None of the above"];
   var INC_CONTRIB = ["Interruptions / high volume / workload", "Lack of quality-control systems", "Inadequate staff education", "Miscommunication of drug order", "Look-alike / sound-alike drugs", "Process deviation", "Other"];
   var INC_HARM = [
@@ -3690,26 +3908,41 @@
     ["Severe", "major permanent loss of function"],
     ["Death", ""],
   ];
-  var INC_AGES = ["0–1", "2–12", "13–18", "19–44", "45–64", "65–84", "85+"];
+  var INC_AGES = ["0–1", "2–12", "13–18", "19–44", "45–64", "65–84", "85+", "Unknown"];
   var INCIDENTS = [
-    { d: new Date(2026, 6, 12), type: "Incorrect quantity", kind: "Incident", harm: "None", stages: ["Preparation / dispensing"], meds: ["Apixaban"], status: "Needs analysis", nidr: "submitted",
-      disc: "Patient", desc: "90 tablets dispensed instead of 30; the patient returned the excess unopened.", factors: ["Interruptions / high volume / workload"] },
-    { d: new Date(2026, 6, 8), type: "Incorrect concentration/strength", kind: "Near miss", harm: null, stages: ["Rx order entry", "Preparation / dispensing"], meds: ["Amoxicillin suspension"], status: "Share learnings", nidr: "submitted",
-      disc: "Pharmacist", desc: "250 mg/5 mL entered instead of 400 mg/5 mL; caught at the final check before release.", factors: ["Miscommunication of drug order"] },
-    { d: new Date(2026, 5, 24), type: "Incorrect patient", kind: "Near miss", harm: null, stages: ["Rx order entry"], meds: ["Sertraline"], status: "Complete", nidr: "submitted",
-      disc: "Pharmacy technician", desc: "Rx entered under a different patient profile with a similar name; caught at verification.", factors: ["Process deviation"] },
-    { d: new Date(2026, 5, 4), type: "Incorrect drug", kind: "Incident", harm: "None", stages: ["Preparation / dispensing"], meds: ["Hydralazine", "Hydroxyzine"], status: "Complete", nidr: "submitted",
-      disc: "Pharmacist", desc: "Hydroxyzine prepared instead of hydralazine; identified at counselling and corrected.", factors: ["Look-alike / sound-alike drugs"] },
-    { d: new Date(2026, 4, 5), type: "Incorrect label", kind: "Incident", harm: "None", stages: ["Preparation / dispensing"], meds: ["Metformin"], status: "Complete", nidr: "submitted",
-      disc: "Pharmacist", desc: "Directions for another strength printed on the label; corrected and relabelled before pickup.", factors: [] },
+    { iid: "i1", d: new Date(2026, 6, 12), type: "Incorrect quantity", kind: "Incident", harm: "None", stages: ["Preparation / dispensing"], meds: ["Apixaban"], status: "Needs analysis", nidr: "pending",
+      disc: "Patient", presc: "Family physician", assocList: [], desc: "90 tablets dispensed instead of 30; the patient returned the excess unopened.", factors: ["Interruptions / high volume / workload"], cqi: true, cqiDiscussedAt: null, cqiOutcome: null },
+    { iid: "i2", d: new Date(2026, 6, 8), type: "Incorrect concentration/strength", kind: "Near miss", harm: null, stages: ["Rx order entry", "Preparation / dispensing"], meds: ["Amoxicillin suspension"], status: "Share learnings", nidr: "pending",
+      disc: "Pharmacist", presc: null, assocList: ["Compliance packaging"], desc: "250 mg/5 mL entered instead of 400 mg/5 mL; caught at the final check before release.", factors: ["Miscommunication of drug order"], cqi: true, cqiDiscussedAt: null, cqiOutcome: null },
+    { iid: "i3", d: new Date(2026, 5, 24), type: "Incorrect patient", kind: "Near miss", harm: null, stages: ["Rx order entry"], meds: ["Sertraline"], status: "Documented", nidr: "submitted",
+      disc: "Pharmacy technician", presc: null, assocList: [], desc: "Rx entered under a different patient profile with a similar name; caught at verification.", factors: ["Process deviation"], cqi: true, cqiDiscussedAt: new Date(2026, 7, 25), cqiOutcome: "Name-alert flag added at order entry" },
+    { iid: "i4", d: new Date(2026, 5, 4), type: "Incorrect drug", kind: "Incident", harm: "None", stages: ["Preparation / dispensing"], meds: ["Hydralazine", "Hydroxyzine"], status: "Documented", nidr: "submitted",
+      disc: "Pharmacist", presc: "Family physician", assocList: [], desc: "Hydroxyzine prepared instead of hydralazine; identified at counselling and corrected.", factors: ["Look-alike / sound-alike drugs"], cqi: true, cqiDiscussedAt: new Date(2026, 7, 25), cqiOutcome: "Stock separated; shelf label added" },
+    { iid: "i5", d: new Date(2026, 4, 5), type: "Incorrect label", kind: "Incident", harm: "None", stages: ["Preparation / dispensing"], meds: ["Metformin"], status: "Documented", nidr: "submitted",
+      disc: "Pharmacist", presc: null, assocList: [], desc: "Directions for another strength printed on the label; corrected and relabelled before pickup.", factors: [], cqi: true, cqiDiscussedAt: new Date(2026, 4, 25), cqiOutcome: "Label template corrected" },
+  ];
+  var CQI_PLAN = "Review at the next CQI meeting";
+  var PLAN_LIB = ["Separate the look-alike stock on the shelf", "Add a shelf warning label", "Independent double-count for this drug", "Staff education huddle", "Report to supplier / manufacturer", CQI_PLAN];
+  var ROUTES = ["Oral", "Topical", "Subcutaneous", "Intramuscular", "Inhaled", "Ophthalmic", "Other"];
+  var INC_KIND_PRESET = null; // set by the Record chooser sheet
+  var PLANS = [
+    { id: "pl1", iid: "i4", text: "Separate hydralazine / hydroxyzine stock on the shelf", src: "Incorrect drug · Jun 4", done: false, doneAt: null, doneBy: null, owner: "Omar", due: new Date(2026, 8, 3) },
+    { id: "pl2", iid: "i2", text: "Add a shelf warning label — amoxicillin strengths", src: "Incorrect concentration/strength · Jul 8", done: false, doneAt: null, doneBy: null, owner: null, due: new Date(2026, 7, 25) },
+    { id: "pl3", iid: "i1", text: "Independent double-count for apixaban", src: "Incorrect quantity · Jul 12", done: false, doneAt: null, doneBy: null, owner: "Priya", due: new Date(2026, 8, 10) },
+    { id: "pl4", iid: "i3", text: "Staff education huddle — similar patient names at order entry", src: "Incorrect patient · Jun 24", done: true, doneAt: new Date(2026, 6, 2), doneBy: "Priya", owner: "Priya", due: null },
+  ];
+  var CQI_MEETINGS = [
+    { d: new Date(2026, 10, 25), held: false, notes: "", attendees: "", topics: [] },
+    { d: new Date(2026, 7, 25), held: true, notes: "Reviewed look-alike storage; shelf labels agreed for amoxicillin strengths.", attendees: "Priya, Omar", topics: [] },
+    { d: new Date(2026, 4, 25), held: true, notes: "Quarterly review — dispensing double-count reinforced.", attendees: "Priya", topics: [] },
   ];
   // Short stage labels for LIST rows only — detail shows the full wording.
   var INC_STAGE_SHORT = { "Prescribing": "Prescribing", "Rx order entry": "Order entry", "Preparation / dispensing": "Dispensing", "Administration": "Administration", "Monitoring / follow-up": "Monitoring" };
   var incShown = 10; // incremental loading: 10 at a time (button appears only when longer)
-  var INC_CQI = { last: new Date(2026, 4, 25), next: new Date(2026, 7, 25) };   // quarterly
+  var INC_CQI = { last: new Date(2026, 7, 25), next: new Date(2026, 10, 25) };   // quarterly
   var INC_SSA = { last: new Date(2025, 8, 17), next: new Date(2027, 8, 17) };   // every 2 years
-  function incOpen() { return INCIDENTS.filter(function (e) { return e.status !== "Complete"; }); }
-  function incQuarter() { return INCIDENTS.filter(function (e) { return dayDiff(today, e.d) <= 90 && dayDiff(today, e.d) >= 0; }); }
+  function incOpen() { return INCIDENTS.filter(function (e) { return e.status !== "Documented"; }); }
+  function incQuarter() { return INCIDENTS.filter(function (e) { return dayDiff(e.d, quarterStart()) >= 0 && dayDiff(today, e.d) >= 0; }); }
   function fmtShort(d) { return d.toLocaleDateString("en-CA", { month: "short", day: "numeric" }); }
   function ageBand(p) {
     var a = age(p);
@@ -3717,96 +3950,539 @@
   }
   var incReturn = "scrMore", incFlash = "";
 
-  function renderIncidents(ret) {
+  // ---- 4-page AIMS module (client spec 2026-08-27 + review fixes 08-28) ----
+  function safetyTabs(active) {
+    var t = [["dash", "Dashboard"], ["inc", "Incidents"], ["plans", "Action plans"], ["cqi", "CQI"]];
+    return '<div class="steptabs sm" style="margin:2px 0 14px">' + t.map(function (x) {
+      return '<button class="chip' + (x[0] === active ? " on" : "") + '" type="button" data-stab="' + x[0] + '">' + x[1] + "</button>";
+    }).join("") + "</div>";
+  }
+  function bindSafetyTabs(el) {
+    el.querySelectorAll("[data-stab]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var k = b.getAttribute("data-stab");
+        if (k === "dash") renderSafety();
+        else if (k === "inc") renderIncidents();
+        else if (k === "plans") renderPlans();
+        else renderCQI();
+      });
+    });
+  }
+  function safetyHead(el, tab) {
+    return '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="sfBackBtn" aria-label="Back">' + backSvg + "</button>" +
+      '<h2 class="screen-title">Pharmacy safety</h2>' +
+      (tab === "inc" ? '<button class="pd-link" id="incSync" type="button">' + (NIDR_SYNC.failed ? "Retry sync" : "Sync now") + "</button>" : "") + "</div>" +
+      safetyTabs(tab);
+  }
+  function bindSafetyBack(fallback) {
+    document.getElementById("sfBackBtn").addEventListener("click", fallback);
+  }
+  function cqiAgenda() { return INCIDENTS.filter(function (e) { return e.cqi && !e.cqiDiscussedAt; }); }
+  function planOpen() { return PLANS.filter(function (p) { return !p.done; }); }
+  function incByIid(iid) { return INCIDENTS.filter(function (e) { return e.iid === iid; })[0]; }
+  // Calendar quarter (decided per review: NOT rolling 90 days) — applied everywhere.
+  function quarterStart() { return new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1); }
+  function quarterEnd() { return new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3 + 3, 0); }
+  var plansMsg = "", cqiMsg = "", cqiOpenIdx = -1, ssaMsg = "";
+  var cqiAskId = null, cqiUndoRef = null, cqiTopicOpen = false;
+  var incQtxt = "", incFType = "All incident types", incFStat = "All statuses", incFDate = "Any date", incFKind = "All events", lastIid = null;
+  var incFFrom = "", incFTo = "";
+  var NIDR_SYNC = { failed: false, lastOk: "today 6:00 AM", failedAt: "3 Sept 2026, 6:00 AM" };
+  function openIncFilterSheet() {
+    function sel(id, lab, cur, opts) {
+      return '<div class="fieldlab" style="margin-top:14px">' + lab + '</div><select class="sh-sel" id="' + id + '">' +
+        opts.map(function (o) { return '<option' + (o === cur ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select>";
+    }
+    sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">Filters</div>' +
+      '<div class="sh-s">Narrow the event log. The event-type filter stays on the page.</div>' +
+      sel("shType", "Category", incFType, ["All incident types"].concat(INC_TYPES)) +
+      sel("shStat", "Status", incFStat, ["All statuses", "Needs analysis", "Share learnings", "Documented", "Not yet submitted to NIDR", "Submitted to NIDR", "Overdue (7+ days)"]) +
+      sel("shDate", "Date", incFDate, ["Any date", "This quarter", "Last quarter", "Last 30 days", "Last 90 days", "This year", "Custom range"]) +
+      '<div id="shRange"' + (incFDate === "Custom range" ? "" : " hidden") + '>' +
+        '<div class="fieldlab" style="margin-top:12px">From</div><input type="date" class="sh-sel" id="shFrom" max="' + isoDate(today) + '" value="' + esc(incFFrom) + '">' +
+        '<div class="fieldlab" style="margin-top:12px">To</div><input type="date" class="sh-sel" id="shTo" max="' + isoDate(today) + '" value="' + esc(incFTo) + '">' +
+      "</div>" +
+      '<div style="display:flex;gap:10px;margin-top:20px">' +
+        '<button type="button" class="btn-outline" id="shClear" style="flex:1">Clear all</button>' +
+        '<button type="button" class="btn-primary" id="shApply" style="flex:1;position:static;width:auto">Apply filters</button></div>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    document.getElementById("shDate").addEventListener("change", function (e2) {
+      document.getElementById("shRange").hidden = e2.target.value !== "Custom range";
+    });
+    document.getElementById("shClear").addEventListener("click", function () {
+      document.getElementById("shType").value = "All incident types";
+      document.getElementById("shStat").value = "All statuses";
+      document.getElementById("shDate").value = "Any date";
+      document.getElementById("shFrom").value = "";
+      document.getElementById("shTo").value = "";
+      document.getElementById("shRange").hidden = true;
+    });
+    document.getElementById("shApply").addEventListener("click", function () {
+      incFType = document.getElementById("shType").value;
+      incFStat = document.getElementById("shStat").value;
+      incFDate = document.getElementById("shDate").value;
+      incFFrom = document.getElementById("shFrom").value;
+      incFTo = document.getElementById("shTo").value;
+      if (incFDate !== "Custom range") { incFFrom = ""; incFTo = ""; }
+      incShown = 10; closeSheet(); renderIncidents();
+    });
+  }
+
+  // -------- Page 1: Dashboard --------
+  function renderSafety(ret) {
     if (ret) incReturn = ret;
-    var el = document.getElementById("incPage");
-    var q = incQuarter(), open = incOpen();
+    var el = document.getElementById("safetyPage");
+    var q = incQuarter(), agenda = cqiAgenda();
     var nearPct = q.length ? Math.round(q.filter(function (e) { return e.kind === "Near miss"; }).length / q.length * 100) : 0;
-    el.innerHTML =
-      '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="incBack" aria-label="Back">' + backSvg + "</button>" +
-        '<h2 class="screen-title">Incident reporting</h2>' +
-        '<button class="pd-link" id="incSync" type="button">NIDR sync</button></div>' +
-      '<div class="note" style="margin:0 0 12px">OCP AIMS — anonymous and de-identified. Near misses matter as much as incidents. (Simulated.)</div>' +
-      (incFlash ? '<div class="reassure" style="margin:0 0 12px;color:#1db871" role="status">' + okSvg + incFlash + "</div>" : "") +
-      '<div class="card sum-card"><div class="sum-grid">' +
-        '<div class="sum-tile"><span class="sum-ic">' + ICON.clip + '</span><span class="mid"><span class="val">' + q.length + '</span><span class="lab">Events this quarter · ' + nearPct + "% near misses</span></span></div>" +
-        '<div class="sum-tile' + (open.length ? " warn" : "") + '"><span class="sum-ic">' + warnSm + '</span><span class="mid"><span class="val">' + open.length + '</span><span class="lab">Open workflow ' + (open.length === 1 ? "item" : "items") + "</span></span></div>" +
-      "</div></div>" +
-      '<div class="note" style="margin:12px 0 0">Next CQI meeting <b style="color:#2B2A44">' + fmtDate(INC_CQI.next) + '</b> · Safety self-assessment <b style="color:#2B2A44">' + fmtDate(INC_SSA.next) + "</b></div>" +
-      '<div class="section-head"><h2>Event log</h2></div>' +
-      '<div class="card txn-card">' + INCIDENTS.slice(0, incShown).map(function (e, i) {
-        // Scan-first: what · when · dominant status. A second pill ONLY when it
-        // changes what to do next (NIDR pending → sync). Everything else → detail.
-        var meta = e.stages.map(function (x) { return INC_STAGE_SHORT[x] || x; }).join(", ") +
-          (e.meds.length ? " · " + e.meds[0] + (e.meds.length > 1 ? " +" + (e.meds.length - 1) : "") : "");
-        return '<div class="txn cal-row inc-row" role="button" tabindex="0" data-inc="' + i + '"><span class="tm inc-dt">' + fmtShort(e.d) + "</span>" +
-          '<div class="who"><div class="n">' + e.type + '</div>' +
-          '<div class="d">' + meta + "</div>" +
-          '<div class="pl-line"><span class="stat-pill ' + (e.status === "Complete" ? "paid" : "warn") + '">' + e.status + "</span>" +
-            (e.nidr === "pending" ? '<span class="stat-pill sub">NIDR pending</span>' : "") + "</div></div></div>";
-      }).join("") + "</div>" +
-      (INCIDENTS.length > incShown ? '<button class="btn-outline" id="incMore" type="button" style="display:block;width:100%;margin-top:12px">Load more · ' + (INCIDENTS.length - incShown) + " older</button>" : "") +
-      '<div class="next-fixed"><button class="btn-primary" id="incNew" type="button">Record incident →</button></div>';
-    incFlash = "";
-    document.getElementById("incBack").addEventListener("click", function () {
+    var a = INCIDENTS.filter(function (e) { return e.status === "Needs analysis"; }).length;
+    var b = INCIDENTS.filter(function (e) { return e.status === "Share learnings"; }).length;
+    var wLab, wSub = "";
+    if (a + b === 0) { wLab = "All events documented"; }
+    else if (a && !b) { wLab = a === 1 ? "incident needs analysis" : "incidents need analysis"; }
+    else if (b && !a) { wLab = b === 1 ? "incident needs learnings shared" : "incidents need learnings shared"; }
+    else { wLab = "incidents need action"; wSub = a + " need" + (a === 1 ? "s" : "") + " analysis · " + b + " need" + (b === 1 ? "s" : "") + " learnings"; }
+    // CQI card turns amber when the quarter closes within 30 days and no meeting is booked before quarter end.
+    var qLeft = dayDiff(quarterEnd(), today);
+    var booked = CQI_MEETINGS.some(function (m) { return !m.held && dayDiff(quarterEnd(), m.d) >= 0; });
+    var cqiWarn = qLeft <= 30 && !booked;
+    function tile(ic, val, lab, sub, warn, go) {
+      return '<button type="button" class="dash-tile card' + (warn ? " warn" : "") + '" data-go="' + go + '">' +
+        '<span class="dash-top"><span class="dv">' + val + '</span><span class="sum-ic">' + ic + "</span></span>" +
+        '<span class="dl">' + lab + "</span>" +
+        (sub ? '<span class="ds">' + sub + "</span>" : "") + "</button>";
+    }
+    el.innerHTML = safetyHead(el, "dash") +
+      '<div class="note" style="margin:0 0 14px">OCP AIMS — anonymous and de-identified. (Simulated.)</div>' +
+      (ssaMsg ? '<div class="reassure" style="margin:0 0 12px;color:#1db871" role="status">' + okSvg + ssaMsg + "</div>" : "") +
+      '<div class="dash-grid">' +
+        tile(ICON.clip, q.length, "Events this quarter", "calendar Q" + (Math.floor(today.getMonth() / 3) + 1) + " · " + nearPct + "% near misses", false, "incq") +
+        tile(warnSm, a + b, wLab, wSub, a + b > 0, "inc") +
+        tile(okSvg, planOpen().length, "Open action items", planOpen().length ? "prevention steps to complete" : "all done", false, "plans") +
+        tile(NTF_ICONS.appt, fmtShort(INC_CQI.next), "Next CQI meeting", (cqiWarn ? "quarter closing — book a meeting" : "quarterly · " + agenda.length + " on the agenda"), cqiWarn, "cqi") +
+      "</div>" +
+      '<div class="card txn-card" style="margin-top:14px"><div class="txn" role="button" tabindex="0" id="ssaRow">' +
+        '<span class="ic">' + ICON.shield + "</span>" +
+        '<div class="who"><div class="n">Safety self-assessment</div><div class="d">Due ' + fmtDate(INC_SSA.next) + " · last completed " + fmtDate(INC_SSA.last) + "</div></div></div></div>" +
+      '<div class="next-fixed"><button class="btn-primary" id="safNew" type="button">Record an event <i class=tri></i></button></div>';
+    ssaMsg = "";
+    bindSafetyTabs(el);
+    bindSafetyBack(function () {
       if (incReturn === "scrHome") showScreen("scrHome");
       else if (incReturn === "scrNotifs") renderNotifs();
       else renderMore();
     });
+    document.getElementById("safNew").addEventListener("click", function () { openRecordSheet("scrSafety"); });
+    var sr = document.getElementById("ssaRow");
+    function ssaGo() { ssaMsg = "Opens the OCP safety self-assessment tool (external — simulated)."; renderSafety(); }
+    sr.addEventListener("click", ssaGo);
+    sr.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ssaGo(); } });
+    el.querySelectorAll("[data-go]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var g = btn.getAttribute("data-go");
+        if (g === "incq") { incFDate = "This quarter"; incShown = 10; renderIncidents(); }
+        else if (g === "inc") renderIncidents(); else if (g === "plans") renderPlans(); else renderCQI();
+      });
+    });
+    showScreen("scrSafety");
+  }
+
+  // Record chooser: incident vs near miss (one button, two clear paths).
+  function openRecordSheet(from) {
+    sheetEl.innerHTML = '<div class="grab"></div>' +
+      '<div class="sh-t" id="sheetTitle">Record an event</div>' +
+      '<div class="sh-s">Both count — near misses matter as much as incidents.</div>' +
+      '<div class="card txn-card" style="box-shadow:none;border:1px solid #ECEAF5">' +
+        '<div class="txn" role="button" tabindex="0" data-rk="Incident"><span class="ic" style="background:#fdf0dc;color:#f6a723">' + warnSm + '</span><div class="who"><div class="n">Record incident</div><div class="d">Reached the patient</div></div></div>' +
+        '<div class="txn" role="button" tabindex="0" data-rk="Near miss"><span class="ic" style="background:#e8f1fd;color:#2f6fd0">' + ICON.shield + '</span><div class="who"><div class="n">Record near miss</div><div class="d">Intercepted before the patient</div></div></div>' +
+      "</div>" +
+      '<button class="btn-outline" id="sheetClose" type="button" style="display:block;width:100%;margin-top:14px">Cancel</button>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    document.getElementById("sheetClose").addEventListener("click", closeSheet);
+    sheetEl.querySelectorAll("[data-rk]").forEach(function (row) {
+      function pick() {
+        INC_KIND_PRESET = row.getAttribute("data-rk");
+        if (INC) { // an in-progress draft keeps its data but takes the chosen kind
+          INC.kind = INC_KIND_PRESET;
+          INC.kindLocked = INC_KIND_PRESET === "Near miss";
+          if (INC.kind === "Near miss") INC.harm = null; // harm step is skipped
+          INC.step = Math.min(INC.step, INC.kind === "Near miss" ? 6 : 7);
+        }
+        closeSheet();
+        enterSession("incidents", null, from);
+      }
+      row.addEventListener("click", pick);
+      row.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+    });
+  }
+
+  // -------- Page 2: Incidents (event log) --------
+  function incFiltered() {
+    var qs = incQtxt.trim().toLowerCase();
+    return INCIDENTS.filter(function (e) {
+      if (incFType !== "All incident types" && e.type !== incFType) return false;
+      if (incFKind !== "All events" && e.kind !== incFKind) return false;
+      if (incFStat === "Not yet submitted to NIDR") { if (e.nidr !== "pending") return false; }
+      else if (incFStat === "Submitted to NIDR") { if (e.nidr === "pending") return false; }
+      else if (incFStat === "Overdue (7+ days)") { if (!(dayDiff(today, e.d) >= 7 && (e.status !== "Documented" || e.nidr === "pending"))) return false; }
+      else if (incFStat !== "All statuses" && e.status !== incFStat) return false;
+      if (incFDate === "This quarter" && !(dayDiff(e.d, quarterStart()) >= 0 && dayDiff(today, e.d) >= 0)) return false;
+      if (incFDate === "Last quarter") {
+        var lqS = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3 - 3, 1);
+        var lqE = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 0);
+        if (!(dayDiff(e.d, lqS) >= 0 && dayDiff(lqE, e.d) >= 0)) return false;
+      }
+      if (incFDate === "Custom range") {
+        if (incFFrom && dayDiff(e.d, fromIso(incFFrom)) < 0) return false;
+        if (incFTo && dayDiff(fromIso(incFTo), e.d) < 0) return false;
+      }
+      if (incFDate === "Last 30 days" && dayDiff(today, e.d) > 30) return false;
+      if (incFDate === "Last 90 days" && dayDiff(today, e.d) > 90) return false;
+      if (incFDate === "This year" && e.d.getFullYear() !== today.getFullYear()) return false;
+      if (qs && !(e.type + " " + e.meds.join(" ") + " " + (e.desc || "")).toLowerCase().includes(qs)) return false;
+      return true;
+    });
+  }
+  function fmtLogDate(d) {
+    return fmtShort(d) + '<br><span style="font-size:10px;color:#C4C1D9">' + d.getFullYear() + "</span>";
+  }
+  // Aging applies to both open obligations equally: amber under 7 days, red at 7+.
+  // (NIDR sync state is shown as a row badge, not an aging note.)
+  function agingNote(e) {
+    if (e.status === "Documented") return null;
+    var d = dayDiff(today, e.d);
+    if (d < 1) return null;
+    var lab = (e.status === "Share learnings" ? "Pending " : "Open ") + d + " day" + (d === 1 ? "" : "s");
+    return [d >= 7 ? "red" : "amber", lab];
+  }
+  function renderIncidents() {
+    var el = document.getElementById("incPage");
+    var list = incFiltered();
+    var nPend = INCIDENTS.filter(function (e) { return e.nidr === "pending"; }).length;
+    var rangeLabel = incFFrom || incFTo
+      ? (incFFrom ? fmtShort(fromIso(incFFrom)) : "…") + " – " + (incFTo ? fmtShort(fromIso(incFTo)) : "…")
+      : "Custom range";
+    var secFilters = [
+      { key: "type", cur: incFType, def: "All incident types" },
+      { key: "stat", cur: incFStat, def: "All statuses" },
+      { key: "date", cur: incFDate === "Custom range" ? rangeLabel : incFDate, def: "Any date", raw: incFDate },
+    ].filter(function (f) { return f.cur !== f.def; });
+    var filterSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v5.5l-4 2V13z"></path></svg>';
+    el.innerHTML = safetyHead(el, "inc") +
+      (NIDR_SYNC.failed
+        ? '<div class="note" style="margin:0 0 4px;color:#e0403d;font-weight:600">Last sync failed — ' + NIDR_SYNC.failedAt + "</div>"
+        : '<div class="note" style="margin:0 0 4px">NIDR auto-syncs daily · last synced ' + NIDR_SYNC.lastOk + " (simulated)</div>") +
+      (nPend ? '<button type="button" class="pd-link" id="incPendLine" style="margin:0 0 10px;display:block">' + nPend + " not yet submitted to NIDR</button>" : '<div style="margin:0 0 6px"></div>') +
+      (incFlash ? '<div class="reassure" style="margin:0 0 12px;color:#1db871" role="status">' + okSvg + '<span style="flex:1">' + incFlash + "</span>" +
+        (lastIid ? '<button class="pd-link" id="incViewNew" style="margin:0">View \u2192</button>' : "") + "</div>" : "") +
+      '<div class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>' +
+        '<input id="incSearch" type="search" placeholder="Search type, medication, description" value="' + esc(incQtxt) + '"></div>' +
+      '<div class="qf-row" aria-label="Event type">' +
+        [["All events", "All"], ["Incident", "Incident"], ["Near miss", "Near miss"]].map(function (o) {
+          return '<button type="button" class="qf' + (incFKind === o[0] ? " on" : "") + '" data-qf="' + o[0] + '" aria-pressed="' + (incFKind === o[0]) + '">' + o[1] + "</button>";
+        }).join("") + "</div>" +
+      '<button type="button" class="moref" id="incMoreF">' + filterSvg + "More filters" +
+        (secFilters.length ? '<span class="fbadge">' + secFilters.length + "</span>" : "") + "</button>" +
+      (secFilters.length ? '<div class="afrow">' + secFilters.map(function (f) {
+        return '<button type="button" class="afchip" data-clearf="' + f.key + '" aria-label="Remove filter ' + esc(f.cur) + '">' + esc(f.cur) + "<span class=\"x\">\u00d7</span></button>";
+      }).join("") + "</div>" : "") +
+      '<div class="section-head" style="margin-top:12px"><h2>Event log' + (list.length !== INCIDENTS.length ? " · " + list.length + " of " + INCIDENTS.length : "") + "</h2></div>" +
+      (list.length ? '<div class="card txn-card">' + list.slice(0, incShown).map(function (e) {
+        var i = INCIDENTS.indexOf(e);
+        var meta = e.stages.map(function (x) { return INC_STAGE_SHORT[x] || x; }).join(", ") +
+          (e.meds.length ? " · " + e.meds[0] + (e.meds.length > 1 ? " +" + (e.meds.length - 1) : "") : "");
+        return '<div class="txn cal-row inc-row" role="button" tabindex="0" data-inc="' + i + '"><span class="tm inc-dt">' + fmtLogDate(e.d) + "</span>" +
+          '<div class="who"><div class="n">' + (e.typeOther || e.type) + '</div>' +
+          '<div class="d">' + meta + "</div>" +
+          '<div class="pl-line">' +
+            (e.status === "Needs analysis" ? '<span class="stat-pill warn">Needs analysis</span>' : "") +
+            (e.status === "Documented" ? '<span class="stat-pill paid">Documented</span>' : "") +
+            (e.kind === "Near miss" ? '<span class="stat-pill info">Near miss</span>' : "") +
+            (e.nidr === "pending" ? '<span class="stat-pill warn">NIDR pending</span>' : '<span class="stat-pill sub">Synced</span>') +
+          "</div>" +
+          (function () { var a = agingNote(e); return a ? '<div class="age-note' + (a[0] === "amber" ? " amber" : "") + '">' + a[1] + "</div>" : ""; })() +
+          "</div></div>";
+      }).join("") + "</div>"
+        : '<div class="reassure" style="color:#6E6C88">No events match — clear the search or filters.</div>') +
+      (list.length > incShown ? '<button class="btn-outline" id="incMore" type="button" style="display:block;width:100%;margin-top:12px">Load more · ' + (list.length - incShown) + " older</button>" : "") +
+      '<div class="next-fixed"><button class="btn-primary" id="incNew" type="button">Record an event <i class=tri></i></button></div>';
+    incFlash = "";
+    bindSafetyTabs(el);
+    bindSafetyBack(function () { renderSafety(); });
     document.getElementById("incSync").addEventListener("click", function () {
       var pend = INCIDENTS.filter(function (e) { return e.nidr === "pending"; });
       pend.forEach(function (e) { e.nidr = "submitted"; });
+      NIDR_SYNC.failed = false;
+      NIDR_SYNC.lastOk = "just now";
       incFlash = pend.length
         ? "NIDR sync complete — " + pend.length + " event" + (pend.length === 1 ? "" : "s") + " submitted (simulated)."
         : "NIDR up to date — nothing new to submit (simulated).";
       renderIncidents();
     });
-    document.getElementById("incNew").addEventListener("click", function () { enterSession("incidents", null, "scrIncidents"); });
+    var pl = document.getElementById("incPendLine");
+    if (pl) pl.addEventListener("click", function () {
+      incFStat = "Not yet submitted to NIDR"; incShown = 10; renderIncidents();
+    });
+    var sIn = document.getElementById("incSearch");
+    sIn.addEventListener("input", function () {
+      incQtxt = sIn.value; incShown = 10; renderIncidents();
+      var s2 = document.getElementById("incSearch"); s2.focus(); s2.setSelectionRange(s2.value.length, s2.value.length);
+    });
+    el.querySelectorAll("[data-qf]").forEach(function (b) {
+      b.addEventListener("click", function () { incFKind = b.getAttribute("data-qf"); incShown = 10; renderIncidents(); });
+    });
+    el.querySelectorAll("[data-clearf]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var k = b.getAttribute("data-clearf");
+        if (k === "type") incFType = "All incident types";
+        if (k === "stat") incFStat = "All statuses";
+        if (k === "date") { incFDate = "Any date"; incFFrom = ""; incFTo = ""; }
+        incShown = 10; renderIncidents();
+      });
+    });
+    document.getElementById("incMoreF").addEventListener("click", openIncFilterSheet);
+    document.getElementById("incNew").addEventListener("click", function () { openRecordSheet("scrIncidents"); });
     el.querySelectorAll("[data-inc]").forEach(function (row) {
-      function go() { renderIncDetail(+row.getAttribute("data-inc")); }
+      function go() { renderIncDetail(+row.getAttribute("data-inc"), "inc"); }
       row.addEventListener("click", go);
       row.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
     });
     var lm = document.getElementById("incMore");
     if (lm) lm.addEventListener("click", function () { incShown += 10; renderIncidents(); });
+    var vw = document.getElementById("incViewNew");
+    if (vw) vw.addEventListener("click", function () {
+      var e = incByIid(lastIid); lastIid = null;
+      if (e) renderIncDetail(INCIDENTS.indexOf(e), "inc");
+    });
     showScreen("scrIncidents");
   }
 
+  // -------- Page 3: Action plans (grouped by incident, owner/due, opens the source) --------
+  function renderPlans() {
+    var el = document.getElementById("plansPage");
+    var open = PLANS.filter(function (p) { return !p.done; });
+    var done = PLANS.filter(function (p) { return p.done; });
+    function planRow(p) {
+      var idx = PLANS.indexOf(p);
+      var overdue = p.due && !p.done && dayDiff(today, p.due) > 0;
+      return '<div class="plan-row' + (p.done ? " done" : "") + '" role="button" tabindex="0" data-src="' + esc(p.iid) + '">' +
+        '<button type="button" class="plan-chk" data-pl="' + idx + '" aria-label="' + (p.done ? "Reopen" : "Mark as done") + '">' +
+          (p.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>' : "") + "</button>" +
+        '<div style="flex:1;min-width:0"><div class="pt">' + esc(p.text) + "</div>" +
+          '<div class="ps">' + (p.owner ? "Owner " + esc(p.owner) : "Unassigned") +
+          (p.done && p.doneAt ? " · done " + fmtShort(p.doneAt) + (p.doneBy ? " · by " + esc(p.doneBy) : "") : "") + "</div></div>" +
+        (p.due && !p.done ? '<span class="due' + (overdue ? " over" : "") + '">' + (overdue ? "Overdue · " : "Due ") + fmtShort(p.due) + "</span>" : "") +
+        "</div>";
+    }
+    // Group open items under their source incident heading.
+    var groups = [];
+    open.forEach(function (p) {
+      var g = groups.filter(function (x) { return x.iid === p.iid; })[0];
+      if (!g) { g = { iid: p.iid, src: p.src, items: [] }; groups.push(g); }
+      g.items.push(p);
+    });
+    el.innerHTML = safetyHead(el, "plans") +
+      '<div class="note" style="margin:0 0 12px">Consolidated from all recorded events. Circle = done · row opens the source event.</div>' +
+      (plansMsg ? '<div class="reassure" style="margin:0 0 12px;color:#1db871" role="status">' + okSvg + plansMsg + "</div>" : "") +
+      (groups.length ? groups.map(function (g) {
+        return '<div class="fieldlab" style="margin-top:14px">' + esc(g.src) + " · " + g.items.length + "</div>" +
+          '<div class="card">' + g.items.map(planRow).join("") + "</div>";
+      }).join("") : '<div class="reassure" style="color:#6E6C88">Nothing open — action plans are created while recording an event.</div>') +
+      (done.length ? '<div class="fieldlab" style="margin-top:18px">Completed · ' + done.length + '</div><div class="card">' + done.map(planRow).join("") + "</div>" : "");
+    plansMsg = "";
+    bindSafetyTabs(el);
+    bindSafetyBack(function () { renderSafety(); });
+    el.querySelectorAll("[data-pl]").forEach(function (b) {
+      b.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var p = PLANS[+b.getAttribute("data-pl")];
+        p.done = !p.done;
+        p.doneAt = p.done ? new Date(today) : null;
+        p.doneBy = p.done ? PROFILE.name.split(" ")[0] : null;
+        plansMsg = p.done ? "Marked as done — " + p.text : "Reopened — " + p.text;
+        renderPlans();
+      });
+    });
+    el.querySelectorAll(".plan-row").forEach(function (row) {
+      row.addEventListener("click", function () {
+        var e = incByIid(row.getAttribute("data-src"));
+        if (e) renderIncDetail(INCIDENTS.indexOf(e), "plans");
+      });
+    });
+    showScreen("scrPlans");
+  }
+
+  // -------- Page 4: CQI meetings --------
+  function renderCQI() {
+    var el = document.getElementById("cqiPage");
+    var mtg = CQI_MEETINGS[0];
+    var agendaInc = cqiAgenda();
+    var topics = (mtg.topics || []).filter(function (t) { return !t.discussed; });
+    var held = CQI_MEETINGS.filter(function (m) { return m.held; });
+    function askBox(refId) {
+      return '<div class="cqi-ask"><input class="tinput" id="cqiOut" placeholder="One-line outcome (what was decided)…">' +
+        '<div class="sigrow" style="justify-content:flex-end;gap:8px;margin-top:8px"><button class="pd-link" id="cqiAskCancel" style="margin:0">Cancel</button>' +
+        '<button class="btn-primary" id="cqiAskSave" style="width:auto;padding:9px 16px;font-size:13px" data-ref="' + esc(refId) + '">Save &amp; close item</button></div></div>';
+    }
+    el.innerHTML = safetyHead(el, "cqi") +
+      (cqiMsg ? '<div class="reassure" style="margin:0 0 12px;color:#1db871" role="status">' + okSvg + '<span style="flex:1">' + cqiMsg + "</span>" +
+        (cqiUndoRef ? '<button class="pd-link" id="cqiUndoBtn" style="margin:0">Undo</button>' : "") + "</div>" : "") +
+      '<div class="card" style="padding:16px">' +
+        '<div class="eyebrow" style="margin-bottom:4px">Next meeting</div>' +
+        '<div class="step-title" style="margin-bottom:2px">' + fmtDate(INC_CQI.next) + "</div>" +
+        '<div class="note" style="margin:0 0 10px">Quarterly continuous quality improvement · required by OCP</div>' +
+        '<div class="fieldlab" style="margin:0 0 6px">Attendees</div>' +
+        '<input class="tinput" id="cqiAtt" placeholder="Who will attend…" value="' + esc(mtg.attendees || "") + '">' +
+        '<span class="savedhint" id="attSaved"></span>' +
+      "</div>" +
+      '<div class="fieldlab" style="display:flex;justify-content:space-between;align-items:center">Agenda · ' + (agendaInc.length + topics.length) +
+        (cqiTopicOpen ? "" : '<button type="button" class="pd-link add-link" id="cqiAddTopic">+ Add agenda item</button>') + "</div>" +
+      (cqiTopicOpen ? '<div class="card" style="padding:12px 14px;margin-bottom:10px"><input class="tinput" id="cqiTopicText" placeholder="Non-incident topic (e.g., new fridge log)…">' +
+        '<div class="sigrow" style="justify-content:space-between"><button class="pd-link" id="cqiTopicCancel" style="margin-left:0">Cancel</button>' +
+        '<button class="btn-primary" id="cqiTopicSave" style="width:auto;padding:9px 16px;font-size:13px">Add</button></div></div>' : "") +
+      ((agendaInc.length + topics.length) ?
+        '<div class="card txn-card">' +
+        agendaInc.map(function (e) {
+          var i = INCIDENTS.indexOf(e);
+          return '<div class="txn cal-row inc-row" role="button" tabindex="0" data-ag="' + i + '"><span class="tm inc-dt">' + fmtShort(e.d) + "</span>" +
+            '<div class="who"><div class="n">' + e.type + '</div><div class="d">' + e.kind + (e.meds.length ? " · " + e.meds[0] : "") + "</div>" +
+            (cqiAskId === e.iid ? askBox(e.iid) : '<div class="pl-line"><button type="button" class="chip cqi-disc" data-disc="' + esc(e.iid) + '">Mark discussed ✓</button></div>') +
+            "</div></div>";
+        }).join("") +
+        topics.map(function (t, k) {
+          return '<div class="txn cal-row inc-row"><span class="tm inc-dt">topic</span>' +
+            '<div class="who"><div class="n">' + esc(t.text) + '</div><div class="d">Added by the team</div>' +
+            (cqiAskId === "t" + k ? askBox("t" + k) : '<div class="pl-line"><button type="button" class="chip cqi-disc" data-disc="t' + k + '">Mark discussed ✓</button></div>') +
+            "</div></div>";
+        }).join("") + "</div>"
+        : '<div class="reassure" style="color:#6E6C88">Agenda is clear — flag events while recording, or add a topic.</div>') +
+      '<div class="fieldlab" style="display:flex;justify-content:space-between;align-items:center">Meeting notes<span class="savedhint" id="ntSaved"></span></div>' +
+      '<textarea class="tinput tarea" id="cqiNotes" style="min-height:72px" placeholder="Agenda notes, decisions, follow-ups…">' + esc(mtg.notes) + "</textarea>" +
+      '<div class="fieldlab">Past meetings</div>' +
+      '<div class="card txn-card">' + held.map(function (m, k) {
+        var items = INCIDENTS.filter(function (e) { return e.cqiDiscussedAt && dayDiff(e.cqiDiscussedAt, m.d) === 0; });
+        return '<div class="txn" role="button" tabindex="0" data-mtg="' + k + '">' +
+          '<div class="who"><div class="n">' + fmtDate(m.d) + '</div><div class="d">' + items.length + " item" + (items.length === 1 ? "" : "s") + " discussed" + (m.attendees ? " · " + esc(m.attendees) : "") + "</div>" +
+          (cqiOpenIdx === k
+            ? '<div class="ps" style="margin-top:6px;font-size:12px;color:#6E6C88;line-height:1.55">' +
+              (items.map(function (e) { return "• " + e.type + " (" + fmtShort(e.d) + ")" + (e.cqiOutcome ? " — " + esc(e.cqiOutcome) : ""); }).join("<br>") || "—") +
+              (m.notes ? "<br><i>" + esc(m.notes) + "</i>" : "") + "</div>"
+            : "") + "</div></div>";
+      }).join("") + "</div>";
+    cqiMsg = "";
+    bindSafetyTabs(el);
+    bindSafetyBack(function () { renderSafety(); });
+    function savedTick(id) { var s2 = document.getElementById(id); if (s2) { s2.textContent = "Saved ✓"; } }
+    var nt = document.getElementById("cqiNotes");
+    nt.addEventListener("input", function () { mtg.notes = nt.value; savedTick("ntSaved"); });
+    var at = document.getElementById("cqiAtt");
+    at.addEventListener("input", function () { mtg.attendees = at.value; savedTick("attSaved"); });
+    var addT = document.getElementById("cqiAddTopic");
+    if (addT) addT.addEventListener("click", function () { cqiTopicOpen = true; renderCQI(); });
+    var tc = document.getElementById("cqiTopicCancel");
+    if (tc) tc.addEventListener("click", function () { cqiTopicOpen = false; renderCQI(); });
+    var ts = document.getElementById("cqiTopicSave");
+    if (ts) ts.addEventListener("click", function () {
+      var v = document.getElementById("cqiTopicText").value.trim();
+      if (v) { mtg.topics = mtg.topics || []; mtg.topics.push({ text: v, discussed: false, outcome: "" }); }
+      cqiTopicOpen = false; renderCQI();
+    });
+    // Mark discussed <i class=tri></i> ask for a one-line outcome first (same style as past-meeting notes).
+    el.querySelectorAll("[data-disc]").forEach(function (b) {
+      b.addEventListener("click", function (ev) { ev.stopPropagation(); cqiAskId = b.getAttribute("data-disc"); renderCQI(); });
+    });
+    var ac = document.getElementById("cqiAskCancel");
+    if (ac) ac.addEventListener("click", function () { cqiAskId = null; renderCQI(); });
+    var as = document.getElementById("cqiAskSave");
+    if (as) as.addEventListener("click", function () {
+      var ref = as.getAttribute("data-ref");
+      var out = (document.getElementById("cqiOut").value || "").trim();
+      if (ref.charAt(0) === "t" && !incByIid(ref)) {
+        var t = (mtg.topics || []).filter(function (x) { return !x.discussed; })[+ref.slice(1)];
+        if (t) { t.discussed = true; t.outcome = out; cqiUndoRef = { kind: "topic", ref: t }; }
+      } else {
+        var e = incByIid(ref);
+        if (e) { e.cqiDiscussedAt = new Date(INC_CQI.next); e.cqiOutcome = out || null; cqiUndoRef = { kind: "inc", ref: e }; }
+      }
+      cqiAskId = null;
+      cqiMsg = "Marked discussed — removed from the agenda.";
+      renderCQI();
+    });
+    var ub = document.getElementById("cqiUndoBtn");
+    if (ub) ub.addEventListener("click", function () {
+      if (cqiUndoRef) {
+        if (cqiUndoRef.kind === "inc") { cqiUndoRef.ref.cqiDiscussedAt = null; cqiUndoRef.ref.cqiOutcome = null; }
+        else { cqiUndoRef.ref.discussed = false; cqiUndoRef.ref.outcome = ""; }
+      }
+      cqiUndoRef = null; cqiMsg = "";
+      renderCQI();
+    });
+    el.querySelectorAll("[data-ag]").forEach(function (row) {
+      row.addEventListener("click", function () { renderIncDetail(+row.getAttribute("data-ag"), "cqi"); });
+    });
+    el.querySelectorAll("[data-mtg]").forEach(function (row) {
+      row.addEventListener("click", function () {
+        var k = +row.getAttribute("data-mtg");
+        cqiOpenIdx = cqiOpenIdx === k ? -1 : k;
+        renderCQI();
+      });
+    });
+    showScreen("scrCQI");
+  }
+
   // ---- Event details: the information destination (list = recognition only) ----
-  var incDetailFlash = "";
-  function renderIncDetail(i) {
+  var incDetailFlash = "", incDetailFrom = "inc";
+  function renderIncDetail(i, from) {
+    if (from) incDetailFrom = from;
     var e = INCIDENTS[i]; if (!e) { renderIncidents(); return; }
     var el = document.getElementById("incDetailPage");
-    var open = e.status !== "Complete";
+    var open = e.status !== "Documented";
     var ctx = [e.ageRange, e.gender, e.route].filter(Boolean).join(" · ");
     el.innerHTML =
-      '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="idBack" aria-label="Back to Incident reporting">' + backSvg + "</button>" +
+      '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="idBack" aria-label="Back">' + backSvg + "</button>" +
       '<h2 class="screen-title">Event details</h2></div>' +
-      '<div class="note" style="margin:0 0 8px">' + fmtDate(e.d) + (e.time ? " · " + fmt12(e.time) : "") + " · recorded anonymously</div>" +
-      '<div class="step-title" style="margin-bottom:8px">' + e.type + "</div>" +
+      '<div class="note" style="margin:0 0 8px">Event ' + fmtDate(e.d) + (e.time ? " · " + fmt12(e.time) : "") + (e.reportedAt && dayDiff(e.reportedAt, e.d) !== 0 ? " · reported " + fmtDate(e.reportedAt) : "") +
+        ' · <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:-1px" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.5" fill="currentColor"></circle></svg> De-identified for NIDR</div>' +
+      '<div class="step-title" style="margin-bottom:8px">' + (e.typeOther || e.type) + "</div>" +
       '<div class="pl-line" style="margin:0 0 14px"><span class="stat-pill ' + (open ? "warn" : "paid") + '">' + e.status + "</span>" +
-        '<span class="stat-pill ' + (e.kind === "Near miss" ? "info" : "sub") + '">' + e.kind + "</span>" +
-        '<span class="stat-pill sub">NIDR ' + e.nidr + "</span></div>" +
+        '<span class="stat-pill ' + (e.kind === "Near miss" ? "info" : "sub") + '">' + e.kind + "</span></div>" +
       (incDetailFlash ? '<div class="reassure" style="margin:0 0 14px;color:#1db871" role="status">' + okSvg + incDetailFlash + "</div>" : "") +
-      (open ? '<button class="btn-primary" id="idDone" type="button" style="margin-bottom:16px">' + (e.status === "Needs analysis" ? "Mark analysis complete →" : "Mark learnings shared →") + "</button>" : "") +
+      (open ? '<button class="btn-primary" id="idDone" type="button" style="margin-bottom:16px">' + (e.status === "Needs analysis" ? "Mark analysis complete <i class=tri></i>" : "Mark learnings shared <i class=tri></i>") + "</button>" : "") +
       '<div class="card kv-card">' +
-        '<div class="kv"><span class="k">Category</span><span class="v">' + e.type + "</span></div>" +
-        (e.kind === "Incident" ? '<div class="kv"><span class="k">Degree of harm</span><span class="v">' + (e.harm || "\u2014") + "</span></div>" : "") +
+        (e.kind === "Incident"
+          ? '<div class="kv"><span class="k">Degree of harm</span><span class="v">' + (e.harm || "—") + "</span></div>"
+          : '<div class="kv"><span class="k">Outcome</span><span class="v">Intercepted before reaching the patient</span></div>') +
         '<div class="kv"><span class="k">Stage(s)</span><span class="v">' + e.stages.join(", ") + "</span></div>" +
         (e.meds.length ? '<div class="kv"><span class="k">Medication(s)</span><span class="v">' + e.meds.map(esc).join(", ") + "</span></div>" : "") +
         (e.disc ? '<div class="kv"><span class="k">Discovered by</span><span class="v">' + e.disc + "</span></div>" : "") +
+        (e.recordedBy ? '<div class="kv"><span class="k">Recorded by</span><span class="v">' + esc(e.recordedBy) + " (internal only)</span></div>" : "") +
+        (e.presc ? '<div class="kv"><span class="k">Prescribed by</span><span class="v">' + esc(e.presc) + "</span></div>" : "") +
+        (e.assocList && e.assocList.length ? '<div class="kv"><span class="k">Associated factors</span><span class="v">' + e.assocList.map(esc).join(", ") + "</span></div>" : "") +
         (ctx ? '<div class="kv"><span class="k">Patient context</span><span class="v">' + esc(ctx) + "</span></div>" : "") +
-        '<div class="kv"><span class="k">NIDR</span><span class="v">' + (e.nidr === "pending" ? "Pending \u2014 sync from the log" : "Submitted (simulated)") + "</span></div>" +
+        '<div class="kv"><span class="k">NIDR</span><span class="v">' + (e.nidr === "pending" ? "Pending — auto-syncs daily" : (e.status === "Documented" ? "Submitted — event closed" : "Submitted (simulated)")) + "</span></div>" +
+        '<div class="kv"><span class="k">CQI</span><span class="v">' + (e.cqiDiscussedAt ? "Discussed at the " + fmtDate(e.cqiDiscussedAt) + " meeting" + (e.cqiOutcome ? " — " + esc(e.cqiOutcome) : "") : e.cqi ? "On the next agenda (" + fmtDate(INC_CQI.next) + ")" : "—") + "</span></div>" +
       "</div>" +
       (e.desc ? '<div class="fieldlab">What happened</div><div class="saved-note">' + esc(e.desc) + "</div>" : "") +
-      (e.factors && e.factors.length ? '<div class="fieldlab">Contributing factors</div><div class="note" style="margin:0">' + e.factors.join(" \u00b7 ") + "</div>" : "") +
-      (e.actions ? '<div class="fieldlab">Immediate actions taken</div><div class="saved-note">' + esc(e.actions) + "</div>" : "");
+      (e.factors && e.factors.length ? '<div class="fieldlab">Contributing factors</div><div class="saved-note">' + e.factors.map(esc).join(" · ") + "</div>" : "") +
+      (e.actions ? '<div class="fieldlab">Immediate actions taken</div><div class="saved-note">' + esc(e.actions) + "</div>" : "") +
+      (function () {
+        var mine = PLANS.filter(function (pl) { return pl.iid === e.iid; });
+        if (!mine.length) return "";
+        return '<div class="fieldlab">Action plan</div><div class="card">' + mine.map(function (pl) {
+          return '<div class="plan-row' + (pl.done ? " done" : "") + '"><span class="plan-chk" style="cursor:default">' +
+            (pl.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>' : "") + "</span>" +
+            '<div><div class="pt">' + esc(pl.text) + '</div><div class="ps">' + (pl.owner ? "Owner " + esc(pl.owner) : "Unassigned") + (pl.due ? " · due " + fmtShort(pl.due) : "") + "</div></div></div>";
+        }).join("") + "</div>";
+      })();
     incDetailFlash = "";
-    document.getElementById("idBack").addEventListener("click", function () { renderIncidents(); });
+    document.getElementById("idBack").addEventListener("click", function () {
+      if (incDetailFrom === "cqi") renderCQI();
+      else if (incDetailFrom === "plans") renderPlans();
+      else renderIncidents();
+    });
     var dn = document.getElementById("idDone");
     if (dn) dn.addEventListener("click", function () {
-      incDetailFlash = (e.status === "Needs analysis" ? "Analysis marked complete" : "Learnings marked shared") + " \u2014 removed from open workflow items.";
-      e.status = "Complete";
+      incDetailFlash = (e.status === "Needs analysis" ? "Analysis marked complete" : "Learnings marked shared") + " — the event is now documented.";
+      e.status = "Documented";
       syncBellDot();
       renderIncDetail(i);
     });
@@ -3816,11 +4492,11 @@
   // ---- Record a medication event: micro-steps, one decision per screen ----
   var INC = null;
   function incFresh(p) {
-    return { step: 1, kind: null, date: isoDate(today), time: "", ageRange: p ? ageBand(p) : null, gender: null, route: "",
+    return { step: 1, kind: INC_KIND_PRESET || null, kindLocked: INC_KIND_PRESET === "Near miss", date: isoDate(today), time: "", ageRange: p ? ageBand(p) : null, gender: null, route: "",
       type: null, disc: null, presc: null, stages: {}, meds: [{ name: "", din: "" }], assoc: {}, harm: null,
-      desc: "", contrib: {}, actions: "", quickMeds: p ? p.meds.slice(0, 6) : [], fromPatient: !!p, descTouched: false };
+      desc: "", contrib: {}, contribOther: "", typeOther: "", actions: "", plans: {}, planMeta: {}, planEdits: {}, customPlans: [], planOpenKey: null, quickMeds: p ? p.meds.slice(0, 6) : [], fromPatient: !!p, descTouched: false };
   }
-  function incSteps() { return ["when", "patient", "type", "process"].concat(INC.kind !== "Near miss" ? ["harm"] : []).concat(["describe"]); }
+  function incSteps() { return ["when", "patient", "type", "process"].concat(INC.kind !== "Near miss" ? ["harm"] : []).concat(["describe", "plan"]); }
   // Anonymous guard: flag anything that looks like an identifier.
   function incIdentifiers(text) {
     var hits = [];
@@ -3838,16 +4514,31 @@
       if (!INC.kind) items.push("event type");
       if (!INC.date) items.push("date occurred");
       else if (dayDiff(fromIso(INC.date), today) > 0) items.push("a date not in the future");
+      if (!INC.time) items.push("time (approx.)");
+    }
+    if (key === "patient") {
+      if (!INC.ageRange) items.push("age range");
+      if (!INC.gender) items.push("gender");
+      if (!INC.route) items.push("route");
     }
     if (key === "type") {
       if (!INC.type) items.push("type of incident");
+      else if (INC.type === "Other" && !INC.typeOther.trim()) items.push("name the event type");
       if (!INC.disc) items.push("who discovered it");
+      if (!INC.presc) items.push("prescribed by");
     }
-    if (key === "process" && !Object.keys(INC.stages).some(function (k) { return INC.stages[k]; })) items.push("at least one process stage");
+    if (key === "process") {
+      if (!Object.keys(INC.stages).some(function (k) { return INC.stages[k]; })) items.push("at least one process stage");
+      if (!INC.meds.some(function (m) { return m.name.trim(); })) items.push("medication involved");
+      if (!Object.keys(INC.assoc).some(function (k) { return INC.assoc[k]; })) items.push("associated factors (or None of the above)");
+    }
     if (key === "harm" && !INC.harm) items.push("degree of harm");
     if (key === "describe") {
       if (!INC.desc.trim()) items.push("what happened");
       else if (incIdentifiers(INC.desc).length) items.push("remove identifying details");
+      if (!Object.keys(INC.contrib).some(function (k) { return INC.contrib[k]; })) items.push("contributing factors");
+      else if (INC.contrib["Other"] && !INC.contribOther.trim()) items.push("describe the other factor");
+      if (!INC.actions.trim()) items.push("immediate actions taken");
     }
     return items;
   }
@@ -3857,8 +4548,13 @@
       return '<button type="button" class="chip' + (on ? " on" : "") + '" data-' + attr + '="' + esc(x) + '">' + x + "</button>";
     }).join("") + "</div>";
   }
+  function drugListHtml() {
+    var names = Object.keys(MED_KB);
+    INCIDENTS.forEach(function (e) { e.meds.forEach(function (m) { if (names.indexOf(m) < 0) names.push(m); }); });
+    return '<datalist id="drugList">' + names.sort().map(function (n) { return '<option value="' + esc(n) + '">'; }).join("") + "</datalist>";
+  }
   function renderIncForm(p) {
-    if (!INC) INC = incFresh(p);
+    if (!INC) { INC = incFresh(p); INC_KIND_PRESET = null; }
     else if (p && !INC.fromPatient) { INC.fromPatient = true; INC.ageRange = INC.ageRange || ageBand(p); INC.quickMeds = p.meds.slice(0, 6); }
     var steps = incSteps(), total = steps.length;
     if (INC.step > total) INC.step = total;
@@ -3867,68 +4563,120 @@
     el.className = "page pf";
     var body = "";
     if (key === "when") {
-      body = '<div class="step-title">What kind of event?</div>' +
-        '<div class="info-banner" style="margin:0 0 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.5" fill="currentColor"></circle></svg>' +
-          "<span><b>Anonymous by design.</b> No names, health numbers or birthdates — describe roles (“the patient”, “the pharmacist”). Only de-identified fields are recorded.</span></div>" +
-        seglHtml("incKind", ["Incident", "Near miss"], INC.kind) +
-        '<div class="note" style="margin:8px 0 0">' + (INC.kind === "Near miss" ? "Intercepted before reaching the patient." : INC.kind === "Incident" ? "Reached the patient." : "Incident = reached the patient · Near miss = intercepted before.") + "</div>" +
+      var anonBanner = '<div class="info-banner" style="margin:0 0 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.5" fill="currentColor"></circle></svg>' +
+        "<span><b>Anonymous by design.</b> No names, health numbers or birthdates — describe roles (“the patient”, “the pharmacist”). Only de-identified fields are recorded.</span></div>";
+      body = (INC.kindLocked
+        ? '<div class="step-title">Record a ' + INC.kind.toLowerCase() + '</div>' + anonBanner +
+          '<div class="card" style="padding:12px 14px;display:flex;align-items:center;gap:10px"><span class="stat-pill ' + (INC.kind === "Near miss" ? "info" : "sub") + '">' + INC.kind + "</span>" +
+          '<span class="note" style="margin:0;flex:1">' + (INC.kind === "Near miss" ? "Intercepted before reaching the patient" : "Reached the patient") + "</span>" +
+          '<button type="button" class="pd-link" id="incKindChange" style="margin:0">Change</button></div>'
+        : '<div class="step-title">What kind of event?</div>' + anonBanner +
+          seglHtml("incKind", ["Incident", "Near miss"], INC.kind) +
+          '<div class="note" style="margin:8px 0 0">' + (INC.kind === "Near miss" ? "Intercepted before reaching the patient." : INC.kind === "Incident" ? "Reached the patient." : "Incident = reached the patient · Near miss = intercepted before.") + "</div>") +
         '<div class="fieldlab">Date occurred</div>' +
         '<input class="tinput" id="incDate" type="date" max="' + isoDate(today) + '" value="' + esc(INC.date) + '">' +
-        '<div class="fieldlab">Time <span style="font-weight:500;color:#8A88A3">(approx., optional)</span></div>' +
+        '<div class="note" id="incDateEcho" style="margin:6px 0 0">= ' + (INC.date ? fromIso(INC.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "\u2014") + "</div>" +
+        '<div class="fieldlab">Time <span style="font-weight:500;color:#8A88A3">(approx.)</span></div>' +
         '<input class="tinput" id="incTime" type="time" value="' + esc(INC.time) + '">';
     } else if (key === "patient") {
       body = '<div class="step-title">Patient context</div>' +
-        '<div class="note" style="margin:0 0 12px">Optional — helps analysis. Never a birthdate, never a name.' +
+        '<div class="note" style="margin:0 0 12px">Required for OCP reporting. Never a birthdate, never a name.' +
           (INC.fromPatient ? ' <b style="color:#1db871">Pre-filled from the visit — de-identified only; the record never links to the patient.</b>' : "") + "</div>" +
         '<div class="fieldlab" style="margin-top:0">Age range</div>' + chipsHtml(INC_AGES, INC.ageRange, "age", false) +
-        '<div class="fieldlab">Gender</div>' + seglHtml("incGender", ["Female", "Male", "Other"], INC.gender) +
-        '<div class="fieldlab">Route</div>' +
-        '<input class="tinput" id="incRoute" placeholder="e.g., oral" value="' + esc(INC.route) + '">';
+        '<div class="fieldlab">Gender</div>' + seglHtml("incGender", ["Female", "Male"], INC.gender) +
+        '<div class="fieldlab">Route</div>' + chipsHtml(ROUTES, INC.route, "route", false);
     } else if (key === "type") {
       body = '<div class="step-title">What happened to the medication?</div>' +
         '<div class="card">' + INC_TYPES.map(function (t) {
           return '<button type="button" class="opt' + (INC.type === t ? " on" : "") + '" data-type="' + esc(t) + '">' + t + (INC.type === t ? '<span class="ok">' + okSvg + "</span>" : "") + "</button>";
         }).join("") + "</div>" +
         '<div class="fieldlab">Discovered by</div>' + chipsHtml(INC_DISC, INC.disc, "disc", false) +
-        '<div class="fieldlab">Prescribed by <span style="font-weight:500;color:#8A88A3">(optional)</span></div>' + chipsHtml(INC_PRESC, INC.presc, "presc", false);
+        '<div class="fieldlab">Prescribed by</div>' + chipsHtml(INC_PRESC, INC.presc, "presc", false) +
+        (INC.type === "Other" ? '<div class="fieldlab">What kind of event? <span style="font-weight:500;color:#8A88A3">(short)</span></div><input class="tinput" id="incTypeOther" placeholder="Name the event type\u2026" value="' + esc(INC.typeOther) + '">' : "");
     } else if (key === "process") {
       body = '<div class="step-title">Where in the process?</div>' +
         '<div class="fieldlab" style="margin-top:0">Medication system stage(s)</div>' + chipsHtml(INC_STAGES, INC.stages, "stage", true) +
-        '<div class="fieldlab">Medication(s) involved <span style="font-weight:500;color:#8A88A3">(optional)</span></div>' +
+        '<div class="fieldlab">Medication(s) involved</div>' +
         (INC.quickMeds.length ? chipsHtml(INC.quickMeds, INC.meds[0].name, "qmed", false) : "") +
         INC.meds.map(function (m, i) {
-          return '<div style="display:flex;gap:8px;margin-top:' + (i ? 8 : 10) + 'px"><input class="tinput" data-mname="' + i + '" placeholder="Drug name" value="' + esc(m.name) + '" style="flex:1">' +
+          return '<div style="display:flex;gap:8px;margin-top:' + (i ? 8 : 10) + 'px"><input class="tinput" data-mname="' + i + '" list="drugList" placeholder="Drug name" value="' + esc(m.name) + '" style="flex:1">' +
             '<input class="tinput" data-mdin="' + i + '" placeholder="DIN" inputmode="numeric" value="' + esc(m.din) + '" style="width:96px">' +
             (INC.meds.length > 1 ? '<button type="button" class="rm" data-mrm="' + i + '" aria-label="Remove" style="align-self:center">×</button>' : "") + "</div>";
         }).join("") +
         '<button type="button" class="pd-link add-link" id="incAddMed" style="margin:10px 0 0">+ Add another medication</button>' +
-        '<div class="fieldlab">Associated factors <span style="font-weight:500;color:#8A88A3">(optional)</span></div>' + chipsHtml(INC_ASSOC, INC.assoc, "assoc", true);
+        '<div class="fieldlab">Associated factors</div>' + chipsHtml(INC_ASSOC, INC.assoc, "assoc", true);
     } else if (key === "harm") {
       body = '<div class="step-title">Degree of harm</div>' +
         '<div class="note" style="margin:0 0 12px">The event reached the patient — what was the outcome?</div>' +
         '<div class="card">' + INC_HARM.map(function (h) {
           return '<button type="button" class="opt' + (INC.harm === h[0] ? " on" : "") + '" data-harm="' + esc(h[0]) + '">' + h[0] + (h[1] ? ' <span class="opt-sub">— ' + h[1] + "</span>" : "") + (INC.harm === h[0] ? '<span class="ok">' + okSvg + "</span>" : "") + "</button>";
         }).join("") + "</div>";
-    } else {
+    } else if (key === "describe") {
       var ids = INC.descTouched ? incIdentifiers(INC.desc) : [];
       body = '<div class="step-title">Describe &amp; record</div>' +
         '<div class="fieldlab field-tools" style="margin-top:0">What happened' +
-          '<span class="tools"><button class="dictate" id="incDictate" type="button">' + micSvg + "Dictate</button></span></div>" +
+          '<span class="tools"><button class="dictate" id="incDictate" type="button">' + micSvg + 'Dictate</button>' +
+          '<button class="chip ai" id="incStruct" type="button">✨ Tidy</button></span></div>' +
+        (/^What happened:/.test(INC.desc) ? '<div class="ai-cap" style="margin:0 0 6px"><b>\u2726 AI suggested</b> \u2014 editable draft, review before recording</div>' : "") +
         '<textarea class="tinput tarea" id="incDesc" style="min-height:100px" placeholder="What was intended, what actually happened, and how it was discovered — roles only, no names…">' + esc(INC.desc) + "</textarea>" +
+        '<div class="note" style="margin:6px 0 0">Voice is transcribed to text \u2014 no audio is ever stored in the record.</div>' +
         '<div class="ferr' + (ids.length ? " show" : "") + '" id="incIdErr" style="margin-top:6px">Possible identifier: “' + ids.join("”, “") + "” — describe roles instead (“the patient”).</div>" +
-        '<div class="fieldlab">Contributing factors <span style="font-weight:500;color:#8A88A3">(optional)</span></div>' + chipsHtml(INC_CONTRIB, INC.contrib, "contrib", true) +
-        '<div class="fieldlab">Immediate actions taken <span style="font-weight:500;color:#8A88A3">(optional)</span></div>' +
+        '<div class="fieldlab">Contributing factors</div>' + chipsHtml(INC_CONTRIB, INC.contrib, "contrib", true) +
+        (INC.contrib["Other"] ? '<input class="tinput" id="incContribOther" style="margin-top:10px" placeholder="Describe the other factor\u2026" value="' + esc(INC.contribOther) + '">' : "") +
+        '<div class="fieldlab">Immediate actions taken <span style="font-weight:500;color:#8A88A3">(already done — not the action plan)</span></div>' +
         '<textarea class="tinput tarea" id="incActions" style="min-height:64px" placeholder="e.g., Patient contacted and correct medication dispensed; prescriber informed…">' + esc(INC.actions) + "</textarea>" +
-        '<div class="note" style="margin:12px 0 0">Recorded under your login for access accountability only — never shown in the record or transmitted.</div>';
+        "";
+    } else {
+      function clip90(t) { t = (t || "").trim(); return t.slice(0, 90) + (t.length > 90 ? "\u2026" : ""); }
+      var sumRows = [
+        ["Kind", INC.kind],
+        ["When", fromIso(INC.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) + (INC.time ? " " + fmt12(INC.time) : "")],
+        ["Category", INC.typeOther || INC.type],
+        ["Medication(s)", INC.meds.map(function (m) { return m.name.trim(); }).filter(Boolean).join(", ")],
+        ["Stage(s)", INC_STAGES.filter(function (k) { return INC.stages[k]; }).map(function (x) { return INC_STAGE_SHORT[x] || x; }).join(", ")],
+        INC.kind === "Incident" ? ["Harm", INC.harm] : null,
+        ["Discovered by", INC.disc],
+        ["Prescribed by", INC.presc],
+        ["Associated factors", Object.keys(INC.assoc).filter(function (k) { return INC.assoc[k]; }).join(", ")],
+        ["Contributing factors", INC_CONTRIB.filter(function (k) { return INC.contrib[k]; }).map(function (k) { return k === "Other" && INC.contribOther.trim() ? "Other \u2014 " + INC.contribOther.trim() : k; }).join(", ")],
+        ["Immediate actions", clip90(INC.actions)],
+        ["What happened", clip90(INC.desc)],
+      ].filter(function (r) { return r && r[1]; });
+      body = '<div class="step-title">Action plan</div>' +
+        '<div class="card txn-card" style="margin-bottom:12px"><div class="txn" role="button" tabindex="0" id="incSummary">' +
+          '<span class="ic">' + ICON.clip + '</span><div class="who"><div class="n">Review the record</div><div class="d">verify before recording</div></div></div></div>' +
+        '<div class="ai-cap" style="margin:0 0 4px;font-size:12.5px;display:flex;justify-content:space-between;align-items:center"><span><b>\u2726 AI suggested</b> \u2014 from this event</span>' +
+          '<button type="button" class="pd-link" id="incPlanAll" style="margin:0;font-size:12px">' + (PLAN_LIB.every(function (k) { return INC.plans[k]; }) ? "Clear all" : "Select all") + "</button></div>" +
+        '<div class="note" style="margin:0 0 10px">Review before saving. Ticked items land on the consolidated Action plans page.</div>' +
+        '<div class="card check-card">' + PLAN_LIB.map(function (k) {
+          var on = INC.plans[k];
+          var meta = INC.planMeta[k] || {};
+          return "<div>" + '<label class="check-row"><input type="checkbox" data-plan="' + esc(k) + '"' + (on ? " checked" : "") + ">" + k + "</label>" +
+            (on && k !== CQI_PLAN
+              ? '<div class="plan-meta">' + (INC.planOpenKey === k
+                  ? '<input class="tinput" data-wording="' + esc(k) + '" value="' + esc(INC.planEdits[k] || k) + '" style="margin-bottom:8px" aria-label="Edit the action wording">' +
+                    '<input class="tinput" data-owner="' + esc(k) + '" placeholder="Owner (optional)" value="' + esc(meta.owner || "") + '" style="margin-bottom:8px">' +
+                    '<input class="tinput" data-duedate="' + esc(k) + '" type="date" min="' + isoDate(today) + '" value="' + esc(meta.due || "") + '">'
+                  : '<button type="button" class="pd-link add-link" data-meta="' + esc(k) + '" style="margin:0">' + (meta.owner || meta.due || INC.planEdits[k] ? "Edited \u00b7 wording / owner / due \u203a" : "+ Edit wording / owner / due (optional)") + "</button>") + "</div>"
+              : "") + "</div>";
+        }).join("") + "</div>" +
+        (INC.customPlans.length ? '<div class="card" style="margin-top:10px">' + INC.customPlans.map(function (c, k) {
+          return '<div class="se-item">' + esc(c) + '<button class="rm" data-rmplan="' + k + '" aria-label="Remove">\u00d7</button></div>';
+        }).join("") + "</div>" : "") +
+        '<div class="fieldlab field-tools" style="margin-top:14px">Add your own action' +
+          '<span class="tools"><button class="dictate" id="incPlanDictate" type="button">' + micSvg + "Dictate</button></span></div>" +
+        '<div style="display:flex;gap:8px"><input class="tinput" id="incPlanNew" placeholder="Type or dictate an action\u2026" style="flex:1">' +
+        '<button type="button" class="btn-outline" id="incPlanAdd" style="flex:none;width:auto;padding:0 16px">+ Add</button></div>' +
+        '<div class="note" style="margin:14px 0 0">Recorded by <b style="color:#2B2A44">' + esc(PROFILE.name) + "</b> \u00b7 de-identified for NIDR.<br>Login attribution is for access accountability only \u2014 never shown in the record or transmitted.</div>";
     }
     el.innerHTML =
       '<div class="section-head left"><button class="filter-btn" id="incFBack" aria-label="Back">' + backSvg + "</button>" +
       '<h2 class="screen-title">Record event</h2></div>' +
       '<div class="note" style="margin:0 0 2px">Anonymous · de-identified · about 2 minutes · progress saved</div>' +
       '<div class="pbar">' + steps.map(function (_, i) { return "<span" + (i < INC.step ? ' class="fill"' : "") + "></span>"; }).join("") + "</div>" +
-      '<div class="step-label">Step ' + INC.step + " of " + total + "</div>" + body +
+      '<div class="step-label">Step ' + INC.step + " of " + total + "</div>" + body + drugListHtml() +
       '<div class="next-fixed"><div id="incGate">' + gateHtml(gate) + "</div>" +
-      '<button class="btn-primary" id="incNext"' + (gate.length ? " disabled" : "") + ">" + (INC.step === total ? "Record anonymously →" : "Next →") + "</button></div>";
+      '<button class="btn-primary" id="incNext"' + (gate.length ? " disabled" : "") + ">" + (INC.step === total ? "Record anonymously <i class=tri></i>" : "Next <i class=tri></i>") + "</button></div>";
 
     function sync() {
       var g = incGate();
@@ -3941,25 +4689,60 @@
     el.querySelectorAll('[data-seg="incKind"] button').forEach(function (b) {
       b.addEventListener("click", function () { INC.kind = b.getAttribute("data-v"); renderIncForm(p); });
     });
+    var kc = document.getElementById("incKindChange");
+    if (kc) kc.addEventListener("click", function () { INC.kindLocked = false; renderIncForm(p); });
     el.querySelectorAll('[data-seg="incGender"] button').forEach(function (b) {
       b.addEventListener("click", function () { INC.gender = INC.gender === b.getAttribute("data-v") ? null : b.getAttribute("data-v"); renderIncForm(p); });
     });
     var d1 = document.getElementById("incDate");
-    if (d1) d1.addEventListener("change", function () { INC.date = d1.value; sync(); });
+    if (d1) d1.addEventListener("change", function () {
+      INC.date = d1.value; sync();
+      var echo = document.getElementById("incDateEcho");
+      if (echo) echo.textContent = "= " + (INC.date ? fromIso(INC.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "\u2014");
+    });
     var t1 = document.getElementById("incTime");
-    if (t1) t1.addEventListener("change", function () { INC.time = t1.value; });
-    var rt = document.getElementById("incRoute");
-    if (rt) rt.addEventListener("input", function () { INC.route = rt.value; });
+    if (t1) t1.addEventListener("change", function () { INC.time = t1.value; sync(); });
+    var to = document.getElementById("incTypeOther");
+    if (to) to.addEventListener("input", function () { INC.typeOther = to.value; sync(); });
+    var co = document.getElementById("incContribOther");
+    if (co) co.addEventListener("input", function () { INC.contribOther = co.value; sync(); });
+    var sm = document.getElementById("incSummary");
+    if (sm) {
+      function openReview() {
+        sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">Review the record</div>' +
+          '<div class="sh-s">Check the de-identified details before recording.</div>' +
+          '<div class="card kv-card" style="box-shadow:none;border:1px solid #ECEAF5">' +
+          sumRows.map(function (r) { return '<div class="kv"><span class="k">' + r[0] + '</span><span class="v" style="text-align:right;max-width:62%">' + esc(r[1]) + "</span></div>"; }).join("") + "</div>" +
+          '<button class="btn-primary" id="reviewBack" type="button" style="margin-top:14px">Back to action plan</button>';
+        sheetEl.hidden = false; sheetScrim.hidden = false;
+        document.getElementById("reviewBack").addEventListener("click", closeSheet);
+      }
+      sm.addEventListener("click", openReview);
+      sm.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openReview(); } });
+    }
+    el.querySelectorAll("[data-wording]").forEach(function (inp) {
+      inp.addEventListener("input", function () { var k = inp.getAttribute("data-wording"); INC.planEdits[k] = inp.value; });
+    });
+    el.querySelectorAll("[data-route]").forEach(function (c) {
+      c.addEventListener("click", function () { INC.route = INC.route === c.getAttribute("data-route") ? "" : c.getAttribute("data-route"); renderIncForm(p); });
+    });
     el.querySelectorAll("[data-age]").forEach(function (c) { c.addEventListener("click", function () { INC.ageRange = INC.ageRange === c.getAttribute("data-age") ? null : c.getAttribute("data-age"); renderIncForm(p); }); });
     el.querySelectorAll("[data-type]").forEach(function (c) { c.addEventListener("click", function () { INC.type = c.getAttribute("data-type"); renderIncForm(p); }); });
     el.querySelectorAll("[data-disc]").forEach(function (c) { c.addEventListener("click", function () { INC.disc = c.getAttribute("data-disc"); renderIncForm(p); }); });
     el.querySelectorAll("[data-presc]").forEach(function (c) { c.addEventListener("click", function () { INC.presc = INC.presc === c.getAttribute("data-presc") ? null : c.getAttribute("data-presc"); renderIncForm(p); }); });
     el.querySelectorAll("[data-stage]").forEach(function (c) { c.addEventListener("click", function () { var k = c.getAttribute("data-stage"); INC.stages[k] = !INC.stages[k]; renderIncForm(p); }); });
-    el.querySelectorAll("[data-assoc]").forEach(function (c) { c.addEventListener("click", function () { var k = c.getAttribute("data-assoc"); INC.assoc[k] = !INC.assoc[k]; renderIncForm(p); }); });
+    el.querySelectorAll("[data-assoc]").forEach(function (c) { c.addEventListener("click", function () {
+      var k = c.getAttribute("data-assoc");
+      var on = !INC.assoc[k];
+      if (k === "None of the above" && on) INC.assoc = {}; // mutually exclusive
+      else if (on) delete INC.assoc["None of the above"];
+      INC.assoc[k] = on;
+      renderIncForm(p);
+    }); });
     el.querySelectorAll("[data-contrib]").forEach(function (c) { c.addEventListener("click", function () { var k = c.getAttribute("data-contrib"); INC.contrib[k] = !INC.contrib[k]; renderIncForm(p); }); });
     el.querySelectorAll("[data-qmed]").forEach(function (c) { c.addEventListener("click", function () { INC.meds[0].name = c.getAttribute("data-qmed"); renderIncForm(p); }); });
     el.querySelectorAll("[data-harm]").forEach(function (c) { c.addEventListener("click", function () { INC.harm = c.getAttribute("data-harm"); renderIncForm(p); }); });
-    el.querySelectorAll("[data-mname]").forEach(function (i) { i.addEventListener("input", function () { INC.meds[+i.getAttribute("data-mname")].name = i.value; }); });
+    el.querySelectorAll("[data-mname]").forEach(function (i) { i.addEventListener("input", function () { INC.meds[+i.getAttribute("data-mname")].name = i.value; sync(); }); });
     el.querySelectorAll("[data-mdin]").forEach(function (i) { i.addEventListener("input", function () { INC.meds[+i.getAttribute("data-mdin")].din = i.value; }); });
     el.querySelectorAll("[data-mrm]").forEach(function (b) { b.addEventListener("click", function () { INC.meds.splice(+b.getAttribute("data-mrm"), 1); renderIncForm(p); }); });
     var am = document.getElementById("incAddMed");
@@ -3975,26 +4758,83 @@
         sync();
       });
       attachDictate(document.getElementById("incDictate"), de, function (v) { INC.desc = v; INC.descTouched = true; sync(); });
+      document.getElementById("incStruct").addEventListener("click", function () {
+        var raw = INC.desc.trim();
+        if (!raw) return;
+        if (/^What happened:/.test(raw)) return; // already structured
+        INC.desc = "What happened: " + raw.replace(/\s+/g, " ") +
+          "\nDiscovered: " + (INC.disc ? "by the " + INC.disc.toLowerCase() : "during routine checks") +
+          "\nImmediate action: " + (INC.actions.trim() || "corrected before further impact") + ".";
+        INC.descTouched = true;
+        renderIncForm(p);
+      });
     }
     var ac = document.getElementById("incActions");
     if (ac) ac.addEventListener("input", function () { INC.actions = ac.value; });
+    el.querySelectorAll("[data-plan]").forEach(function (cb) {
+      cb.addEventListener("change", function () { INC.plans[cb.getAttribute("data-plan")] = cb.checked; renderIncForm(p); });
+    });
+    el.querySelectorAll("[data-meta]").forEach(function (b) {
+      b.addEventListener("click", function () { INC.planOpenKey = b.getAttribute("data-meta"); renderIncForm(p); });
+    });
+    el.querySelectorAll("[data-owner]").forEach(function (inp) {
+      inp.addEventListener("input", function () { var k = inp.getAttribute("data-owner"); INC.planMeta[k] = INC.planMeta[k] || {}; INC.planMeta[k].owner = inp.value; });
+    });
+    el.querySelectorAll("[data-duedate]").forEach(function (inp) {
+      inp.addEventListener("change", function () { var k = inp.getAttribute("data-duedate"); INC.planMeta[k] = INC.planMeta[k] || {}; INC.planMeta[k].due = inp.value; });
+    });
+    var pall = document.getElementById("incPlanAll");
+    if (pall) pall.addEventListener("click", function () {
+      var allOn = PLAN_LIB.every(function (k) { return INC.plans[k]; });
+      PLAN_LIB.forEach(function (k) { INC.plans[k] = !allOn; });
+      renderIncForm(p);
+    });
+    var pa = document.getElementById("incPlanAdd");
+    if (pa) pa.addEventListener("click", function () {
+      var v = document.getElementById("incPlanNew").value.trim();
+      if (v) { INC.customPlans.push(v); renderIncForm(p); }
+    });
+    var pd = document.getElementById("incPlanDictate");
+    if (pd) attachDictate(pd, document.getElementById("incPlanNew"), null);
+    el.querySelectorAll("[data-rmplan]").forEach(function (b) {
+      b.addEventListener("click", function () { INC.customPlans.splice(+b.getAttribute("data-rmplan"), 1); renderIncForm(p); });
+    });
     document.getElementById("incNext").addEventListener("click", function () {
       if (incGate().length) return;
       if (INC.step < incSteps().length) { INC.step++; renderIncForm(p); return; }
+      var iid = "i" + Date.now();
+      var wantCqi = !!INC.plans[CQI_PLAN];
       INCIDENTS.unshift({
-        d: fromIso(INC.date), time: INC.time, type: INC.type, kind: INC.kind,
+        iid: iid, d: fromIso(INC.date), time: INC.time, type: INC.type, typeOther: INC.typeOther.trim() || null, kind: INC.kind, recordedBy: PROFILE.name,
         harm: INC.kind === "Incident" ? INC.harm : null,
         stages: INC_STAGES.filter(function (s) { return INC.stages[s]; }),
         meds: INC.meds.map(function (m) { return m.name.trim(); }).filter(Boolean),
-        disc: INC.disc, ageRange: INC.ageRange, gender: INC.gender, route: INC.route.trim(),
+        disc: INC.disc, presc: INC.presc, ageRange: INC.ageRange, gender: INC.gender, route: INC.route,
+        assocList: INC_ASSOC.filter(function (k) { return INC.assoc[k]; }),
         desc: INC.desc.trim(), actions: INC.actions.trim(),
-        factors: INC_CONTRIB.filter(function (k) { return INC.contrib[k]; }),
+        factors: INC_CONTRIB.filter(function (k) { return INC.contrib[k]; }).map(function (k) { return k === "Other" && INC.contribOther.trim() ? "Other \u2014 " + INC.contribOther.trim() : k; }),
         status: INC.kind === "Incident" ? "Needs analysis" : "Share learnings",
-        nidr: "pending",
+        nidr: "pending", cqi: wantCqi, cqiDiscussedAt: null, cqiOutcome: null, reportedAt: new Date(today),
+      });
+      var srcLabel = (INC.typeOther.trim() || INC.type) + " \u00b7 " + fmtShort(fromIso(INC.date));
+      var made = 0;
+      PLAN_LIB.forEach(function (k) {
+        if (k !== CQI_PLAN && INC.plans[k]) {
+          var m2 = INC.planMeta[k] || {};
+          PLANS.unshift({ id: "pl" + Date.now() + made, iid: iid, text: (INC.planEdits[k] || k).trim() || k, src: srcLabel, done: false, doneAt: null, doneBy: null, owner: (m2.owner || "").trim() || null, due: m2.due ? fromIso(m2.due) : null });
+          made++;
+        }
+      });
+      INC.customPlans.forEach(function (c, k2) {
+        PLANS.unshift({ id: "plc" + Date.now() + k2, iid: iid, text: c, src: srcLabel, done: false, doneAt: null, doneBy: null, owner: null, due: null });
+        made++;
       });
       INC = null;
-      incFlash = "Recorded anonymously — added to the event log. NIDR submission pending sync (simulated).";
-      renderIncidents(incReturn);
+      lastIid = iid;
+      incFlash = "Recorded \u2014 de-identified for NIDR (auto-syncs daily)." +
+        (made ? " " + made + " action item" + (made === 1 ? "" : "s") + " created." : "") +
+        (wantCqi ? " Added to the next CQI agenda (" + fmtDate(INC_CQI.next) + ")." : "");
+      renderIncidents();
       syncBellDot();
     });
     showScreen("scrSession");
@@ -4038,7 +4878,7 @@
     // Incident program (computed from INCIDENTS)
     var openInc = incOpen().length;
     if (openInc) out.push({ id: "inc-open", group: "Today", tone: "a", icon: "inc", incidents: true,
-      t: openInc + " incident workflow " + (openInc === 1 ? "item" : "items") + " open",
+      t: openInc + " event" + (openInc === 1 ? " needs" : "s need") + " action",
       s: "Analysis or shared learning outstanding \u00b7 tap to review", tm: "Today" });
     var cqiIn = dayDiff(INC_CQI.next, today);
     if (cqiIn >= 0 && cqiIn <= 7) out.push({ id: "inc-cqi", group: "Today", tone: "b", icon: "appt", incidents: true,
@@ -4098,7 +4938,7 @@
         var n = list.filter(function (x) { return x.id === row.getAttribute("data-nid"); })[0];
         NTF_READ[n.id] = true; syncBellDot();
         if (n.pid) openPatient(n.pid);
-        else if (n.incidents) renderIncidents("scrNotifs");
+        else if (n.incidents) renderSafety("scrNotifs");
         else if (n.billing) renderBilling();
         else if (n.patientsTab) { activeFilter = "eligible"; renderPatients(); showScreen("scrPatients"); }
         else renderNotifs();
@@ -4143,7 +4983,7 @@
     var rows = [
       { id: "mrBilling", icon: ICON.folder, t: "Billing", d: BILLING.length + " claim" + (BILLING.length === 1 ? "" : "s") + " on file", go: renderBilling },
       { id: "mrNotifs", icon: ICON.clip, t: "Notifications", d: "Vaccines, appointments, claims", go: renderNotifs },
-      { id: "mrInc", icon: ICON.shield, t: "Incident reporting", d: incOpen().length ? incOpen().length + " open workflow " + (incOpen().length === 1 ? "item" : "items") : "All events complete", go: function () { renderIncidents("scrMore"); } },
+      { id: "mrInc", icon: ICON.shield, t: "Incident reporting", d: incOpen().length ? incOpen().length + " event" + (incOpen().length === 1 ? " needs" : "s need") + " action" : "All events documented", go: function () { renderSafety("scrMore"); } },
       { id: "mrSettings", icon: ICON.person, t: "Settings", d: "Profile, AI draft style, appearance", go: renderSettings },
     ];
     el.innerHTML =
@@ -4267,7 +5107,7 @@
     out.sort(function (a, b) { return a.dayOffset - b.dayOffset || a.time.localeCompare(b.time); });
     return out;
   }
-  function fmt12(t) { // "14:00" → "2:00 PM"
+  function fmt12(t) { // "14:00" <i class=tri></i> "2:00 PM"
     var h = +t.split(":")[0], m = t.split(":")[1];
     return ((h % 12) || 12) + ":" + m + " " + (h < 12 ? "AM" : "PM");
   }
@@ -4458,7 +5298,7 @@
         if (BOOK.custom) {
           return '<input class="tinput' + (E.time && T.time ? " invalid" : "") + '" id="bkTime" type="time" step="300" min="' + PHARMACY_HOURS.open + '" max="' + PHARMACY_HOURS.close + '" value="' + esc(BOOK.time) + '">' +
             '<div class="note" style="margin:8px 0 0">Open ' + fmt12(PHARMACY_HOURS.open) + " – " + fmt12(PHARMACY_HOURS.close) + (BOOK.service ? " · " + APPT_DURATION[BOOK.service] + "-min slot" : "") + "</div>" +
-            '<button type="button" class="pd-link" id="bkCustom" style="margin:8px 0 0">‹ Choose from available times</button>';
+            '<button type="button" class="pd-link" id="bkCustom" style="margin:8px 0 0"><i class=chvl></i> Choose from available times</button>';
         }
         if (!BOOK.service || (E.date && T.date) || !BOOK.date) {
           return '<div class="note" style="margin:4px 0 0">Choose a service' + (!BOOK.date || (E.date && T.date) ? " and date" : "") + " to see available times.</div>";
@@ -4466,17 +5306,17 @@
         var slots = freeSlots(dayDiff(fromIso(BOOK.date), today), APPT_DURATION[BOOK.service] || 0);
         if (!slots.length) {
           return '<div class="note" style="margin:4px 0 0">No free ' + APPT_DURATION[BOOK.service] + "-min slots on this day — pick another date.</div>" +
-            '<button type="button" class="pd-link" id="bkCustom" style="margin:8px 0 0">Pick a custom time ›</button>';
+            '<button type="button" class="pd-link" id="bkCustom" style="margin:8px 0 0">Pick a custom time <i class=chv></i></button>';
         }
         return '<div class="preset-row" style="margin-top:2px">' + slots.map(function (t) {
             return '<button type="button" class="chip' + (BOOK.time === t ? " on" : "") + '" data-slot="' + t + '">' + fmt12(t) + "</button>";
           }).join("") + "</div>" +
           '<div class="note" style="margin:8px 0 0">Free ' + APPT_DURATION[BOOK.service] + "-min slots · open " + fmt12(PHARMACY_HOURS.open) + " – " + fmt12(PHARMACY_HOURS.close) + "</div>" +
-          '<button type="button" class="pd-link" id="bkCustom" style="margin:8px 0 0">Pick a custom time ›</button>';
+          '<button type="button" class="pd-link" id="bkCustom" style="margin:8px 0 0">Pick a custom time <i class=chv></i></button>';
       })() +
       ferr("time") +
       '<div class="next-fixed">' + (Object.keys(T).length ? gateHtml(v.missing) : "") +
-        '<button class="btn-primary" id="bkGo" type="button"' + (v.missing.length ? " disabled" : "") + ">Book appointment →</button></div>";
+        '<button class="btn-primary" id="bkGo" type="button"' + (v.missing.length ? " disabled" : "") + ">Book appointment <i class=tri></i></button></div>";
 
     document.getElementById("bkBack").addEventListener("click", function () {
       // §17: keep a started draft; drop an untouched one so the next entry prefills the selected day.
@@ -4538,11 +5378,14 @@
   })();
 
   var resetEl = document.getElementById("reset"), setupEl = document.getElementById("setup"), lockEl = document.getElementById("lock");
+  var landEl = document.getElementById("land"), signupEl = document.getElementById("signup");
   var preState_ = null;
-  function setPreApp(state) { // "onb" | "auth" | "reset" | "setup" | "lock" | null (inside app)
+  function setPreApp(state) { // "land" | "onb" | "auth" | "signup" | "reset" | "setup" | "lock" | null (inside app)
     preState_ = state;
     onbEl.hidden = state !== "onb";
     authEl.hidden = state !== "auth";
+    landEl.hidden = state !== "land";
+    signupEl.hidden = state !== "signup";
     resetEl.hidden = state !== "reset";
     setupEl.hidden = state !== "setup";
     lockEl.hidden = state !== "lock";
@@ -4594,7 +5437,7 @@
       var el = document.getElementById(f.id); if (!el) return;
       el.addEventListener("blur", function () { spec.touched[f.id] = true; formValidate(spec); });
       el.addEventListener("input", function () { if (el.value) spec.touched[f.id] = true; formValidate(spec); });
-      // Enter on an incomplete form (button disabled → no implicit submit): reveal what's missing.
+      // Enter on an incomplete form (button disabled <i class=tri></i> no implicit submit): reveal what's missing.
       el.addEventListener("keydown", function (e) {
         if (e.key !== "Enter") return;
         e.preventDefault();
@@ -4614,7 +5457,9 @@
   var emailRule = function (v) { v = v.trim(); return !v ? "Enter your email." : (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "That doesn’t look like a valid email (e.g., you@pharmacy.ca)."); };
   var errSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.7 3.3c-.75-1.3-2.65-1.3-3.4 0L1.2 19a2 2 0 0 0 1.7 3h18.2a2 2 0 0 0 1.7-3L13.7 3.3z"></path><rect x="11.1" y="9" width="1.8" height="6" rx="0.9" fill="#fdecec"></rect><circle cx="12" cy="18" r="1.2" fill="#fdecec"></circle></svg>';
   var okSvgSm2 = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12.5 2.5 2.5 5-5.5"></path></svg>';
-  var brandHtml = '<div class="brand"><span class="logo"><svg width="30" height="26" viewBox="0 0 36 30" fill="none" aria-hidden="true"><circle cx="13" cy="15" r="9" stroke="#2B6CEA" stroke-width="3.4"/><circle cx="23" cy="15" r="9" stroke="#21BF7A" stroke-width="3.4"/><path d="M15.3 6.3 A9 9 0 0 1 20.4 9.8" stroke="#2B6CEA" stroke-width="3.4" stroke-linecap="round"/></svg></span><span><span class="a">Agile</span> <span class="p">Pharmas</span></span></div>';
+  var LOGO_URI = "data:image/png;base64,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";
+  var brandHtml = '<div class="brand"><span class="logo"><img src="' + LOGO_URI + '" alt=""></span><span class="wm"><span class="a">Agile</span><span class="p">Rx</span></span></div>';
+  document.querySelectorAll('.brand .logo').forEach(function (el) { el.innerHTML = '<img src="' + LOGO_URI + '" alt="">'; });
   // Show/hide password toggles (any .pw-toggle[data-pw]).
   document.addEventListener("click", function (e) {
     var t = e.target.closest(".pw-toggle"); if (!t) return;
@@ -4629,8 +5474,8 @@
 
   // ================= 0.1 Sign in =================
   // Simulated backend: any valid email + password signs in, EXCEPT
-  //   password "wrong"             → invalid credentials
-  //   email ending "@offline.test" → network error
+  //   password "wrong"             <i class=tri></i> invalid credentials
+  //   email ending "@offline.test" <i class=tri></i> network error
   function goAuth() {
     try { sessionStorage.setItem("agilerx.onboarded", "1"); } catch (e) {}
     document.getElementById("authErr").hidden = true;
@@ -4677,6 +5522,67 @@
   document.getElementById("authForm").addEventListener("submit", function (e) { e.preventDefault(); submitAuth(); });
   document.getElementById("authForgot").addEventListener("click", function () { showReset("request", document.getElementById("auEmail").value.trim()); });
   function enterApp() { setPreApp(null); idleReset(); }
+
+  // ================= Landing (Sign in / Sign up choice) =================
+  function renderLand() {
+    landEl.innerHTML = brandHtml +
+      '<div style="height:6vh"></div>' +
+      '<h1 class="ob-h">Pharmacy care,<br>organized.</h1>' +
+      '<p class="ob-p">Sign in to your workspace, or create a new pharmacy account.</p>' +
+      '<div class="auth-form" style="margin-top:26px">' +
+        '<button class="btn-grad" id="landSignin" type="button">Sign in</button>' +
+        '<button class="btn-outline" id="landSignup" type="button" style="display:block;width:100%;margin-top:10px">Create an account</button>' +
+      "</div>" +
+      '<div class="auth-foot">New pharmacies are onboarded with the AgileRx team.</div>';
+    document.getElementById("landSignin").addEventListener("click", function () { goAuth(); });
+    document.getElementById("landSignup").addEventListener("click", function () { showSignup(); });
+    setPreApp("land");
+  }
+
+  // ================= Sign up (create account → pharmacy setup) =================
+  var SIGNUP = { fields: [
+    { id: "suNm", err: "suNmErr", label: "full name", rule: function (v) { return v.trim().length >= 2 ? "" : "Enter your full name."; } },
+    { id: "suPh", err: "suPhErr", label: "pharmacy", rule: function (v) { return v.trim() ? "" : "Enter your pharmacy name."; } },
+    { id: "suEm", err: "suEmErr", label: "email", rule: emailRule },
+    { id: "suPw", err: "suPwErr", label: "password", rule: function (v) { return v.length >= 8 ? "" : "Use at least 8 characters."; } },
+  ], gate: "suGate2", btn: "suGo2" };
+  function showSignup() {
+    function fld(id, lab, extra) {
+      return '<div class="fld"><label for="' + id + '">' + lab + "</label>" + extra + '<div class="ferr" id="' + id + 'Err"></div></div>';
+    }
+    signupEl.innerHTML = brandHtml +
+      '<h1 class="ob-h">Create your account.</h1>' +
+      '<p class="ob-p">Set up your pharmacy workspace in a couple of minutes.</p>' +
+      '<form class="auth-form" id="suForm2" novalidate>' +
+        fld("suNm", "Full name", '<input class="tinput" id="suNm" type="text" placeholder="e.g., Nour El-Sayed" autocomplete="name">') +
+        fld("suPh", "Pharmacy name", '<input class="tinput" id="suPh" type="text" placeholder="e.g., Lakeview Pharmacy" autocomplete="organization">') +
+        fld("suEm", "Email", '<input class="tinput" id="suEm" type="email" inputmode="email" placeholder="you@pharmacy.ca" autocomplete="email">') +
+        '<div class="fld"><label for="suPw">Password</label><div class="pw-wrap"><input class="tinput" id="suPw" type="password" placeholder="At least 8 characters" autocomplete="new-password"><button type="button" class="pw-toggle" data-pw="suPw" aria-label="Show password" aria-pressed="false">Show</button></div><div class="ferr" id="suPwErr"></div></div>' +
+        '<div id="suGate2"></div>' +
+        '<button class="btn-grad" id="suGo2" type="submit" disabled>Create account</button>' +
+      "</form>" +
+      '<div class="auth-foot">Already have an account? <button type="button" class="auth-link" id="suToSignin">Sign in</button></div>';
+    formBind(SIGNUP, doSignup);
+    document.getElementById("suForm2").addEventListener("submit", function (e) { e.preventDefault(); doSignup(); });
+    document.getElementById("suToSignin").addEventListener("click", function () { goAuth(); });
+    setPreApp("signup");
+  }
+  function doSignup() {
+    if (formRevealErrors(SIGNUP)) return;
+    var nm = document.getElementById("suNm").value.trim();
+    var ph = document.getElementById("suPh").value.trim();
+    var em = document.getElementById("suEm").value.trim();
+    PROFILE = { name: nm, creds: "RPh", pharmacy: ph, email: em };
+    // Brand-new account → run the pharmacy setup wizard from the start.
+    SETUP.done = false; SETUP.step = 1; SETUP.prefilled = false; SETUP.pharm.name = ph;
+    try {
+      localStorage.setItem("agilerx.profile", JSON.stringify(PROFILE));
+      localStorage.setItem("agilerx.signedin", "1");
+      localStorage.setItem("agilerx.onboarded", "1");
+      saveSetup();
+    } catch (e) {}
+    showSetup(1);
+  }
   function authBanner(text) {
     var b = document.getElementById("authBanner");
     if (!text) { b.hidden = true; return; }
@@ -4884,7 +5790,7 @@
       "</div>" +
       '<div class="su-body">' + body + "</div>" +
       '<div class="su-foot"><div id="suGate">' + gateHtml(gate) + "</div>" +
-        '<button class="btn-primary" id="suNext"' + (gate.length ? " disabled" : "") + ">" + (st === SETUP_STEPS ? "Go to Home →" : "Continue →") + "</button></div>";
+        '<button class="btn-primary" id="suNext"' + (gate.length ? " disabled" : "") + ">" + (st === SETUP_STEPS ? "Go to Home <i class=tri></i>" : "Continue <i class=tri></i>") + "</button></div>";
 
     function sync() { var g = setupGate(); document.getElementById("suNext").disabled = g.length > 0; document.getElementById("suGate").innerHTML = gateHtml(g); saveSetup(); }
     var bk = document.getElementById("suBack"); if (bk) bk.addEventListener("click", function () { SETUP.step--; saveSetup(); renderSetup(); });
@@ -4988,14 +5894,16 @@
     setTimeout(function () { var i = document.getElementById("lkPass"); if (i) i.focus(); }, 50);
   }
 
-  // Gate: fresh visit → intro slides; onboarded → sign in; signed in but not
-  // set up → setup; signed in + set up → app. Deep-link hashes bypass for testing.
+  // Gate: fresh visit <i class=tri></i> intro slides; onboarded <i class=tri></i> sign in; signed in but not
+  // set up <i class=tri></i> setup; signed in + set up <i class=tri></i> app. Deep-link hashes bypass for testing.
   (function gate() {
     var h = location.hash.slice(1);
     var onboarded = false, signed = false;
     try { onboarded = !!sessionStorage.getItem("agilerx.onboarded"); signed = !!(localStorage.getItem("agilerx.signedin") || sessionStorage.getItem("agilerx.signedin")); } catch (e) {}
     if (h === "onboarding") { showOb(0); setPreApp("onb"); return; }
-    if (h === "signin" || h === "signup") { goAuth(); return; }
+    if (h === "land") { renderLand(); return; }
+    if (h === "signin") { goAuth(); return; }
+    if (h === "signup") { showSignup(); return; }
     if (h === "reset") { showReset("request", ""); return; }
     if (h === "reset-sent") { showReset("sent", "priya@lakeviewpharmacy.ca"); return; }
     if (h === "reset-new") { showReset("new", "priya@lakeviewpharmacy.ca"); return; }
@@ -5003,9 +5911,8 @@
     if (h === "lock") { setPreApp(null); showLock(); return; }
     if (h) { setPreApp(null); idleReset(); return; }
     if (signed) { if (SETUP.done) { setPreApp(null); idleReset(); } else showSetup(); return; }
-    // Sales-led B2B: provisioned accounts go straight to Sign in. The intro
-    // slides stay reachable at #onboarding only.
-    goAuth();
+    // Fresh visit → the Sign in / Sign up choice. Intro slides live at #onboarding.
+    renderLand();
   })();
 
   // Hash routes (testing / deep links)
@@ -5023,6 +5930,10 @@
     if (h === "calendar") { renderCalendar(); return; }
     if (h === "book") { renderBooking(); return; }
     if (h === "incidents") { renderIncidents(); return; }
+    if (h === "incidents-syncfail") { NIDR_SYNC.failed = true; renderIncidents(); return; } // demo the failed-sync state
+    if (h === "safety") { renderSafety(); return; }
+    if (h === "plans") { renderPlans(); return; }
+    if (h === "cqi") { renderCQI(); return; }
     if (h === "incident-new") { enterSession("incidents", null, "scrIncidents"); return; }
     m = h.match(/^incident-new-(\w+)$/); if (m) { enterSession("incidents", m[1], "scrIncidents"); return; }
     m = h.match(/^calendar-(-?\d+)$/); if (m) { calSel = daysAhead(+m[1]); calMonth = new Date(calSel.getFullYear(), calSel.getMonth(), 1); renderCalendar(); return; }
