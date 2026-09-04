@@ -2105,12 +2105,7 @@
       <button class="ob-skip" id="obSkip" type="button">Skip</button>
     </section>
 
-    <!-- ============ Landing — Sign in / Sign up choice ============ -->
-    <section class="pre" id="land" aria-label="Welcome" hidden></section>
-    <!-- ============ Sign up (create account → pharmacy setup) ============ -->
-    <section class="pre" id="signup" aria-label="Create your account" hidden></section>
-
-    <!-- ============ AUTH — 0.1 Sign in ============ -->
+    <!-- ============ AUTH — 0.1 Sign in (sales-led: no public sign-up) ============ -->
     <section class="pre" id="auth" aria-label="Sign in" hidden>
       <div class="brand"><span class="logo"><svg width="34" height="28" viewBox="0 0 42 34" fill="none" aria-hidden="true"><rect x="3.4" y="12" width="21.5" height="19" rx="9.5" stroke="#21BF7A" stroke-width="3.6"/><rect x="17.1" y="12" width="21.5" height="19" rx="9.5" stroke="#2B6CEA" stroke-width="3.6"/><circle cx="8" cy="6.4" r="3.1" fill="#AFC9F2"/><circle cx="16.4" cy="6.4" r="3.1" fill="#5B93E8"/><circle cx="24.8" cy="6.4" r="3.1" fill="#2B6CEA"/></svg></span><span class="wm"><span class="a">Agile</span><span class="p">Rx</span></span></div>
       <h1 class="ob-h">Welcome back.</h1>
@@ -5378,14 +5373,11 @@
   })();
 
   var resetEl = document.getElementById("reset"), setupEl = document.getElementById("setup"), lockEl = document.getElementById("lock");
-  var landEl = document.getElementById("land"), signupEl = document.getElementById("signup");
   var preState_ = null;
-  function setPreApp(state) { // "land" | "onb" | "auth" | "signup" | "reset" | "setup" | "lock" | null (inside app)
+  function setPreApp(state) { // "onb" | "auth" | "reset" | "setup" | "lock" | null (inside app)
     preState_ = state;
     onbEl.hidden = state !== "onb";
     authEl.hidden = state !== "auth";
-    landEl.hidden = state !== "land";
-    signupEl.hidden = state !== "signup";
     resetEl.hidden = state !== "reset";
     setupEl.hidden = state !== "setup";
     lockEl.hidden = state !== "lock";
@@ -5523,66 +5515,6 @@
   document.getElementById("authForgot").addEventListener("click", function () { showReset("request", document.getElementById("auEmail").value.trim()); });
   function enterApp() { setPreApp(null); idleReset(); }
 
-  // ================= Landing (Sign in / Sign up choice) =================
-  function renderLand() {
-    landEl.innerHTML = brandHtml +
-      '<div style="height:6vh"></div>' +
-      '<h1 class="ob-h">Pharmacy care,<br>organized.</h1>' +
-      '<p class="ob-p">Sign in to your workspace, or create a new pharmacy account.</p>' +
-      '<div class="auth-form" style="margin-top:26px">' +
-        '<button class="btn-grad" id="landSignin" type="button">Sign in</button>' +
-        '<button class="btn-outline" id="landSignup" type="button" style="display:block;width:100%;margin-top:10px">Create an account</button>' +
-      "</div>" +
-      '<div class="auth-foot">New pharmacies are onboarded with the AgileRx team.</div>';
-    document.getElementById("landSignin").addEventListener("click", function () { goAuth(); });
-    document.getElementById("landSignup").addEventListener("click", function () { showSignup(); });
-    setPreApp("land");
-  }
-
-  // ================= Sign up (create account → pharmacy setup) =================
-  var SIGNUP = { fields: [
-    { id: "suNm", err: "suNmErr", label: "full name", rule: function (v) { return v.trim().length >= 2 ? "" : "Enter your full name."; } },
-    { id: "suPh", err: "suPhErr", label: "pharmacy", rule: function (v) { return v.trim() ? "" : "Enter your pharmacy name."; } },
-    { id: "suEm", err: "suEmErr", label: "email", rule: emailRule },
-    { id: "suPw", err: "suPwErr", label: "password", rule: function (v) { return v.length >= 8 ? "" : "Use at least 8 characters."; } },
-  ], gate: "suGate2", btn: "suGo2" };
-  function showSignup() {
-    function fld(id, lab, extra) {
-      return '<div class="fld"><label for="' + id + '">' + lab + "</label>" + extra + '<div class="ferr" id="' + id + 'Err"></div></div>';
-    }
-    signupEl.innerHTML = brandHtml +
-      '<h1 class="ob-h">Create your account.</h1>' +
-      '<p class="ob-p">Set up your pharmacy workspace in a couple of minutes.</p>' +
-      '<form class="auth-form" id="suForm2" novalidate>' +
-        fld("suNm", "Full name", '<input class="tinput" id="suNm" type="text" placeholder="e.g., Nour El-Sayed" autocomplete="name">') +
-        fld("suPh", "Pharmacy name", '<input class="tinput" id="suPh" type="text" placeholder="e.g., Lakeview Pharmacy" autocomplete="organization">') +
-        fld("suEm", "Email", '<input class="tinput" id="suEm" type="email" inputmode="email" placeholder="you@pharmacy.ca" autocomplete="email">') +
-        '<div class="fld"><label for="suPw">Password</label><div class="pw-wrap"><input class="tinput" id="suPw" type="password" placeholder="At least 8 characters" autocomplete="new-password"><button type="button" class="pw-toggle" data-pw="suPw" aria-label="Show password" aria-pressed="false">Show</button></div><div class="ferr" id="suPwErr"></div></div>' +
-        '<div id="suGate2"></div>' +
-        '<button class="btn-grad" id="suGo2" type="submit" disabled>Create account</button>' +
-      "</form>" +
-      '<div class="auth-foot">Already have an account? <button type="button" class="auth-link" id="suToSignin">Sign in</button></div>';
-    formBind(SIGNUP, doSignup);
-    document.getElementById("suForm2").addEventListener("submit", function (e) { e.preventDefault(); doSignup(); });
-    document.getElementById("suToSignin").addEventListener("click", function () { goAuth(); });
-    setPreApp("signup");
-  }
-  function doSignup() {
-    if (formRevealErrors(SIGNUP)) return;
-    var nm = document.getElementById("suNm").value.trim();
-    var ph = document.getElementById("suPh").value.trim();
-    var em = document.getElementById("suEm").value.trim();
-    PROFILE = { name: nm, creds: "RPh", pharmacy: ph, email: em };
-    // Brand-new account → run the pharmacy setup wizard from the start.
-    SETUP.done = false; SETUP.step = 1; SETUP.prefilled = false; SETUP.pharm.name = ph;
-    try {
-      localStorage.setItem("agilerx.profile", JSON.stringify(PROFILE));
-      localStorage.setItem("agilerx.signedin", "1");
-      localStorage.setItem("agilerx.onboarded", "1");
-      saveSetup();
-    } catch (e) {}
-    showSetup(1);
-  }
   function authBanner(text) {
     var b = document.getElementById("authBanner");
     if (!text) { b.hidden = true; return; }
@@ -5901,9 +5833,7 @@
     var onboarded = false, signed = false;
     try { onboarded = !!sessionStorage.getItem("agilerx.onboarded"); signed = !!(localStorage.getItem("agilerx.signedin") || sessionStorage.getItem("agilerx.signedin")); } catch (e) {}
     if (h === "onboarding") { showOb(0); setPreApp("onb"); return; }
-    if (h === "land") { renderLand(); return; }
-    if (h === "signin") { goAuth(); return; }
-    if (h === "signup") { showSignup(); return; }
+    if (h === "signin" || h === "signup" || h === "land") { goAuth(); return; }
     if (h === "reset") { showReset("request", ""); return; }
     if (h === "reset-sent") { showReset("sent", "priya@lakeviewpharmacy.ca"); return; }
     if (h === "reset-new") { showReset("new", "priya@lakeviewpharmacy.ca"); return; }
@@ -5911,8 +5841,8 @@
     if (h === "lock") { setPreApp(null); showLock(); return; }
     if (h) { setPreApp(null); idleReset(); return; }
     if (signed) { if (SETUP.done) { setPreApp(null); idleReset(); } else showSetup(); return; }
-    // Fresh visit → the Sign in / Sign up choice. Intro slides live at #onboarding.
-    renderLand();
+    // Sales-led B2B: provisioned accounts go straight to Sign in. Intro slides live at #onboarding.
+    goAuth();
   })();
 
   // Hash routes (testing / deep links)
