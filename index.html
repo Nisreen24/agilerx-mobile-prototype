@@ -352,6 +352,19 @@
   }
   @keyframes scanSpin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .scan-cam .sim, .scan-spin { animation: none; } }
+  .face-cam {
+    position: relative; width: 230px; height: 230px; border-radius: 50%;
+    overflow: hidden; background: #1c1a28;
+    border: 3.5px solid #8B7CF6;
+    box-shadow: 0 0 0 10px rgba(139, 124, 246, 0.15);
+  }
+  .face-cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+  .face-cam .sim {
+    position: absolute; inset: 0;
+    background: linear-gradient(115deg, #23202f 0%, #2e2a3e 35%, #23202f 65%);
+    background-size: 220% 100%;
+    animation: scanShimmer 1.6s linear infinite;
+  }
   .scan-kv { width: 100%; max-width: 330px; text-align: left; background: #fff; border-radius: 18px; padding: 6px 16px; color: #2B2A44; }
   .scan-kv .kv .k { color: #8A88A3; }
   .filter-btn {
@@ -2041,6 +2054,29 @@
   .bio-btn.done .ic { color: #1db871; animation: none; }
   @keyframes bioPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.88); opacity: 0.55; } }
   @media (prefers-reduced-motion: reduce) { .bio-btn.scanning .ic { animation: none; opacity: 0.6; } }
+  .bio-or {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 16px; font-size: 12px; font-weight: 600; color: #8A88A3;
+  }
+  .bio-or span { flex: 1; height: 1px; background: #DDD9F0; }
+  .bio-duo { display: flex; gap: 10px; margin-top: 12px; }
+  .bio-duo button {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px;
+    padding: 14px 10px 12px;
+    background: #FDFCFF; border: 1.5px solid #DDD9F0; border-radius: 16px;
+    font-family: inherit; font-size: 13px; font-weight: 700; color: #2B2A44;
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bio-duo button:hover { border-color: #CFC7F5; }
+  .bio-duo button:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .bio-duo button:active { transform: scale(0.96); }
+  .bio-duo button:disabled { cursor: default; }
+  .bio-duo .ic { color: #8B7CF6; }
+  .bio-duo .ic svg { width: 30px; height: 30px; display: block; }
+  .bio-duo button.scanning .ic { animation: bioPulse 0.9s ease-in-out infinite; }
+  .bio-duo button.done { border-color: #bfe9d8; }
+  .bio-duo button.done .ic { color: #1db871; animation: none; }
   .bio-sheet-ic {
     width: 66px; height: 66px; border-radius: 22px;
     background: #EEEBFC; color: #8B7CF6;
@@ -2286,7 +2322,6 @@
       <h1 class="ob-h">Welcome back.</h1>
       <p class="ob-p">Sign in to your pharmacy workspace.</p>
       <div class="auth-banner ok" id="authBanner" role="status" hidden></div>
-      <div id="bioPane" hidden></div>
       <form class="auth-form" id="authForm" novalidate>
         <div class="fld"><label for="auEmail">Email</label><input class="tinput" id="auEmail" type="email" placeholder="you@pharmacy.ca" autocomplete="email" inputmode="email" aria-describedby="eEmail"><div class="ferr" id="eEmail"></div></div>
         <div class="fld"><label for="auPass">Password</label>
@@ -2296,6 +2331,11 @@
         <div class="auth-row" id="authRow"><label><input type="checkbox" checked>Keep me signed in</label></div>
         <div id="authGate"></div>
         <button class="btn-grad" id="authGo" type="submit" style="margin-top:6px" disabled>Sign in</button>
+        <div class="bio-or" aria-hidden="true"><span></span>or sign in with<span></span></div>
+        <div class="bio-duo">
+          <button type="button" id="bioFace"><span class="ic" id="bioFaceIc"></span><span id="bioFaceLbl">Face ID</span></button>
+          <button type="button" id="bioFinger"><span class="ic" id="bioFingerIc"></span><span id="bioFingerLbl">Fingerprint</span></button>
+        </div>
         <button type="button" class="auth-link" id="authForgot" style="align-self:center;margin-top:10px;font-size:13.5px">Forgot password?</button>
       </form>
       <div class="auth-foot" id="authFoot">Pharmacy accounts are set up by the AgileRx team. Need access? Ask your pharmacy administrator.</div>
@@ -6185,97 +6225,117 @@
   // Simulated backend: any valid email + password signs in, EXCEPT
   //   password "wrong"             <i class=tri></i> invalid credentials
   //   email ending "@offline.test" <i class=tri></i> network error
-  // ---- Biometric sign-in (simulated; opt-in per device) ----
-  // Face ID on the phone build, Touch ID on the tablet build (ipad.html is
-  // generated from this file and carries a #tablet-overrides style block).
-  var BIO_KIND = document.getElementById("tablet-overrides") ? "Touch ID" : "Face ID";
-  var faceIdSvg = '<svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5H10a5 5 0 0 0-5 5v5"/><path d="M33 5h5a5 5 0 0 1 5 5v5"/><path d="M15 43H10a5 5 0 0 1-5-5v-5"/><path d="M33 43h5a5 5 0 0 0 5-5v-5"/><path d="M16 19v3"/><path d="M32 19v3"/><path d="M24 19v7a2 2 0 0 1-2 2"/><path d="M17 32.5a10 10 0 0 0 14 0"/></svg>';
-  var touchIdSvg = '<svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 10c-8 0-14 6-14 14 0 4 .8 8 2.2 11.5"/><path d="M24 17a7 7 0 0 0-7 7c0 4.5 1 8.6 2.8 12.3"/><path d="M24 24c0 5.5 1.4 10.4 3.8 14.5"/><path d="M31 24a7 7 0 0 0-1.6-4.5"/><path d="M35.6 34.6c1.5-3.2 2.4-6.8 2.4-10.6 0-4.5-2-8.5-5.2-11.1"/><path d="M17 8.6A17 17 0 0 1 24 7c3 0 5.8.7 8.3 2"/></svg>';
-  var bioOkSvg = '<svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M15.5 24.5 21 30l11.5-12"/></svg>';
-  function bioIcon() { return BIO_KIND === "Touch ID" ? touchIdSvg : faceIdSvg; }
-  function bioPref() { try { return localStorage.getItem("agilerx.bio"); } catch (e) { return null; } }
-  function setBioPref(v) { try { localStorage.setItem("agilerx.bio", v); } catch (e) {} }
-
-  function renderAuthMode() {
-    var pane = document.getElementById("bioPane");
-    var form = document.getElementById("authForm");
-    var bioOn = bioPref() === "on" && PROFILE && PROFILE.email;
-    pane.hidden = !bioOn;
-    form.hidden = !!bioOn;
-    var h = document.querySelector("#auth .ob-h"), sub = document.querySelector("#auth .ob-p");
-    if (bioOn) {
-      var initials = (PROFILE.name || "?").split(" ").map(function (w) { return w[0]; }).slice(0, 2).join("").toUpperCase();
-      h.textContent = "Welcome back, " + (PROFILE.name || "").split(" ")[0] + ".";
-      sub.textContent = "Signed in as " + PROFILE.email;
-      pane.innerHTML =
-        '<div class="bio-ava" aria-hidden="true">' + initials + "</div>" +
-        '<button type="button" class="bio-btn" id="bioGo"><span class="ic">' + bioIcon() + "</span>" +
-          '<span id="bioLbl">Sign in with ' + BIO_KIND + "</span></button>" +
-        '<button type="button" class="auth-link" id="bioToPass" style="display:block;margin:18px auto 0;font-size:13.5px">Use password instead</button>';
-      document.getElementById("bioGo").addEventListener("click", runBioScan);
-      document.getElementById("bioToPass").addEventListener("click", function () {
-        pane.hidden = true; form.hidden = false;
-        h.textContent = "Welcome back."; sub.textContent = "Sign in to your pharmacy workspace.";
-        var e = document.getElementById("auEmail");
-        if (!e.value && PROFILE.email) { e.value = PROFILE.email; formValidate(AUTH); }
-        showBioReturnLink();
-      });
-    } else {
-      h.textContent = "Welcome back."; sub.textContent = "Sign in to your pharmacy workspace.";
-      showBioReturnLink();
-    }
-  }
-  function showBioReturnLink() {
-    var old = document.getElementById("authToBio");
-    if (old) old.remove();
-    if (bioPref() !== "on" || !(PROFILE && PROFILE.email)) return;
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "auth-link"; b.id = "authToBio";
-    b.style.cssText = "align-self:center;margin-top:2px;font-size:13.5px";
-    b.textContent = "Sign in with " + BIO_KIND + " instead";
-    document.getElementById("authForgot").after(b);
-    b.addEventListener("click", function () { renderAuthMode(); });
-  }
-  function runBioScan() {
-    var btn = document.getElementById("bioGo"), lbl = document.getElementById("bioLbl");
-    if (!btn || btn.disabled) return;
-    btn.disabled = true; btn.classList.add("scanning");
-    lbl.textContent = BIO_KIND === "Touch ID" ? "Touch the sensor\u2026" : "Scanning\u2026";
+  // ---- Biometric sign-in: a first-class option on the FIRST page (per client) ----
+  // Both methods are always visible beside Sign in; either signs the provisioned
+  // pharmacist straight into Home. Simulated scan; no enrollment step.
+  var faceIdSvg = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5H10a5 5 0 0 0-5 5v5"/><path d="M33 5h5a5 5 0 0 1 5 5v5"/><path d="M15 43H10a5 5 0 0 1-5-5v-5"/><path d="M33 43h5a5 5 0 0 0 5-5v-5"/><path d="M16 19v3"/><path d="M32 19v3"/><path d="M24 19v7a2 2 0 0 1-2 2"/><path d="M17 32.5a10 10 0 0 0 14 0"/></svg>';
+  var touchIdSvg = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 10c-8 0-14 6-14 14 0 4 .8 8 2.2 11.5"/><path d="M24 17a7 7 0 0 0-7 7c0 4.5 1 8.6 2.8 12.3"/><path d="M24 24c0 5.5 1.4 10.4 3.8 14.5"/><path d="M31 24a7 7 0 0 0-1.6-4.5"/><path d="M35.6 34.6c1.5-3.2 2.4-6.8 2.4-10.6 0-4.5-2-8.5-5.2-11.1"/><path d="M17 8.6A17 17 0 0 1 24 7c3 0 5.8.7 8.3 2"/></svg>';
+  var bioOkSvg = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M15.5 24.5 21 30l11.5-12"/></svg>';
+  document.getElementById("bioFaceIc").innerHTML = faceIdSvg;
+  document.getElementById("bioFingerIc").innerHTML = touchIdSvg;
+  var bioBusy = false;
+  function runBio(kind) {
+    if (bioBusy) return;
+    bioBusy = true;
+    var btn = document.getElementById(kind === "face" ? "bioFace" : "bioFinger");
+    var other = document.getElementById(kind === "face" ? "bioFinger" : "bioFace");
+    var ic = btn.querySelector(".ic"), lbl = btn.querySelector("span:last-child");
+    btn.disabled = true; other.disabled = true;
+    btn.classList.add("scanning");
+    lbl.textContent = kind === "face" ? "Scanning\u2026" : "Touch the sensor\u2026";
     setTimeout(function () {
       btn.classList.remove("scanning"); btn.classList.add("done");
-      btn.querySelector(".ic").innerHTML = bioOkSvg;
-      lbl.textContent = "You\u2019re in";
+      ic.innerHTML = bioOkSvg;
+      lbl.textContent = "Welcome back";
       setTimeout(function () {
         try {
           localStorage.setItem("agilerx.signedin", "1");
           sessionStorage.removeItem("agilerx.signedin");
         } catch (e) {}
-        if (SETUP.done) enterApp(); else showSetup();
+        bioBusy = false;
+        btn.disabled = false; other.disabled = false;
+        btn.classList.remove("done");
+        ic.innerHTML = kind === "face" ? faceIdSvg : touchIdSvg;
+        lbl.textContent = kind === "face" ? "Face ID" : "Fingerprint";
+        enterApp(); // straight to Home — no terms, no pharmacy setup
       }, 550);
     }, 1100);
   }
-  function openBioSheet(cont) {
-    sheetEl.innerHTML = '<div class="grab"></div>' +
-      '<div class="bio-sheet-ic">' + bioIcon() + "</div>" +
-      '<div class="sh-t" id="sheetTitle" style="text-align:center">Sign in faster with ' + BIO_KIND + "</div>" +
-      '<div class="sh-s" style="text-align:center">Skip typing your password next time. ' + BIO_KIND + " stays on this device \u2014 it\u2019s never sent to AgileRx. Optional; you can keep using your password.</div>" +
-      '<button class="btn-primary" id="bioYes" type="button" style="margin-top:16px">Enable ' + BIO_KIND + "</button>" +
-      '<button class="btn-outline" id="bioNo" type="button" style="display:block;width:100%;margin-top:10px">Not now</button>';
-    sheetEl.hidden = false; sheetScrim.hidden = false;
-    document.getElementById("bioYes").addEventListener("click", function () {
-      setBioPref("on"); closeSheet();
-      authBanner(BIO_KIND + " enabled \u2014 next sign-in is one tap.");
-      cont();
-    });
-    document.getElementById("bioNo").addEventListener("click", function () {
-      setBioPref("off"); closeSheet(); cont();
-    });
+  document.getElementById("bioFace").addEventListener("click", openFaceSignIn);
+  document.getElementById("bioFinger").addEventListener("click", function () { runBio("finger"); });
+
+  // Face ID sign-in: proper camera-permission validations, then verification.
+  function openFaceSignIn() {
+    var ov = document.createElement("div");
+    ov.className = "scan-ov"; ov.id = "faceOverlay";
+    document.querySelector(".screen").appendChild(ov);
+    var stream = null, timer = null;
+    function stopCam() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+    function close() { stopCam(); clearTimeout(timer); ov.remove(); }
+    function head(title) {
+      return '<div class="scan-head"><div class="t">' + title + '</div><button class="scan-x" type="button" id="faceX" aria-label="Cancel">\u00d7</button></div>';
+    }
+    function bindX() { document.getElementById("faceX").addEventListener("click", close); }
+
+    // 1 — permission (the user is asked before any camera opens)
+    function statePermission() {
+      ov.innerHTML = head("Face ID") +
+        '<div class="scan-body"><div class="scan-perm-ic">' + faceIdSvg.replace("<svg ", '<svg width="34" height="34" ') + "</div>" +
+        '<div class="scan-h">Camera access required</div>' +
+        '<div class="scan-p">Allow access to verify your face and sign in. Verification happens on this device \u2014 no image is stored or sent to AgileRx.</div>' +
+        '<button class="btn-primary scan-cta" id="faceAllow" type="button">Allow camera access</button></div>';
+      bindX();
+      document.getElementById("faceAllow").addEventListener("click", function () {
+        var giveUp = setTimeout(function () { stateScan(null); }, 2500); // host never answers
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(function (st) { clearTimeout(giveUp); stream = st; stateScan(st); })
+            .catch(function () { clearTimeout(giveUp); stateScan(null); }); // denied/unavailable -> simulated
+        } else { clearTimeout(giveUp); stateScan(null); }
+      });
+    }
+
+    // 2 — the camera opens in a circular face frame; detection is automatic
+    function stateScan(st) {
+      ov.innerHTML = head("Face ID") +
+        '<div class="scan-body">' +
+        '<div class="face-cam">' + (st ? '<video autoplay playsinline muted></video>' : '<div class="sim"></div>') + "</div>" +
+        '<div class="scan-hint">Center your face in the frame</div>' +
+        (st ? "" : '<div class="scan-sub">Camera unavailable here \u2014 simulated preview</div>') + "</div>";
+      bindX();
+      if (st) { var v = ov.querySelector("video"); v.srcObject = st; }
+      timer = setTimeout(stateVerify, 2200);
+    }
+
+    // 3 — verifying, then signed in -> straight to Home
+    function stateVerify() {
+      stopCam();
+      ov.innerHTML = head("Face ID") +
+        '<div class="scan-body"><div class="scan-spin-wrap"><div class="scan-spin" role="status" aria-label="Verifying"></div></div>' +
+        '<div class="scan-h">Verifying\u2026</div></div>';
+      bindX();
+      timer = setTimeout(function () {
+        ov.innerHTML = head("Face ID") +
+          '<div class="scan-body"><div class="scan-perm-ic" style="background:rgba(29,184,113,0.16);color:#5fe0a8">' + bioOkSvg.replace("<svg ", '<svg width="34" height="34" ') + "</div>" +
+          '<div class="scan-h">Welcome back, ' + esc((PROFILE.name || "").split(" ")[0]) + "</div></div>";
+        bindX();
+        timer = setTimeout(function () {
+          try {
+            localStorage.setItem("agilerx.signedin", "1");
+            sessionStorage.removeItem("agilerx.signedin");
+          } catch (e) {}
+          close();
+          enterApp(); // straight to Home
+        }, 700);
+      }, 1100);
+    }
+
+    statePermission();
   }
 
   function goAuth() {
     try { sessionStorage.setItem("agilerx.onboarded", "1"); } catch (e) {}
     document.getElementById("authErr").hidden = true;
-    renderAuthMode();
     setPreApp("auth");
   }
   var AUTH = { fields: [
@@ -6312,8 +6372,7 @@
       } catch (e) {}
       document.getElementById("auPass").value = "";
       formValidate(AUTH);
-      var proceed = function () { if (SETUP.done) enterApp(); else showSetup(); };
-      if (bioPref() === null) openBioSheet(proceed); else proceed();
+      enterApp(); // straight to Home — terms & pharmacy setup cancelled per client
     }, 600);
   }
   formBind(AUTH, submitAuth);
@@ -6646,7 +6705,7 @@
     var sm = h.match(/^setup(?:-([1-5]))?$/); if (sm) { showSetup(sm[1] ? +sm[1] : 1); return; }
     if (h === "lock") { setPreApp(null); showLock(); return; }
     if (h) { setPreApp(null); idleReset(); return; }
-    if (signed) { if (SETUP.done) { setPreApp(null); idleReset(); } else showSetup(); return; }
+    if (signed) { setPreApp(null); idleReset(); return; } // pharmacy setup cancelled — never routed
     // Sales-led B2B: provisioned accounts go straight to Sign in. Intro slides live at #onboarding.
     goAuth();
   })();
