@@ -271,6 +271,89 @@
     margin: 22px 0 12px;
   }
   .section-head h2 { font-size: 16px; font-weight: 700; color: #2B2A44; }
+  /* Reusable top-right "New patient" action (patient-selection screens) */
+  .newpat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 14px;
+    margin-left: auto;
+    border-radius: 999px;
+    border: 1.5px solid #CFC7F5;
+    background: #EEEBFC;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: #8B7CF6;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .newpat-btn:hover { border-color: #8B7CF6; }
+  .newpat-btn:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .newpat-btn:active { transform: scale(0.96); }
+  /* OHIP card scanner overlay (New Patient primary path) */
+  .scan-ov {
+    position: absolute; inset: 0; z-index: 60;
+    background: #0d0c14; color: #fff;
+    display: flex; flex-direction: column;
+    animation: viewIn 0.2s ease;
+  }
+  .scan-ov[hidden] { display: none; }
+  .scan-head { display: flex; align-items: center; gap: 12px; padding: 58px 20px 12px; }
+  .scan-head .t { font-size: 16px; font-weight: 700; flex: 1; }
+  .scan-x {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12); color: #fff;
+    border: none; font-size: 19px; line-height: 1; cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .scan-x:hover { background: rgba(255, 255, 255, 0.2); }
+  .scan-x:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .scan-x:active { transform: scale(0.92); }
+  .scan-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 26px 40px; text-align: center; }
+  .scan-cam { position: relative; width: 100%; max-width: 330px; aspect-ratio: 1.586; border-radius: 18px; overflow: hidden; background: #1c1a28; }
+  .scan-cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .scan-cam .sim {
+    position: absolute; inset: 0;
+    background: linear-gradient(115deg, #23202f 0%, #2e2a3e 35%, #23202f 65%);
+    background-size: 220% 100%;
+    animation: scanShimmer 1.6s linear infinite;
+  }
+  @keyframes scanShimmer { from { background-position: 0% 0; } to { background-position: -200% 0; } }
+  .scan-corner { position: absolute; width: 30px; height: 30px; border: 3.5px solid #8B7CF6; }
+  .scan-corner.tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+  .scan-corner.tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; border-radius: 0 10px 0 0; }
+  .scan-corner.bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; border-radius: 0 0 0 10px; }
+  .scan-corner.br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+  .scan-hint { margin-top: 18px; font-size: 14px; color: rgba(255, 255, 255, 0.78); }
+  .scan-sub { margin-top: 6px; font-size: 12px; color: rgba(255, 255, 255, 0.45); }
+  .scan-shutter {
+    margin-top: 26px; width: 68px; height: 68px; border-radius: 50%;
+    background: #fff; border: 5px solid rgba(255, 255, 255, 0.35);
+    cursor: pointer; transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .scan-shutter:hover { border-color: rgba(255, 255, 255, 0.6); }
+  .scan-shutter:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 3px; }
+  .scan-shutter:active { transform: scale(0.9); }
+  .scan-perm-ic, .scan-spin-wrap {
+    width: 76px; height: 76px; border-radius: 26px;
+    background: rgba(139, 124, 246, 0.18); color: #B9AEFF;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+  }
+  .scan-h { font-size: 19px; font-weight: 700; }
+  .scan-p { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, 0.7); max-width: 300px; line-height: 1.6; }
+  .scan-cta { margin-top: 24px; width: 100%; max-width: 320px; }
+  .scan-spin {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 3.5px solid rgba(185, 174, 255, 0.25); border-top-color: #B9AEFF;
+    animation: scanSpin 0.8s linear infinite;
+  }
+  @keyframes scanSpin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .scan-cam .sim, .scan-spin { animation: none; } }
+  .scan-kv { width: 100%; max-width: 330px; text-align: left; background: #fff; border-radius: 18px; padding: 6px 16px; color: #2B2A44; }
+  .scan-kv .kv .k { color: #8A88A3; }
   .filter-btn {
     width: 34px;
     height: 34px;
@@ -545,6 +628,63 @@
     padding: 0 10px;
   }
   .tile.dim img { opacity: 0.55; filter: grayscale(0.4); }
+  /* Minor Ailments guided session */
+  .ma-guided {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 15px 16px; text-align: left;
+    background: #FDFCFF; border: 1.5px solid #DDD9F0; border-radius: 16px;
+    font-family: inherit; font-size: 14.5px; font-weight: 700; color: #2B2A44;
+    cursor: pointer; transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .ma-guided:hover { border-color: #CFC7F5; }
+  .ma-guided:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .ma-guided:active { transform: scale(0.98); }
+  .ma-guided.on { background: #EEEBFC; border-color: #8B7CF6; }
+  .ma-guided .gp { margin-left: auto; flex-shrink: 0; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; padding: 5px 9px; border-radius: 999px; background: #8B7CF6; color: #fff; }
+  .ma-cond { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ma-cond .c {
+    padding: 11px 12px; border: 1.5px solid #ECEAF5; border-radius: 13px;
+    background: #FDFCFF; font-size: 12px; line-height: 1.4; color: #8A88A3;
+  }
+  .elig-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; font-size: 13.5px; color: #3A3956; border-bottom: 1px solid #ECEAF5; }
+  .elig-row:last-child { border-bottom: 0; }
+  .elig-ic { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #eafaf3; color: #1db871; margin-top: -1px; }
+  .elig-ic.warn { background: #fdf0dc; color: #f6a723; }
+  .flag-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid #ECEAF5; font-size: 13.5px; color: #2B2A44; }
+  .flag-row:last-child { border-bottom: 0; }
+  .ma-yn { display: flex; flex-shrink: 0; border-radius: 12px; overflow: hidden; border: 1.5px solid #ECEAF5; }
+  .ma-yn button {
+    min-width: 54px; min-height: 40px; border: none; background: #fff;
+    font-family: inherit; font-size: 13px; font-weight: 700; color: #8A88A3; cursor: pointer;
+  }
+  .ma-yn button:focus-visible { outline: 2px solid #8B7CF6; outline-offset: -2px; }
+  .ma-yn button.no.on { background: #eafaf3; color: #1db871; }
+  .ma-yn button.yes.on { background: #e0403d; color: #fff; }
+  .redflag-card { margin-top: 16px; background: #fdecec; border: 1px solid #f5c6c5; border-radius: 16px; padding: 14px 16px; }
+  .redflag-card .t { font-size: 14.5px; font-weight: 700; color: #c43734; }
+  .redflag-card .s { font-size: 12.5px; color: #a94442; line-height: 1.55; margin-top: 6px; }
+  .btn-red {
+    display: block; width: 100%; margin-top: 12px; padding: 15px;
+    background: #e0403d; color: #fff; border: none; border-radius: 16px;
+    font-family: inherit; font-size: 14.5px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 10px 22px rgba(224, 64, 61, 0.28);
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .btn-red:hover { background: #d23935; }
+  .btn-red:focus-visible { outline: 2px solid #e0403d; outline-offset: 2px; }
+  .btn-red:active { transform: scale(0.97); }
+  .ma-out {
+    display: block; width: 100%; text-align: left; padding: 14px 16px; margin-top: 10px;
+    background: #FDFCFF; border: 1.5px solid #ECEAF5; border-radius: 16px;
+    font-family: inherit; cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .ma-out:hover { border-color: #CFC7F5; }
+  .ma-out:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .ma-out:active { transform: scale(0.98); }
+  .ma-out.on { background: #EEEBFC; border-color: #8B7CF6; }
+  .ma-out .t { font-size: 14.5px; font-weight: 700; color: #2B2A44; }
+  .ma-out .s { font-size: 12.5px; color: #6E6C88; margin-top: 3px; line-height: 1.5; }
   .note { font-size: 12.5px; color: #8A88A3; margin: -8px 0 14px; }
 
   /* ---------- Patient details page (reference layout, our design system) ---------- */
@@ -2065,7 +2205,7 @@
     <!-- ============ FLOW SCREENS (rendered by JS) ============ -->
     <div class="scroll" id="scrPatients" hidden>
       <div class="page">
-        <div class="section-head"><h2 class="screen-title">Patients</h2></div>
+        <div class="section-head"><h2 class="screen-title">Patients</h2><button type="button" class="newpat-btn" data-newpat="list">+ New patient</button></div>
         <div class="search-box">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
           <input id="patSearch" type="search" placeholder="Search name, health card, or phone" aria-label="Search patients">
@@ -2324,6 +2464,17 @@
 
   // ================= Business logic =================
   var MA_CONDITIONS = ["Eczema", "Allergic rhinitis", "Acne", "Cold sores", "Conjunctivitis", "UTI history", "Oral thrush"];
+  // Ontario program (July 2026): 28 covered conditions. UTI is the guided demo flow.
+  var MA_GUIDED = "Urinary tract infection (uncomplicated)";
+  var MA28 = ["Acne (mild)", "Allergic rhinitis", "Calluses and corns", "Candidal stomatitis (oral thrush)", "Canker sores (oral aphthae)", "Conjunctivitis", "Dermatitis (atopic, eczema, allergic, contact)", "Dermatitis (diaper)", "Dysmenorrhea", "GERD", "Headache (mild, tension-type)", "Hemorrhoids", "Herpes labialis (cold sores)", "Impetigo", "Insect bites and urticaria (hives)", "Musculoskeletal sprains and strains", "Nausea and vomiting of pregnancy", "Pediculosis (head lice)", "Pinworms and threadworms", "Seborrheic dermatitis", "Tick bites (Lyme disease prophylaxis)", "Tinea corporis (ringworm)", "Tinea cruris (jock itch)", "Verrucae (warts)", "Viral rhinitis / rhinosinusitis", "Vulvovaginal candidiasis (yeast infection)", "Xerophthalmia (dry eye)"];
+  // Legal formulary for the guided condition (only these 4 may be prescribed)
+  var MA_RX = [
+    { d: "Nitrofurantoin (macrocrystals)", first: true, dose: "100 mg", dir: "1 capsule BID \u00d7 5 days" },
+    { d: "Fosfomycin", first: false, dose: "3 g sachet", dir: "1 sachet single dose \u00d7 1 day" },
+    { d: "Sulfamethoxazole/Trimethoprim", first: false, dose: "800/160 mg", dir: "1 tablet BID \u00d7 3 days" },
+    { d: "Trimethoprim", first: false, dose: "100 mg", dir: "1 tablet BID \u00d7 3 days" },
+  ];
+  var MA_FLAGS = ["Male sex", "Pregnant or possibly pregnant", "Under 12 years of age", "Fever, chills, or other systemic symptoms", "Immunocompromised", "Recurrent UTI (\u22652 in 6 months or \u22653 in 12 months)", "Urinary catheter or anatomic/functional abnormality"];
   var MC_FEE = 60;
 
   function byId(id) { for (var i = 0; i < PATIENTS.length; i++) if (PATIENTS[i].id === id) return PATIENTS[i]; return null; }
@@ -2335,7 +2486,7 @@
     if (m < 0 || (m === 0 && today.getDate() < d.getDate())) a--;
     return a;
   }
-  function maskHC(hc) { return "•••• ••• " + hc.slice(7, 10) + " " + hc.slice(10); }
+  function maskHC(hc) { if (!hc || hc.length < 11) return "Not on file"; return "•••• ••• " + hc.slice(7, 10) + " " + hc.slice(10); }
   function initials(p) { var n = p.name.split(" "); return (n[0][0] + n[n.length - 1][0]).toUpperCase(); }
 
   function mcStatus(p) {
@@ -2423,8 +2574,11 @@
         : { ok: false, text: "Last MedsCheck " + mc.daysSince + " days ago — eligible again " + fmtDate(mc.again) };
     }
     if (mod === "ailments") {
+      // No record-based eligibility gate (that pattern belongs to MedsCheck):
+      // Minor Ailments assesses a NEW presenting complaint — the pharmacist
+      // decides during the assessment. History only adds context.
       var ma = maStatus(p);
-      if (!ma.eligible) return { ok: false, text: "Not currently eligible" };
+      if (!ma.eligible) return { ok: true, text: "Assess a new complaint" };
       var t = ma.conds.join(", ");
       if (ma.reviewIn !== null) t += ma.reviewIn < 0 ? " · review overdue" : " · review in " + Math.ceil(ma.reviewIn / 7) + " wks";
       return { ok: true, text: t };
@@ -2544,9 +2698,11 @@
     var p = byId(pid); if (!p) return;
     var mc = mcStatus(p), vx = vaxStatus(p);
     var recs = recommendations(p).slice(0, 2);
-    var hcTail = p.healthCard.slice(7, 10) + " " + p.healthCard.slice(10);
+    var hcTail = p.healthCard && p.healthCard.length >= 11 ? p.healthCard.slice(7, 10) + " " + p.healthCard.slice(10) : "not on file";
 
-    var provider = p.prescribers.length > 1
+    var provider = !p.prescribers.length
+      ? "No provider on file yet"
+      : p.prescribers.length > 1
       ? '<select id="provSel" aria-label="Select prescriber">' + p.prescribers.map(function (d, i) {
           return '<option value="' + i + '">' + d.name + " · " + d.role + "</option>";
         }).join("") + "</select>"
@@ -2729,7 +2885,7 @@
         seglHtml("modality", ["In-person", "Phone"], s.modality);
     }
     if (s.step === 2) {
-      var cur = p.prescribers[s.providerIdx];
+      var cur = p.prescribers[s.providerIdx] || { name: "No provider on file yet", role: "Add one to the record later" };
       var html = '<div class="step-title">Provider</div>' +
         '<div class="card"><div class="prov-row" style="cursor:default">' +
         '<span class="sum-ic">' + ICON.person + "</span>" +
@@ -3831,6 +3987,526 @@
 
   // Single session entry point — used by every path (patient flow, home tiles,
   // in-module patient search). One code path by design.
+  // ================= Minor Ailments guided session (desktop flow \u2192 mobile micro-steps) =================
+  var MA = {}; // per-patient session state — survives navigation, like PRE
+  function maSess(p) {
+    if (!MA[p.id]) {
+      MA[p.id] = {
+      step: 1, cond: null,
+      attest: false, consent: null, modality: null, fee: null,
+      flags: {}, refNote: "", refTouched: false,
+      complaint: "", history: "", verified: false, findings: "", rationale: "",
+      outcome: null, closed: null,
+      rx: { drug: null, qty: "10", refills: "0", edu: "", sig: null },
+      otcNote: "", refNote2: "",
+      follow: "Pharmacist to call the patient on day 3 to confirm symptom improvement and tolerance.",
+      };
+      MA_FLAGS.forEach(function (f) { MA[p.id].flags[f] = false; }); // default No, per the desktop reference
+    }
+    return MA[p.id];
+  }
+  function maFlagged(s) { return MA_FLAGS.filter(function (f) { return s.flags[f] === true; }); }
+  function maRefTemplate(flag) {
+    return "Red-flag finding on screening (" + flag + ") \u2014 presentation is outside the uncomplicated minor ailment scope. Referred for medical assessment; no claim submitted.";
+  }
+  function renderMA(p) {
+    var s = maSess(p);
+    var el = document.getElementById("sessionPage");
+    el.className = "page pf";
+    var TOTAL = 6;
+    var allergyTxt = p.allergies.length ? "Allergy: " + p.allergies.join(", ") : "No known allergies";
+    function gate() {
+      var items = [];
+      if (s.step === 1 && !s.cond) items.push("the condition");
+      if (s.step === 2) {
+        if (!s.attest) items.push("the self/family attestation");
+        if (!s.consent) items.push("consent type");
+        if (!s.modality) items.push("visit type");
+      }
+      if (s.step === 3) MA_FLAGS.forEach(function (f) { if (s.flags[f] === undefined) items.push(1); });
+      if (s.step === 4) {
+        if (!s.complaint.trim()) items.push("presenting complaint");
+        if (!s.history.trim()) items.push("history");
+        if (!s.findings.trim()) items.push("findings");
+        if (!s.rationale.trim()) items.push("clinical rationale");
+      }
+      if (s.step === 5) {
+        if (!s.outcome) items.push("the outcome");
+        else if (s.outcome === "prescribe") {
+          if (!s.rx.drug) items.push("a formulary drug");
+          if (!(+s.rx.qty > 0)) items.push("quantity");
+          if (!s.rx.edu.trim()) items.push("patient education");
+          if (!s.follow.trim()) items.push("follow-up plan");
+          if (!s.rx.sig) items.push("pharmacist signature");
+        } else if (s.outcome === "otc") {
+          if (!s.otcNote.trim()) items.push("the rationale");
+          if (!s.follow.trim()) items.push("follow-up plan");
+        } else {
+          if (!s.refNote2.trim()) items.push("the referral note");
+          if (!s.follow.trim()) items.push("follow-up plan");
+        }
+      }
+      return items;
+    }
+    var body = "", cta = "Continue", flagged = maFlagged(s);
+    if (s.closed === "referred") {
+      body = '<div class="step-title">Referred \u2014 no claim</div>' +
+        '<div class="card" style="padding:14px 16px">' +
+          '<div class="kv"><span class="k">Patient</span><span class="v">' + p.name + "</span></div>" +
+          '<div class="kv"><span class="k">Red flag</span><span class="v" style="color:#c43734">' + esc(s.closed2) + "</span></div>" +
+          '<div class="kv"><span class="k">Claim</span><span class="v">None \u2014 not permitted</span></div>' +
+        "</div>" +
+        '<div class="fieldlab">Referral note</div><div class="saved-note">' + esc(s.refNote) + "</div>" +
+        '<div class="note" style="margin-top:12px">The referral note is ready to print or fax from the desktop. (Simulated.)</div>';
+    } else if (s.step === 1) {
+      body = '<div class="step-title">What\u2019s the complaint?</div>' +
+        '<div class="note" style="margin:0 0 12px">28 conditions covered under the Ontario program (July 2026). Walk-in friendly \u2014 no record-based eligibility.</div>' +
+        '<div class="fieldlab" style="margin-top:0">Guided assessment</div>' +
+        '<button type="button" class="ma-guided' + (s.cond === MA_GUIDED ? " on" : "") + '" id="maGuided">Urinary tract infection (uncomplicated)<span class="gp">GUIDED</span></button>' +
+        '<div class="fieldlab">Billing-ready <span style="font-weight:500;color:#8A88A3">(guided flows coming soon)</span></div>' +
+        '<div class="ma-cond">' + MA28.map(function (c) { return '<div class="c" aria-disabled="true">' + c + "</div>"; }).join("") + "</div>";
+    } else if (s.step === 2) {
+      cta = "Record consent & begin assessment";
+      body = '<div class="step-title">Eligibility &amp; consent</div>' +
+        '<div class="card" style="padding:12px 16px;margin-bottom:14px">' +
+          '<div class="kv"><span class="k">Patient</span><span class="v">' + p.name + " \u00b7 " + age(p) + "</span></div>" +
+          '<div class="kv"><span class="k">Health card</span><span class="v">' + maskHC(p.healthCard) + "</span></div>" +
+          '<div class="kv"><span class="k">Allergies</span><span class="v">' + allergyTxt + "</span></div>" +
+          '<div class="kv"><span class="k">Coverage</span><span class="v">' + p.coverage + "</span></div>" +
+          '<div class="kv"><span class="k">Medications</span><span class="v">' + p.meds.length + " on file \u00b7 Fillware</span></div>" +
+        "</div>" +
+        '<div class="fieldlab" style="margin-top:0">Eligibility</div>' +
+        '<div class="card" style="padding:6px 16px;margin-bottom:14px">' +
+          '<div class="elig-row"><span class="elig-ic' + (p.healthCard ? "" : " warn") + '">' + (p.healthCard ? "\u2713" : "!") + "</span>" + (p.healthCard ? "Ontario health number valid" : "No health number on file \u2014 add it before claiming") + "</div>" +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>' + MA_GUIDED + ": 1 of 3 claims used in the past 365 days</div>" +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>Not an LTC resident of another provider</div>' +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>' + esc(PROFILE.name) + " \u2014 OCP Minor Ailments orientation completed</div>" +
+        "</div>" +
+        '<div class="card check-card" style="margin-bottom:14px"><label class="check-row"><input type="checkbox" id="maAttest"' + (s.attest ? " checked" : "") + ">I attest this patient is not myself or a family member</label></div>" +
+        '<div class="fieldlab">Consent</div>' + seglHtml("maConsent", ["Verbal consent", "Written consent"], s.consent) +
+        '<div class="fieldlab">Visit type</div>' + seglHtml("maMod", ["In person \u2014 $19", "Virtual \u2014 $15"], s.modality);
+    } else if (s.step === 3) {
+      cta = "Screening clear \u2014 continue";
+      body = '<div class="step-title">Red-flag screening</div>' +
+        '<div class="note" style="margin:0 0 10px">OCP/PHO algorithm \u00b7 ' + MA_GUIDED + '. Any \u201cYes\u201d means the patient must be referred and <b style="color:#c43734">no claim is permitted</b>.</div>' +
+        '<div class="card" style="padding:2px 16px">' + MA_FLAGS.map(function (f) {
+          var v = s.flags[f];
+          return '<div class="flag-row"><span>' + f + '</span><span class="ma-yn" data-flag="' + esc(f) + '">' +
+            '<button type="button" class="no' + (v === false ? " on" : "") + '" data-v="no">No</button>' +
+            '<button type="button" class="yes' + (v === true ? " on" : "") + '" data-v="yes">Yes</button></span></div>';
+        }).join("") + "</div>" +
+        (flagged.length
+          ? '<div class="redflag-card"><div class="t">Red flag: ' + esc(flagged[0]) + '</div>' +
+            '<div class="s">The patient does not have an uncomplicated minor ailment. Refer for medical assessment \u2014 a referral note is generated and no claim path exists for this encounter.</div>' +
+            '<div class="field-tools" style="margin:12px 0 6px"><span class="fieldlab" style="margin:0">Referral note</span><span class="tools"><button class="chip ai" id="maRefAI" type="button">\u2728 AI draft</button></span></div>' +
+            '<textarea class="tinput tarea" id="maRefNote" style="min-height:76px">' + esc(s.refNote || maRefTemplate(flagged[0])) + "</textarea>" +
+            '<button type="button" class="btn-red" id="maRefer">Refer &amp; close (no claim)</button></div>'
+          : "");
+    } else if (s.step === 4) {
+      cta = "Continue to outcome";
+      function fld(id, lab, ta, val, ph) {
+        return '<div class="field-tools" style="margin-top:14px"><span class="fieldlab" style="margin:0">' + lab + '</span><span class="tools"><button class="chip ai" type="button" data-madraft="' + id + '">\u2728 AI draft</button></span></div>' +
+          (ta ? '<textarea class="tinput tarea" id="' + id + '" style="min-height:76px" placeholder="' + (ph || "") + '">' + esc(val) + "</textarea>"
+              : '<input class="tinput" id="' + id + '" placeholder="' + (ph || "") + '" value="' + esc(val) + '">');
+      }
+      body = '<div class="step-title">Assessment</div>' +
+        fld("maComplaint", "Presenting complaint", false, s.complaint, "e.g., Dysuria and urinary frequency \u00d7 2 days") +
+        fld("maHistory", "History of presenting complaint", true, s.history) +
+        '<div class="card check-card" style="margin-top:14px"><label class="check-row"><input type="checkbox" id="maVerified"' + (s.verified ? " checked" : "") + ">Patient\u2019s self-diagnosis verified by assessment</label></div>" +
+        fld("maFindings", "Findings", true, s.findings) +
+        fld("maRationale", "Clinical rationale", true, s.rationale);
+    } else if (s.step === 5) {
+      function aiFld(id, lab, ta, val, ph) {
+        return '<div class="field-tools" style="margin-top:14px"><span class="fieldlab" style="margin:0">' + lab + '</span><span class="tools"><button class="chip ai" type="button" data-madraft2="' + id + '">\u2728 AI draft</button></span></div>' +
+          (ta ? '<textarea class="tinput tarea" id="' + id + '" style="min-height:76px" placeholder="' + (ph || "") + '">' + esc(val) + "</textarea>"
+              : '<input class="tinput" id="' + id + '" placeholder="' + (ph || "") + '" value="' + esc(val) + '">');
+      }
+      var sub = "";
+      if (s.outcome === "prescribe") {
+        var sel = MA_RX.filter(function (x) { return x.d === s.rx.drug; })[0];
+        cta = sel ? "Sign & prescribe " + sel.d : "Sign & prescribe";
+        sub = '<div class="fieldlab" style="margin-top:18px">Prescribe <span style="font-weight:500;color:#8A88A3">\u2014 only the ' + MA_RX.length + ' drugs legal for this condition are shown</span></div>' +
+          MA_RX.map(function (x) {
+            return '<button type="button" class="ma-out' + (s.rx.drug === x.d ? " on" : "") + '" data-marx="' + esc(x.d) + '" style="margin-top:8px"><div class="t">' + x.d + (x.first ? ' <span style="font-size:10.5px;font-weight:700;color:#fff;background:#8B7CF6;border-radius:999px;padding:3px 8px;vertical-align:2px">\u2605 first-line</span>' : "") + '</div><div class="s">' + x.dose + " \u00b7 " + x.dir + "</div></button>";
+          }).join("") +
+          '<div style="display:flex;gap:12px;margin-top:14px"><div style="flex:1"><div class="fieldlab" style="margin-top:0">Quantity</div><input class="tinput" id="maQty" type="number" min="1" inputmode="numeric" value="' + esc(s.rx.qty) + '"></div>' +
+          '<div style="flex:1.2"><div class="fieldlab" style="margin-top:0">Refills</div>' + seglHtml("maRefill", ["0", "1", "2"], s.rx.refills) + "</div></div>" +
+          (sel ? '<div class="saved-note" style="margin-top:12px"><b>Directions:</b> ' + sel.dir + "</div>" : "") +
+          aiFld("maEdu", "Patient education", true, s.rx.edu, "e.g., Take with food; complete the full course; expect improvement in 48h\u2026") +
+          aiFld("maFollow", "Follow-up plan", false, s.follow) +
+          '<div class="fieldlab">Pharmacist signature <span style="font-weight:500;color:#8A88A3">\u2014 signs the prescription</span></div>' +
+          '<div class="sigwrap"><canvas class="sigpad" id="maSig" style="height:150px"></canvas><div class="sighint" id="maSigHint">Sign here</div></div>' +
+          '<div class="sigrow" style="justify-content:space-between"><button type="button" class="pd-link" id="maSigFull" style="margin-left:0">Sign in full screen</button><button type="button" class="pd-link" id="maSigClear">Clear</button></div>';
+      } else if (s.outcome === "otc") {
+        cta = "Record outcome & continue";
+        sub = '<div class="fieldlab" style="margin-top:18px">No prescription \u2014 document rationale</div>' +
+          aiFld("maOtc", "Rationale", true, s.otcNote, "Rationale, OTC recommendation, non-pharmacological advice\u2026") +
+          aiFld("maFollow", "Follow-up plan", false, s.follow);
+      } else if (s.outcome === "refer") {
+        cta = "Record outcome & continue";
+        if (!s.refNote2) s.refNote2 = "Assessment completed \u2014 professional-judgment referral: presentation is outside the uncomplicated " + MA_GUIDED.toLowerCase() + " algorithm and requires assessment by a physician or nurse practitioner.";
+        sub = '<div class="fieldlab" style="margin-top:18px">Referral (professional judgment)</div>' +
+          aiFld("maRef2", "Referral note", true, s.refNote2) +
+          aiFld("maFollow", "Follow-up plan", false, s.follow);
+      }
+      body = '<div class="step-title">Outcome</div>' +
+        [["prescribe", "Prescribe", "From the legal formulary for this condition"],
+         ["otc", "OTC / non-drug advice", "No prescription \u2014 rationale documented"],
+         ["refer", "Refer (judgment)", "Completed assessment \u2014 billable with SSC 4"]].map(function (o) {
+          return '<button type="button" class="ma-out' + (s.outcome === o[0] ? " on" : "") + '" data-maout="' + o[0] + '"><div class="t">' + o[1] + '</div><div class="s">' + o[2] + "</div></button>";
+        }).join("") + sub;
+    } else {
+      cta = "Complete & file to Fillware";
+      var outLabel = s.outcome === "prescribe" ? "prescribed " + s.rx.drug : s.outcome === "otc" ? "OTC / non-drug advice documented" : "referred (SSC 4)";
+      body = '<div class="step-title">Documentation</div>' +
+        '<div class="card" style="padding:6px 16px">' +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>Consent recorded \u00b7 modality: ' + (s.modality && s.modality.indexOf("Virtual") >= 0 ? "virtual" : "in-person") + "</div>" +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>Assessment, care plan, and education documented</div>' +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>Outcome: <b>' + esc(outLabel) + "</b></div>" +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>' + (p.prescribers.length ? "Primary care provider on file \u2014 " + esc(p.prescribers[0].name) : "No PCP on file \u2014 pharmacist retains monitoring responsibility") + "</div>" +
+          '<div class="elig-row"><span class="elig-ic">\u2713</span>Day-3 follow-up task created' + (s.outcome === "prescribe" ? " (owed even if the Rx is filled elsewhere)" : "") + "</div>" +
+        "</div>" +
+        '<div class="note" style="margin-top:12px">Files the encounter to Fillware and creates a $' + s.fee + " claim (" + (s.modality || "") + "). Simulated.</div>";
+    }
+    var showNext = !s.closed && !(s.step === 3 && flagged.length);
+    var miss = gate();
+    el.innerHTML =
+      '<div class="section-head left"><button class="filter-btn" id="maBack" aria-label="Back">' + backSvg + "</button>" +
+      '<h2 class="screen-title">Minor Ailments</h2></div>' +
+      (s.cond && !s.closed ? '<div class="note" style="margin:-4px 0 8px;letter-spacing:0.06em;font-size:10.5px;font-weight:700;color:#8B7CF6;text-transform:uppercase">' + esc(s.cond) + " \u00b7 " + fmtDate(today) + " \u00b7 " + esc(p.name) + "</div>" : "") +
+      (s.closed ? "" : '<div class="pbar">' + Array.apply(null, Array(TOTAL)).map(function (_, i) { return "<span" + (i < s.step ? ' class="fill"' : "") + "></span>"; }).join("") + "</div>" +
+      '<div class="step-label">Step ' + s.step + " of " + TOTAL + "</div>") + body +
+      (showNext ? '<div class="next-fixed">' + (miss.length && s.step !== 3 ? gateHtml(miss) : (s.step === 3 && miss.length ? gateHtml(["answer all " + miss.length + " screening questions"]) : "")) +
+        '<button class="btn-primary" id="maNext"' + (miss.length ? " disabled" : "") + ">" + cta + " <i class=tri></i></button></div>"
+      : s.closed ? '<div class="next-fixed"><button class="btn-primary" id="maDone">Done</button></div>' : "");
+
+    // ---- wiring ----
+    document.getElementById("maBack").addEventListener("click", function () {
+      if (s.closed) { goBackFromSession(); return; }
+      if (s.step > 1) { s.step--; renderMA(p); } else goBackFromSession();
+    });
+    var g = document.getElementById("maGuided");
+    if (g) g.addEventListener("click", function () { s.cond = s.cond === MA_GUIDED ? null : MA_GUIDED; renderMA(p); });
+    var at = document.getElementById("maAttest");
+    if (at) at.addEventListener("change", function () { s.attest = at.checked; renderMA(p); });
+    el.querySelectorAll('[data-seg="maConsent"] button').forEach(function (b) {
+      b.addEventListener("click", function () { s.consent = b.getAttribute("data-v"); renderMA(p); });
+    });
+    el.querySelectorAll('[data-seg="maMod"] button').forEach(function (b) {
+      b.addEventListener("click", function () { s.modality = b.getAttribute("data-v"); s.fee = s.modality.indexOf("19") >= 0 ? 19 : 15; renderMA(p); });
+    });
+    el.querySelectorAll("[data-flag]").forEach(function (row) {
+      row.querySelectorAll("button").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var f = row.getAttribute("data-flag");
+          s.flags[f] = b.getAttribute("data-v") === "yes";
+          if (!maFlagged(s).length) s.refNote = "";
+          renderMA(p);
+        });
+      });
+    });
+    var rn = document.getElementById("maRefNote");
+    if (rn) rn.addEventListener("input", function () { s.refNote = rn.value; s.refTouched = true; });
+    var ra = document.getElementById("maRefAI");
+    if (ra) ra.addEventListener("click", function () {
+      var f = maFlagged(s)[0];
+      s.refNote = maRefTemplate(f) + " " + age(p) + "-year-old; " + (p.allergies.length ? "allergies: " + p.allergies.join(", ") + "; " : "no known allergies; ") + p.meds.length + " current medications on file. Assessment for " + MA_GUIDED.toLowerCase() + " stopped at screening.";
+      renderMA(p);
+    });
+    var rf = document.getElementById("maRefer");
+    if (rf) rf.addEventListener("click", function () {
+      s.refNote = (document.getElementById("maRefNote").value || "").trim() || maRefTemplate(maFlagged(s)[0]);
+      s.closed = "referred"; s.closed2 = maFlagged(s)[0];
+      renderMA(p);
+    });
+    [["maComplaint", "complaint"], ["maHistory", "history"], ["maFindings", "findings"], ["maRationale", "rationale"]].forEach(function (f) {
+      var inp = document.getElementById(f[0]);
+      if (inp) inp.addEventListener("input", function () {
+        s[f[1]] = inp.value;
+        var miss2 = gate();
+        var gEl = document.querySelector("#sessionPage .next-fixed");
+        if (gEl) gEl.innerHTML = (miss2.length ? gateHtml(miss2) : "") + '<button class="btn-primary" id="maNext"' + (miss2.length ? " disabled" : "") + ">Continue to outcome <i class=tri></i></button>";
+        bindMaNext();
+      });
+    });
+    var vf = document.getElementById("maVerified");
+    if (vf) vf.addEventListener("change", function () { s.verified = vf.checked; });
+    el.querySelectorAll("[data-madraft]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-madraft");
+        var base = "Symptoms consistent with " + MA_GUIDED.toLowerCase() + " \u00d7 2 days.";
+        if (id === "maComplaint") s.complaint = base;
+        if (id === "maHistory") s.history = base + " Gradual onset, no prior episode in the past year, no self-treatment tried to date. Denies systemic symptoms. " + (p.allergies.length ? "Allergies: " + p.allergies.join(", ") + "." : "No known allergies.");
+        if (id === "maFindings") s.findings = "Presentation consistent with " + MA_GUIDED.toLowerCase() + ". Red-flag screening completed and negative (7 items cleared)" + (s.verified ? "; patient\u2019s self-diagnosis verified on assessment." : ".");
+        if (id === "maRationale") s.rationale = "Uncomplicated presentation appropriate for pharmacist management under the Ontario minor ailments program: red flags absent, symptoms typical, no complicating factors on history. " + (p.allergies.length ? "Allergies noted: " + p.allergies.join(", ") + "." : "No known allergies.");
+        renderMA(p);
+      });
+    });
+    el.querySelectorAll("[data-maout]").forEach(function (b) {
+      b.addEventListener("click", function () { s.outcome = b.getAttribute("data-maout"); renderMA(p); });
+    });
+    function refreshNext() {
+      var gEl = document.querySelector("#sessionPage .next-fixed");
+      if (!gEl) return;
+      var miss3 = gate();
+      var label = document.getElementById("maNext") ? document.getElementById("maNext").textContent.replace(/\s*$/, "") : "Continue";
+      var sel3 = MA_RX.filter(function (x) { return x.d === s.rx.drug; })[0];
+      if (s.step === 5) label = s.outcome === "prescribe" ? (sel3 ? "Sign & prescribe " + sel3.d : "Sign & prescribe") : "Record outcome & continue";
+      gEl.innerHTML = (miss3.length ? gateHtml(miss3) : "") + '<button class="btn-primary" id="maNext"' + (miss3.length ? " disabled" : "") + ">" + label + " <i class=tri></i></button>";
+      bindMaNext();
+    }
+    el.querySelectorAll("[data-marx]").forEach(function (b) {
+      b.addEventListener("click", function () { s.rx.drug = b.getAttribute("data-marx"); renderMA(p); });
+    });
+    var q1 = document.getElementById("maQty");
+    if (q1) q1.addEventListener("input", function () { s.rx.qty = q1.value; refreshNext(); });
+    el.querySelectorAll('[data-seg="maRefill"] button').forEach(function (b) {
+      b.addEventListener("click", function () { s.rx.refills = b.getAttribute("data-v"); renderMA(p); });
+    });
+    var edu = document.getElementById("maEdu");
+    if (edu) edu.addEventListener("input", function () { s.rx.edu = edu.value; refreshNext(); });
+    var fol = document.getElementById("maFollow");
+    if (fol) fol.addEventListener("input", function () { s.follow = fol.value; refreshNext(); });
+    var otc1 = document.getElementById("maOtc");
+    if (otc1) otc1.addEventListener("input", function () { s.otcNote = otc1.value; refreshNext(); });
+    var ref2 = document.getElementById("maRef2");
+    if (ref2) ref2.addEventListener("input", function () { s.refNote2 = ref2.value; refreshNext(); });
+    el.querySelectorAll("[data-madraft2]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-madraft2");
+        var sel2 = MA_RX.filter(function (x) { return x.d === s.rx.drug; })[0];
+        if (id === "maEdu") s.rx.edu = sel2
+          ? "Take " + sel2.d + " " + sel2.dir + "; complete the full course even if symptoms improve. Expect improvement within 48 hours; return or seek medical care if symptoms worsen, fever develops, or there is no improvement by day 3." + (p.allergies.length ? " Allergies on file: " + p.allergies.join(", ") + "." : "")
+          : "Complete the full course even if symptoms improve; return if symptoms worsen or persist past day 3.";
+        if (id === "maFollow") s.follow = "Pharmacist to call the patient on day 3 to confirm symptom improvement and tolerance.";
+        if (id === "maOtc") s.otcNote = "Symptoms mild and early; patient prefers to defer antibiotics. Recommended increased fluid intake and analgesia (acetaminophen or ibuprofen) as needed; reviewed hygiene measures. Advised to return or seek care if symptoms persist beyond 48 hours, worsen, or fever develops \u2014 prescription remains available on reassessment.";
+        if (id === "maRef2") s.refNote2 = "Professional-judgment referral after completed assessment: presentation is outside the uncomplicated " + MA_GUIDED.toLowerCase() + " algorithm and requires assessment by a physician or nurse practitioner. " + age(p) + "-year-old; " + (p.allergies.length ? "allergies: " + p.allergies.join(", ") + "; " : "no known allergies; ") + p.meds.length + " current medications on file.";
+        renderMA(p);
+      });
+    });
+    var sc = document.getElementById("maSig");
+    if (sc) {
+      var maPad = attachSigPad(sc, document.getElementById("maSigHint"), s.rx.sig, function (inked) {
+        s.rx.sig = inked ? maPad.dataUrl() : null;
+        refreshNext();
+      });
+      var scl = document.getElementById("maSigClear");
+      if (scl) scl.addEventListener("click", function () { maPad.clear(); s.rx.sig = null; refreshNext(); });
+      var sfl = document.getElementById("maSigFull");
+      if (sfl) sfl.addEventListener("click", function () {
+        openSigFullscreen(p, "Pharmacist signature", maPad.inked() ? maPad.dataUrl() : null, function (url) {
+          s.rx.sig = url; maPad.load(url); refreshNext();
+        });
+      });
+    }
+    function bindMaNext() {
+      var nx = document.getElementById("maNext");
+      if (nx) nx.addEventListener("click", function () {
+        if (gate().length) return;
+        if (s.step === 6) {
+          BILLING.unshift({
+            patient: p.name,
+            service: "Minor Ailment \u2014 UTI" + (s.outcome === "refer" ? " (SSC 4)" : ""),
+            fee: s.fee || 19,
+            status: "Ready", cls: "ready", date: fmtDate(today),
+          });
+          delete MA[p.id];
+          renderBilling();
+          return;
+        }
+        s.step++; renderMA(p);
+      });
+    }
+    bindMaNext();
+    var dn = document.getElementById("maDone");
+    if (dn) dn.addEventListener("click", goBackFromSession);
+  }
+
+  // ---------- Reusable "New patient" action (top-right of every patient-selection screen) ----------
+  var plusSm = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg>';
+  function newPatBtn(ctx) {
+    return '<button type="button" class="newpat-btn" data-newpat="' + ctx + '">' + plusSm + "New patient</button>";
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("[data-newpat]") : null;
+    if (b) openNewPatientSheet(b.getAttribute("data-newpat"));
+  });
+  // Entry: chooser — scanning is the PRIMARY action, manual entry secondary.
+  function openNewPatientSheet(ctx) {
+    sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">New patient</div>' +
+      '<div class="sh-s">Fastest: scan the patient\u2019s OHIP card with the camera.</div>' +
+      '<button class="btn-primary" id="npScan" type="button" style="margin-top:8px">Scan OHIP card</button>' +
+      '<button class="btn-outline" id="npManual" type="button" style="display:block;width:100%;margin-top:10px">Enter details manually</button>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    document.getElementById("npScan").addEventListener("click", function () { closeSheet(); openScanOverlay(ctx); });
+    document.getElementById("npManual").addEventListener("click", function () { closeSheet(); openManualPatientSheet(ctx); });
+  }
+
+  // ---------- OHIP card scanner (real camera when available; simulated feed otherwise) ----------
+  var SCAN_TIMEOUT = 10000; // no capture within this window -> "couldn't read" state
+  var SCAN_DEMO = { name: "John Smith", dob: "1972-06-14", ohipDigits: "4829176503", version: "JS", expiry: "14 / 06 / 2029" };
+  function openScanOverlay(ctx) {
+    var ov = document.createElement("div");
+    ov.className = "scan-ov"; ov.id = "scanOverlay";
+    document.querySelector(".screen").appendChild(ov);
+    var stream = null, timer = null;
+    function stopCam() { if (stream) { stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; } }
+    function close() { stopCam(); clearTimeout(timer); ov.remove(); }
+    function head(title) {
+      return '<div class="scan-head"><div class="t">' + title + '</div><button class="scan-x" type="button" id="scanX" aria-label="Close">\u00d7</button></div>';
+    }
+    function bindX() { document.getElementById("scanX").addEventListener("click", close); }
+    var camSvg = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h2.5l1.7-2.6a1.5 1.5 0 0 1 1.25-.67h5.1c.5 0 .97.25 1.25.67L17.5 8H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z"/><circle cx="12" cy="14" r="3.6"/></svg>';
+
+    // State 1 — camera permission
+    function statePermission() {
+      clearTimeout(timer);
+      ov.innerHTML = head("Scan OHIP card") +
+        '<div class="scan-body"><div class="scan-perm-ic">' + camSvg + "</div>" +
+        '<div class="scan-h">Camera access required</div>' +
+        '<div class="scan-p">Allow access to scan the patient\u2019s OHIP card. The image is read on this device and never stored.</div>' +
+        '<button class="btn-primary scan-cta" id="scanAllow" type="button">Allow camera access</button></div>';
+      bindX();
+      document.getElementById("scanAllow").addEventListener("click", function () {
+        var giveUp = setTimeout(function () { stateScanner(null); }, 2500); // some hosts never answer
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function (st) { clearTimeout(giveUp); stream = st; stateScanner(st); })
+            .catch(function () { clearTimeout(giveUp); stateScanner(null); }); // denied/unavailable -> simulated feed
+        } else { clearTimeout(giveUp); stateScanner(null); }
+      });
+    }
+
+    // State 2 — scanner frame
+    function stateScanner(st) {
+      ov.innerHTML = head("Scan OHIP card") +
+        '<div class="scan-body">' +
+        '<div class="scan-cam">' + (st ? '<video autoplay playsinline muted></video>' : '<div class="sim"></div>') +
+          '<span class="scan-corner tl"></span><span class="scan-corner tr"></span><span class="scan-corner bl"></span><span class="scan-corner br"></span></div>' +
+        '<div class="scan-hint">Position the card inside the frame</div>' +
+        (st ? "" : '<div class="scan-sub">Camera unavailable here \u2014 simulated preview</div>') +
+        '<button class="scan-shutter" id="scanShot" type="button" aria-label="Capture the card"></button></div>';
+      bindX();
+      if (st) { var v = ov.querySelector("video"); v.srcObject = st; }
+      document.getElementById("scanShot").addEventListener("click", function () { clearTimeout(timer); stateProcessing(true); });
+      clearTimeout(timer);
+      timer = setTimeout(function () { stateProcessing(false); }, SCAN_TIMEOUT); // nothing captured in time
+    }
+
+    // State 3 — processing
+    function stateProcessing(ok) {
+      ov.innerHTML = head("Scan OHIP card") +
+        '<div class="scan-body"><div class="scan-spin-wrap"><div class="scan-spin" role="status" aria-label="Reading card"></div></div>' +
+        '<div class="scan-h">Reading card\u2026</div></div>';
+      bindX();
+      timer = setTimeout(function () { ok ? stateSuccess() : stateFailed(); }, 1400);
+    }
+
+    // State 4 — extracted details
+    function stateSuccess() {
+      stopCam();
+      var d = SCAN_DEMO;
+      var ohipFmt = d.ohipDigits.slice(0, 4) + "-" + d.ohipDigits.slice(4, 7) + "-" + d.ohipDigits.slice(7) + " " + d.version;
+      ov.innerHTML = head("Patient details") +
+        '<div class="scan-body">' +
+        '<div class="scan-kv">' +
+          '<div class="kv"><span class="k">Name</span><span class="v">' + d.name + "</span></div>" +
+          '<div class="kv"><span class="k">Date of birth</span><span class="v">' + fmtDate(fromIso(d.dob)) + "</span></div>" +
+          '<div class="kv"><span class="k">OHIP number</span><span class="v">' + ohipFmt + "</span></div>" +
+          '<div class="kv"><span class="k">Expiry date</span><span class="v">' + d.expiry + "</span></div>" +
+        "</div>" +
+        '<div class="scan-p">Check the details against the card before creating the record.</div>' +
+        '<button class="btn-primary scan-cta" id="scanConfirm" type="button">Confirm &amp; create patient</button>' +
+        '<button type="button" class="auth-link" id="scanEdit" style="margin-top:14px;color:#B9AEFF">Edit details manually</button></div>';
+      bindX();
+      document.getElementById("scanConfirm").addEventListener("click", function () {
+        close();
+        createPatientRecord({ name: d.name, dob: d.dob, healthCard: d.ohipDigits + d.version, phone: "" }, ctx);
+      });
+      document.getElementById("scanEdit").addEventListener("click", function () {
+        close();
+        openManualPatientSheet(ctx, { name: d.name, dob: d.dob, hc: d.ohipDigits + d.version });
+      });
+    }
+
+    // State 5 — scan failed
+    function stateFailed() {
+      stopCam();
+      ov.innerHTML = head("Scan OHIP card") +
+        '<div class="scan-body"><div class="scan-perm-ic" style="background:rgba(224,64,61,0.16);color:#ff9d9b">' + camSvg + "</div>" +
+        '<div class="scan-h">We couldn\u2019t read the card.</div>' +
+        '<div class="scan-p">Make sure the card fills the frame, avoid glare, and hold steady.</div>' +
+        '<button class="btn-primary scan-cta" id="scanRetry" type="button">Try again</button>' +
+        '<button class="btn-outline scan-cta" id="scanManual" type="button" style="margin-top:10px;background:transparent;color:#fff;border-color:rgba(255,255,255,0.35)">Enter manually</button></div>';
+      bindX();
+      document.getElementById("scanRetry").addEventListener("click", function () { statePermission(); });
+      document.getElementById("scanManual").addEventListener("click", function () { close(); openManualPatientSheet(ctx); });
+    }
+
+    statePermission();
+  }
+
+  // Shared creation + context routing (used by both scan-confirm and the manual form)
+  function createPatientRecord(f, ctx) {
+    var np = {
+      id: "p" + Date.now(),
+      name: f.name, dob: f.dob, healthCard: f.healthCard || "", phone: f.phone || "",
+      allergies: [], conditions: [], meds: [], lastMedsCheck: null,
+      vaccines: [], prescribers: [], coverage: "Not on file",
+      appointmentToday: null, maReview: null, injections: [],
+    };
+    PATIENTS.unshift(np);
+    if (ctx.indexOf("mod:") === 0) enterSession(ctx.slice(4), np.id, sessionReturn);
+    else if (ctx === "book") { BOOK.pid = np.id; BOOK.q = ""; renderBooking(); }
+    else { renderPatients(); openPatient(np.id); }
+  }
+
+  function openManualPatientSheet(ctx, pre) {
+    pre = pre || {};
+    sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">New patient</div>' +
+      '<div class="sh-s">Enough to start the service — the rest of the record can be completed later.</div>' +
+      '<div class="fld" style="margin-top:6px"><label for="npName">Full name</label><input class="tinput" id="npName" type="text" placeholder="e.g., Mona Aziz" autocomplete="off" value="' + esc(pre.name || "") + '"><div class="ferr" id="npNameErr">Enter the patient’s full name.</div></div>' +
+      '<div class="fld" style="margin-top:12px"><label for="npDob">Date of birth</label><input class="tinput" id="npDob" type="date" max="' + isoDate(today) + '" value="' + esc(pre.dob || "") + '"><div class="ferr" id="npDobErr">Enter a birth date (not in the future).</div></div>' +
+      '<div class="fld" style="margin-top:12px"><label for="npPhone">Phone <span style="font-weight:500;color:#8A88A3">(optional)</span></label><input class="tinput" id="npPhone" type="tel" inputmode="tel" placeholder="416-555-0000"></div>' +
+      '<div class="fld" style="margin-top:12px"><label for="npHC">Health card <span style="font-weight:500;color:#8A88A3">(optional)</span></label><input class="tinput" id="npHC" type="text" placeholder="10 digits + version code" value="' + esc(pre.hc || "") + '"></div>' +
+      '<div id="npGate" style="margin-top:12px"></div>' +
+      '<button class="btn-primary" id="npGo" type="button" style="margin-top:6px" disabled>Create patient</button>' +
+      '<button class="btn-outline" id="npCancel" type="button" style="display:block;width:100%;margin-top:10px">Cancel</button>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    var touched = {};
+    function items() {
+      var out = [];
+      if (document.getElementById("npName").value.trim().length < 2) out.push("full name");
+      var d = document.getElementById("npDob").value;
+      if (!d || dayDiff(fromIso(d), today) > 0) out.push("date of birth");
+      return out;
+    }
+    function sync() {
+      var miss = items();
+      document.getElementById("npGate").innerHTML = miss.length ? gateHtml(miss) : "";
+      document.getElementById("npGo").disabled = !!miss.length;
+      document.getElementById("npName").classList.toggle("invalid", touched.name && miss.indexOf("full name") >= 0);
+      document.getElementById("npNameErr").classList.toggle("show", touched.name && miss.indexOf("full name") >= 0);
+      document.getElementById("npDob").classList.toggle("invalid", touched.dob && miss.indexOf("date of birth") >= 0);
+      document.getElementById("npDobErr").classList.toggle("show", touched.dob && miss.indexOf("date of birth") >= 0);
+    }
+    document.getElementById("npName").addEventListener("input", function () { touched.name = true; sync(); });
+    document.getElementById("npDob").addEventListener("change", function () { touched.dob = true; sync(); });
+    document.getElementById("npCancel").addEventListener("click", closeSheet);
+    document.getElementById("npGo").addEventListener("click", function () {
+      if (items().length) return;
+      var f = {
+        name: document.getElementById("npName").value.trim(),
+        dob: document.getElementById("npDob").value,
+        healthCard: document.getElementById("npHC").value.trim(),
+        phone: document.getElementById("npPhone").value.trim(),
+      };
+      closeSheet();
+      createPatientRecord(f, ctx);
+    });
+    sync();
+  }
+
   function enterSession(mod, pid, from) {
     sessionReturn = from || null;
     var p = pid ? byId(pid) : null;
@@ -3840,10 +4516,15 @@
       showScreen("scrSession");
       return;
     }
+    if (mod === "ailments" && p) {
+      renderMA(p);
+      showScreen("scrSession");
+      return;
+    }
     document.getElementById("sessionPage").className = "page";
     var html =
       '<div class="section-head left"><button class="filter-btn" id="backSess" aria-label="Back">' + backSvg + "</button>" +
-      '<h2 class="screen-title">' + MODULES[mod].name + "</h2></div>";
+      '<h2 class="screen-title">' + MODULES[mod].name + "</h2>" + newPatBtn("mod:" + mod) + "</div>";
 
     if (p) {
       var st = moduleState(mod, p);
@@ -5304,7 +5985,7 @@
     var list = !p ? PATIENTS.filter(function (x) { return matches(x, BOOK.q); }).slice(0, 5) : [];
     el.innerHTML =
       '<div class="section-head left"><button class="filter-btn" id="bkBack" aria-label="Back to Calendar">' + backSvg + "</button>" +
-      '<h2 class="screen-title">New appointment</h2></div>' +
+      '<h2 class="screen-title">New appointment</h2>' + newPatBtn("book") + "</div>" +
       '<div class="fieldlab" style="margin-top:6px">Patient</div>' +
       (p
         ? '<div class="card txn-card"><div class="txn"><span class="ic ini">' + initials(p) + "</span>" +
@@ -5998,7 +6679,13 @@
     if (m) {
       if (m[2] !== "none") {
         var pp = byId(m[2]);
-        if (pp && m[3]) preState(pp).step = +m[3];
+        if (pp && m[3] && m[1] === "ailments") {
+          var ms = maSess(pp); ms.step = +m[3];
+          if (ms.step > 1) ms.cond = MA_GUIDED;
+          if (ms.step > 2) { ms.attest = true; ms.consent = "Verbal consent"; ms.modality = "In person \u2014 $19"; ms.fee = 19; }
+          if (ms.step > 3) MA_FLAGS.forEach(function (f) { ms.flags[f] = false; });
+          if (ms.step > 4) { ms.complaint = "x"; ms.history = "x"; ms.findings = "x"; ms.rationale = "x"; }
+        } else if (pp && m[3]) preState(pp).step = +m[3];
         if (pp && m[4]) {
           preState(pp).done = true;
           if (m[4] === "ackphone") preState(pp).modality = "Phone";
