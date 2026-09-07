@@ -172,6 +172,10 @@
 - **PMR progressive disclosure** (`renderPMR`): the auto-filled med record is collapsed to a `#pmrToggle` summary row ("Medication record · 6 medications + N OTC · auto-filled · tap to review", `aria-expanded`, `w.pmr.recOpen`); actions (recommendations/signature/confirm) sit in the first viewport.
 - **Fresh visits go straight to Sign in** — the gate's fallback is `goAuth()`; the 3 intro slides survive ONLY at `#onboarding`.
 
+## Hero avatar → Settings (2026-09-07)
+- The home hero avatar is a `<button id="heroAvatar">` (hover/focus-visible/active states) → `renderSettings("scrHome")`. `renderSettings(from)` is origin-aware via `settingsReturn`: Back returns to Home when opened from the avatar, otherwise to More (More-hub rows and the `#settings` deep link pass an event/nothing → default More, unchanged).
+- `syncHero()` fills the avatar initials + greeting name from `PROFILE` (was hardcoded "OB / Oliver Bennet" from the fintech reference) at boot and after a pharmacist switch in `openSwitchSheet`.
+
 ## More hub + Settings (2026-08-16)
 - The **More** tab opens `#scrMore` (`renderMore`) — a MINIMAL hub built only so Settings is reachable (there was no More hub in this prototype before): rows for existing destinations Billing, Notifications, Settings. Do not expand it without a request.
 - **Settings** (`#scrSettings`, `renderSettings`, deep link `#settings`; `#more` for the hub): back button (aria "Back to More") + "Settings" title per the standard nested header (`section-head left` + `filter-btn` + `screen-title`); identity card (initials `.id-ava` 56px, "Name, RPh", pharmacy, "Edit profile ›" row → `renderEditProfile` placeholder); **AI draft style** segmented `Short & numeric | Detailed` (individual-level only — no organization-level control here by design); **Appearance** segmented `Light | Dark | System` (default System); neutral outlined **Sign out** (`.btn-outline`) → clears `agilerx.signedin`, returns to Sign in.
