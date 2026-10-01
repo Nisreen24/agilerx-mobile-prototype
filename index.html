@@ -1997,6 +1997,125 @@
   button.id-card:active { background: #F1EFF9; }
   .id-cap { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8A88A3; margin-bottom: 2px; }
   .id-card .chev { color: #C4C1D9; flex-shrink: 0; transform: rotate(90deg); }
+  /* ---------- Claim packet round (2026-09-29): switches, work queue, claim detail, vaccination session, prescriber sheet ---------- */
+  .sw { flex-shrink: 0; width: 46px; height: 28px; border-radius: 999px; border: none; background: #DDD9F0; position: relative; cursor: pointer; padding: 0; transition: background 0.18s ease; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(58, 50, 110, 0.25); transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .sw[aria-checked="true"] { background: #8B7CF6; }
+  .sw[aria-checked="true"]::after { transform: translateX(18px); }
+  .sw:hover { filter: brightness(0.97); }
+  .sw:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .sw:active::after { transform: scale(0.92); }
+  .sw[aria-checked="true"]:active::after { transform: translateX(18px) scale(0.92); }
+  .sw:disabled { opacity: 0.45; cursor: not-allowed; }
+  .set-card { padding: 6px 16px 8px; }
+  .set-row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid #ECEAF5; min-height: 46px; }
+  .set-row:first-child { border-top: 0; }
+  .set-row .st { flex: 1; min-width: 0; }
+  .set-row .st .t { font-size: 14px; font-weight: 700; color: #2B2A44; }
+  .set-row .st .d { font-size: 12.5px; color: #8A88A3; margin-top: 3px; line-height: 1.45; }
+  .set-row .st .d.amber { color: #b8791a; font-weight: 600; }
+  .set-row .st .d.red { color: #c43734; font-weight: 600; }
+  .set-row .st .d.green { color: #1db871; font-weight: 600; }
+  .set-row .val { font-size: 13px; font-weight: 700; color: #8B7CF6; display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+  .set-row .val.muted { color: #8A88A3; }
+  .set-row .val .chev { color: #C4C1D9; }
+  .set-row[role="button"] { cursor: pointer; }
+  .set-row[role="button"]:hover .t { color: #8B7CF6; }
+  .set-row[role="button"]:focus-visible { outline: 2px solid #8B7CF6; outline-offset: -2px; border-radius: 10px; }
+  .set-row .mini { font-family: inherit; font-size: 13px; font-weight: 700; color: #8B7CF6; background: #EEEBFC; border: none; border-radius: 10px; padding: 9px 14px; cursor: pointer; flex-shrink: 0; min-height: 40px; }
+  .set-row .mini:hover { background: #E4DFFA; }
+  .set-row .mini:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .set-row .mini:active { transform: scale(0.96); }
+  .set-row .mini.red { color: #c43734; background: #fdecec; }
+  .stat-pill.bad { background: #fdecec; color: #c43734; }
+  .qf-row.scroll { overflow-x: auto; scrollbar-width: none; margin-left: -20px; margin-right: -20px; padding: 0 20px; }
+  .qf-row.scroll::-webkit-scrollbar { display: none; }
+  .qf-row.scroll .qf { flex: 0 0 auto; padding: 0 14px; }
+  .claim-note { font-size: 11.5px; font-weight: 700; margin-top: 4px; }
+  .claim-note.amber { color: #b8791a; }
+  .claim-note.red { color: #e0403d; }
+  .claim-note.green { color: #1db871; }
+  .bill-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; padding: 7px 12px; border-radius: 10px; background: #fdf0dc; color: #8a5a10; margin-top: 12px; line-height: 1.3; }
+  .bill-badge.red { background: #fdecec; color: #c43734; }
+  .bill-badge.green { background: #eafaf3; color: #1db871; }
+  .bill-badge.grey { background: #F1EFF9; color: #6E6C88; }
+  .claim-head { display: flex; align-items: flex-start; gap: 12px; }
+  .claim-head .ic { width: 42px; height: 42px; border-radius: 50%; background: #EEEBFC; color: #8B7CF6; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .claim-head .cn { font-size: 16px; font-weight: 700; color: #2B2A44; }
+  .claim-head .cs { font-size: 12.5px; color: #6E6C88; margin-top: 2px; }
+  .claim-head .fee { margin-left: auto; font-size: 18px; font-weight: 800; color: #1db871; flex-shrink: 0; }
+  .tl { display: flex; align-items: flex-start; margin: 16px 0 2px; }
+  .tl .n { flex: 1; text-align: center; position: relative; font-size: 10.5px; font-weight: 700; color: #8A88A3; letter-spacing: 0.02em; line-height: 1.2; }
+  .tl .n i { display: block; width: 12px; height: 12px; border-radius: 50%; background: #DDD9F0; margin: 0 auto 6px; position: relative; z-index: 1; box-shadow: 0 0 0 3px #fff; }
+  .tl .n::before { content: ""; position: absolute; top: 5px; left: -50%; width: 100%; height: 2px; background: #ECEAF5; }
+  .tl .n:first-child::before { display: none; }
+  .tl .n.done i { background: #1db871; }
+  .tl .n.done { color: #2B2A44; }
+  .tl .n.done::before { background: #bfe9d8; }
+  .tl .n.cur i { background: #8B7CF6; box-shadow: 0 0 0 3px #fff, 0 0 0 5px #E4DFFA; }
+  .tl .n.cur { color: #8B7CF6; }
+  .tl .n.cur::before { background: #bfe9d8; }
+  .tl .n.bad i { background: #e0403d; }
+  .tl .n.bad { color: #c43734; }
+  .doc-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid #ECEAF5; }
+  .doc-row:first-child { border-top: 0; }
+  .doc-row .di { width: 34px; height: 34px; border-radius: 10px; background: #EEEBFC; color: #8B7CF6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .doc-row .dt { font-size: 13.5px; font-weight: 700; color: #2B2A44; }
+  .doc-row .dd { font-size: 12px; color: #8A88A3; margin-top: 2px; line-height: 1.4; }
+  .doc-row .pdf { margin-left: auto; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; color: #8A88A3; border: 1px solid #ECEAF5; border-radius: 6px; padding: 2px 6px; flex-shrink: 0; }
+  .vq { background: #fff; border: 1.5px solid #ECEAF5; border-radius: 16px; padding: 12px 14px; margin-top: 10px; }
+  .vq.bad { border-color: #e0403d; background: #fff8f8; }
+  .vq .q { font-size: 13.5px; color: #2B2A44; line-height: 1.45; }
+  .vq .ma-yn { margin-top: 10px; width: max-content; }
+  .vq .ma-yn button { min-width: 66px; }
+  .prod { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: #fff; border: 1.5px solid #ECEAF5; border-radius: 16px; padding: 13px 14px; margin-top: 10px; font-family: inherit; cursor: pointer; transition: transform 0.12s ease, border-color 0.15s ease; }
+  .prod:hover { border-color: #CFC7F5; }
+  .prod:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .prod:active { transform: scale(0.98); }
+  .prod.on { background: #EEEBFC; border-color: #8B7CF6; }
+  .prod .pt { font-size: 14.5px; font-weight: 700; color: #2B2A44; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .prod .pt .stat-pill { margin-top: 0; }
+  .prod .ps { font-size: 12.5px; color: #6E6C88; margin-top: 3px; }
+  .prod .pf { margin-left: auto; font-size: 15px; font-weight: 800; color: #1db871; flex-shrink: 0; }
+  .prod .pf.na { color: #8A88A3; font-size: 12px; font-weight: 600; text-align: right; max-width: 40%; }
+  .fax-badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 6px 11px; border-radius: 10px; margin-top: 10px; }
+  .fax-badge.warn { background: #fdf0dc; color: #8a5a10; }
+  .fax-badge.ok { background: #eafaf3; color: #1db871; }
+  .role-help { font-size: 12.5px; color: #8A88A3; margin: 8px 0 0; line-height: 1.5; }
+  .role-help.amber { color: #b8791a; font-weight: 600; }
+  .fee-row { padding: 13px 16px; margin-bottom: 10px; }
+  .fee-row.ph { border: 1px solid #f6d3a0; }
+  .fee-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .fee-top .t { font-size: 15px; font-weight: 700; color: #2B2A44; }
+  .fee-amt { font-size: 15px; font-weight: 700; color: #2B2A44; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .fee-none { font-size: 14px; font-weight: 700; color: #b8791a; flex-shrink: 0; }
+  .fee-meta { font-size: 12.5px; color: #6E6C88; margin-top: 5px; line-height: 1.45; }
+  .fee-sub { font-size: 11.5px; color: #8A88A3; margin-top: 4px; }
+  .fee-sub .amber { color: #b8791a; }
+  .fee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .fee-grid .fieldlab { margin-top: 14px; }
+  .pres-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; text-align: left; background: #fff; border: 1.5px solid #ECEAF5; border-radius: 14px; padding: 11px 14px; margin-top: 8px; font-family: inherit; cursor: pointer; }
+  .pres-row:hover { border-color: #CFC7F5; }
+  .pres-row:focus-visible { outline: 2px solid #8B7CF6; outline-offset: 2px; }
+  .pres-row:active { transform: scale(0.985); }
+  .pres-row.on { background: #EEEBFC; border-color: #8B7CF6; }
+  .pres-row .pn { font-size: 14px; font-weight: 700; color: #2B2A44; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .pres-row .pn .stat-pill { margin-top: 0; }
+  .pres-row .pm { font-size: 12px; color: #6E6C88; margin-top: 2px; line-height: 1.45; }
+  .pres-row .pm.nofax { color: #b8791a; font-weight: 600; }
+  .pres-row .ok { margin-left: auto; color: #8B7CF6; flex-shrink: 0; display: flex; }
+  .pres-row.static { cursor: default; }
+  .pres-row.static:hover { border-color: #ECEAF5; }
+  .pres-row.static:active { transform: none; }
+  .dev-card { background: rgba(255, 255, 255, 0.82); border: 1px solid #DDD9F0; border-radius: 18px; padding: 16px; margin-top: 14px; text-align: left; }
+  .dev-card .t { font-size: 15px; font-weight: 700; color: #2B2A44; }
+  .dev-card .d { font-size: 12.5px; color: #6E6C88; line-height: 1.55; margin-top: 5px; }
+  .dev-card .row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 12px; font-size: 13.5px; font-weight: 600; color: #2B2A44; }
+  .bio-duo[hidden], .bio-or[hidden] { display: none !important; }
+  .pre .btn-grad.plain::after { display: none; }
+  .out-msg { background: #fdf0dc; color: #8a5a10; border-radius: 12px; padding: 12px 14px; font-size: 13px; font-weight: 600; line-height: 1.5; margin-top: 14px; text-align: left; }
+  .out-msg.q { background: rgba(255, 255, 255, 0.82); color: #3A3956; font-weight: 500; border: 1px solid #DDD9F0; }
+  .out-msg .lab { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8A88A3; margin-bottom: 4px; }
   /* Bottom sheet */
   .sheet-scrim { position: absolute; inset: 0; background: rgba(43, 42, 68, 0.35); z-index: 40; }
   .sheet-scrim[hidden] { display: none; }
@@ -2261,6 +2380,7 @@
     <div class="scroll" id="scrModules" hidden><div class="page" id="modSel"></div></div>
     <div class="scroll" id="scrSession" hidden><div class="page" id="sessionPage"></div></div>
     <div class="scroll" id="scrBilling" hidden><div class="page" id="billingPage"></div></div>
+    <div class="scroll" id="scrClaim" hidden><div class="page pf" id="claimPage"></div></div>
     <div class="scroll" id="scrNotifs" hidden><div class="page" id="notifsPage"></div></div>
     <div class="scroll" id="scrMore" hidden><div class="page" id="morePage"></div></div>
     <div class="scroll" id="scrSettings" hidden><div class="page" id="settingsPage"></div></div>
@@ -2356,6 +2476,9 @@
 
     <!-- ============ 0.7 Session timeout lock (rendered by JS) ============ -->
     <section class="pre" id="lock" aria-label="Session timed out" hidden></section>
+    <!-- ============ Set up this device (once per device) + "version too old" (rendered by JS) ============ -->
+    <section class="pre" id="device" aria-label="Set up this device" hidden></section>
+    <section class="pre" id="outdated" aria-label="App version too old" hidden></section>
 
     <!-- ============ 0.6 Switch pharmacist sheet (rendered by JS) ============ -->
     <div class="sheet-scrim" id="sheetScrim" hidden></div>
@@ -2661,7 +2784,7 @@
   var activeFilter = "all";
 
   // ================= Navigation =================
-  var SCREENS = ["scrHome", "scrPatients", "scrPatient", "scrModules", "scrSession", "scrBilling", "scrNotifs", "scrMore", "scrSettings", "scrCalendar", "scrBook", "scrIncidents", "scrIncDetail", "scrSafety", "scrPlans", "scrCQI"];
+  var SCREENS = ["scrHome", "scrPatients", "scrPatient", "scrModules", "scrSession", "scrBilling", "scrClaim", "scrNotifs", "scrMore", "scrSettings", "scrCalendar", "scrBook", "scrIncidents", "scrIncDetail", "scrSafety", "scrPlans", "scrCQI"];
   var tabs = document.querySelectorAll(".tab");
   var sessionReturn = null; // where Back on the session screen goes
   var TAB_OF = { scrHome: 0, scrCalendar: 1, scrBook: 1, scrMore: 3, scrSettings: 3, scrIncidents: 3, scrIncDetail: 3, scrSafety: 3, scrPlans: 3, scrCQI: 3 }; // everything else lights "Patients"
@@ -2837,6 +2960,11 @@
     document.getElementById("backToList").addEventListener("click", function () { renderPatients(); showScreen("scrPatients"); });
     document.getElementById("allMods").addEventListener("click", function () { showModules(pid); });
     document.getElementById("seeAll").addEventListener("click", function () { showModules(pid); });
+    var provRow = document.querySelector("#patDetail .pd-prov");
+    provRow.setAttribute("aria-label", "Primary provider — add or change prescriber");
+    provRow.addEventListener("click", function (e) { if (e.target.tagName === "SELECT" || e.target.tagName === "OPTION") return; openPrescriberSheet(pid); });
+    provRow.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPrescriberSheet(pid); } });
+    if (patFlash) { document.querySelector("#patDetail .pd-head").insertAdjacentHTML("afterend", '<div class="reassure" style="margin-top:12px" role="status">' + okSvgSm2 + esc(patFlash) + "</div>"); patFlash = ""; }
     document.getElementById("patDetail").querySelectorAll("[data-mod]").forEach(function (el) {
       el.addEventListener("click", function () { enterSession(el.getAttribute("data-mod"), pid, "scrPatient"); });
     });
@@ -3920,10 +4048,870 @@
   }
 
   // ================= Notify tab (final step) + Billing =================
-  var BILLING = [
-    { patient: "George Papadopoulos", service: "MedsCheck Annual", fee: 60, status: "Submitted", cls: "sub", date: fmtDate(daysAgo(7)) },
-    { patient: "Lin Wei", service: "Minor Ailment — Conjunctivitis", fee: 19, status: "Paid", cls: "paid", date: fmtDate(daysAgo(13)) },
+  // ================= Claim packet · delivery · prescribers · roles · vaccination session · device setup (2026-09-29) =================
+  // Sources: "The claim packet" briefing (Sept 27) + "Ten screens outside the prototype" (Sept 28).
+  // Everything is simulated in memory / localStorage: nothing is faxed, printed or transmitted.
+  var APP_VERSION = "2.1.0 (build 318)";
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function fmtTime(d) { return d.toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit" }); }
+
+  // ---- Switch (role=switch) — the one toggle component for on/off settings ----
+  function swHtml(id, on, disabled, label) {
+    return '<button class="sw" id="' + id + '" type="button" role="switch" aria-checked="' + (on ? "true" : "false") + '"' + (disabled ? " disabled" : "") + (label ? ' aria-label="' + esc(label) + '"' : "") + "></button>";
+  }
+  function swRow(id, t, d, on, disabled, dcls) {
+    return '<div class="set-row"><div class="st"><div class="t">' + t + '</div><div class="d' + (dcls ? " " + dcls : "") + '">' + d + "</div></div>" + swHtml(id, on, disabled, t) + "</div>";
+  }
+  function bindSw(id, fn) {
+    var b = document.getElementById(id); if (!b) return;
+    b.addEventListener("click", function () { var on = b.getAttribute("aria-checked") !== "true"; b.setAttribute("aria-checked", on ? "true" : "false"); fn(on, b); });
+  }
+
+  // ---- Prescriber directory (the server's search, simulated) ----
+  var PRESCRIBERS = [
+    { name: "Dr. L. Chen", spec: "Family physician", lic: "CPSO-61277", fax: "416-555-0102", phone: "416-555-0100" },
+    { name: "Dr. A. Osei", spec: "Family physician", lic: "CPSO-58810", fax: "416-555-0119", phone: "416-555-0118" },
+    { name: "Dr. R. Singh", spec: "Family physician", lic: "CPSO-70432", fax: "", phone: "905-555-0140" },
+    { name: "Dr. P. Novak", spec: "Family physician", lic: "CPSO-66521", fax: "416-555-0156", phone: "416-555-0155" },
+    { name: "Dr. E. Tremblay", spec: "Family physician", lic: "CPSO-73390", fax: "613-555-0171", phone: "613-555-0170" },
+    { name: "Dr. M. Vargas", spec: "Cardiologist", lic: "CPSO-69004", fax: "416-555-0128", phone: "416-555-0127" },
+    { name: "Dr. H. Wong", spec: "Respirologist", lic: "CPSO-75218", fax: "", phone: "416-555-0163" },
+    { name: "Dr. Helen Walsh", spec: "Family medicine", lic: "CPSO-84210", fax: "416-555-0181", phone: "416-555-0180" },
+    { name: "Dr. Samuel Okafor", spec: "Endocrinology", lic: "CPSO-77315", fax: "416-555-0143", phone: "416-555-0142" },
+    { name: "Priya Nair, NP", spec: "Nurse practitioner", lic: "CNO-1180224", fax: "416-555-0197", phone: "416-555-0196" },
   ];
+  function dirLookup(name) { return PRESCRIBERS.filter(function (d) { return d.name.toLowerCase() === (name || "").toLowerCase(); })[0] || null; }
+  // The directory is the single source for fax numbers — patient records borrow from it.
+  PATIENTS.forEach(function (p) { (p.prescribers || []).forEach(function (d) { var r = dirLookup(d.name); if (r && d.fax === undefined) { d.fax = r.fax; d.lic = r.lic; } }); });
+  function primaryPrescriber(p) { if (!p) return null; return (p.prescribers || []).filter(function (d) { return d.primary; })[0] || (p.prescribers || [])[0] || null; }
+
+  // ---- Roles (invitation requires one; least privilege by default) ----
+  var ROLES = ["Pharmacist", "Owner", "Technician"];
+  var ROLE_HELP = {
+    Pharmacist: "A Pharmacist runs clinical services and files claims. Cannot invite or disable colleagues.",
+    Owner: "An Owner can invite colleagues, disable them, and edit the pharmacy — including the fax line. Give this only to someone who should hold those rights.",
+    Technician: "A Technician assists with sessions and records. Cannot invite or disable colleagues, and cannot change pharmacy settings.",
+  };
+  var staffRoleSel = "Pharmacist";
+  function staffRole(x) { return x.role || (x.owner ? "Owner" : "Pharmacist"); }
+  function ownerName() { staffOwner(); var o = STAFF.filter(function (x) { return staffRole(x) === "Owner"; })[0]; return o ? o.name : "the pharmacy owner"; }
+  function isOwner() {
+    staffOwner();
+    var me = STAFF.filter(function (x) { return PROFILE.email && x.email.toLowerCase() === PROFILE.email.toLowerCase(); })[0];
+    return me ? staffRole(me) === "Owner" : true; // an unlisted signed-in account is the seeded owner
+  }
+
+  // ---- Delivery + diagnostics preferences (kept on this device) ----
+  var DELIV = { faxClose: false, faxMD: false, crash: false, crashes: 0 };
+  try { var savedDeliv = JSON.parse(localStorage.getItem("agilerx.delivery") || "null"); if (savedDeliv) DELIV = savedDeliv; } catch (e) {}
+  function saveDeliv() { try { localStorage.setItem("agilerx.delivery", JSON.stringify(DELIV)); } catch (e) {} }
+  var FAX = { number: "", verified: false, verifiedAt: null, test: "idle" }; // test: idle | sending | sent
+  try { var savedFax = JSON.parse(localStorage.getItem("agilerx.fax") || "null"); if (savedFax) { FAX = savedFax; if (FAX.test === "sending") FAX.test = "idle"; } } catch (e) {}
+  function saveFax() { try { localStorage.setItem("agilerx.fax", JSON.stringify(FAX)); } catch (e) {} }
+  function faxLiveOn() { return DELIV.faxClose && FAX.verified; }
+
+  // ---- Claim model ----
+  // status: Generated (server) → Sent (server: faxed with confirmation, or printed) → Submitted (pharmacist keyed it) → Paid | Rejected (pharmacist).
+  // "Needs attention" is COMPUTED (claimAttention): failed fax, missing data, or unsubmitted past the date of service.
+  var CLAIM_SEQ = 0;
+  var CLAIM_CLS = { Generated: "ready", Sent: "info", Submitted: "sub", Paid: "paid", Rejected: "bad" };
+  var REJECT_CODES = ["Duplicate service within 365 days", "Patient not eligible", "Missing documentation", "Invalid health card", "Other"];
+  function mkClaim(o) {
+    var dos = o.dos || today, at = o.at || dos;
+    var c = { id: "c" + (++CLAIM_SEQ), pid: o.pid || null, patient: o.patient, service: o.service, svc: o.svc, fee: o.fee,
+      status: "Generated", dos: dos, date: fmtDate(dos), version: 1, first: !!o.first, printed: null,
+      history: [{ status: "Generated", at: at, by: "Server" }], fax: { state: "off" }, md: { state: "na" }, reason: null, note: null, txn: null,
+      ref: "AR-" + String(dos.getFullYear()).slice(2) + pad2(dos.getMonth() + 1) + pad2(dos.getDate()) + "-" + (100 + CLAIM_SEQ) };
+    if (o.fax) c.fax = o.fax;
+    else if (faxLiveOn()) c.fax = { state: "sent", at: at, to: FAX.number };
+    else c.fax = { state: FAX.verified ? "off" : "unverified" };
+    if (c.svc === "medscheck") {
+      var pr = primaryPrescriber(byId(c.pid));
+      if (o.md) c.md = o.md;
+      else if (!pr) c.md = { state: "none" };
+      else if (!DELIV.faxMD) c.md = { state: "off", name: pr.name };
+      else if (!pr.fax) c.md = { state: "nofax", name: pr.name };
+      else c.md = { state: "sent", name: pr.name, to: pr.fax, at: at };
+    }
+    if (c.fax.state === "sent") { c.status = "Sent"; c.history.push({ status: "Sent", at: c.fax.at, by: "Server" }); }
+    (o.then || []).forEach(function (h) { c.status = h.status; c.history.push(h); if (h.txn) c.txn = h.txn; if (h.reason) c.reason = h.reason; if (h.note) c.note = h.note; });
+    c.cls = CLAIM_CLS[c.status];
+    return c;
+  }
+  function setClaimStatus(c, status, extra) {
+    c.status = status; c.cls = CLAIM_CLS[status];
+    var h = { status: status, at: new Date(), by: PROFILE.name };
+    if (extra) for (var k in extra) { h[k] = extra[k]; c[k] = extra[k]; }
+    c.history.push(h);
+  }
+  function fileClaim(o) { var c = mkClaim(o); BILLING.unshift(c); return c; }
+  function claimById(id) { return BILLING.filter(function (c) { return c.id === id; })[0] || null; }
+  function claimAttention(c) {
+    if (c.status === "Paid" || c.status === "Submitted") return null;
+    if (c.status === "Rejected") return { tone: "red", short: "Needs correction", text: "Rejected — correct the claim and regenerate the documents" };
+    if (c.fax.state === "failed") return { tone: "red", short: "Fax failed", text: "Fax failed after 3 retries — re-send, or print and submit" };
+    if (c.missing) return { tone: "red", short: "Missing " + c.missing, text: "Documents not built — " + c.missing + " is missing on the session" };
+    if (dayDiff(today, c.dos) > 0) return { tone: "red", short: "Overdue · not submitted", text: "Not submitted on its date of service (" + c.date + ") — revenue at risk" };
+    return { tone: "amber", short: "Bill today", text: "Bill today · " + c.date + " — a claim is billed on its date of service" };
+  }
+  function claimDocs(c) {
+    var d = [{ t: "Claim slip", d: "Service and PIN, patient, date of service, fee · ref " + c.ref }];
+    if (c.svc === "medscheck") {
+      d.push({ t: "Personal Medication Record", d: "Signed and dated by the pharmacist · patient copy" });
+      if (c.first) d.push({ t: "Patient Acknowledgement", d: "First MedsCheck this year" });
+      if (c.md.state !== "none" && c.md.state !== "na") d.push({ t: "Health Care Provider Notification", d: "For " + (c.md.name || "the prescriber on file") });
+    }
+    if (c.svc === "ailments") d.push({ t: "Minor ailment assessment record", d: "Includes the clinical rationale" });
+    if (c.svc === "vaccines" || c.svc === "injections") d.push({ t: "Administration record", d: "Product, lot, site and route" });
+    if (c.fax.state === "sent") d.push({ t: "Fax transmission confirmation", d: "Received " + fmtDate(c.fax.at) + " · stored on this claim" });
+    return d;
+  }
+  var BILLING = [];
+  (function seedClaims() {
+    function nm(id) { return byId(id).name; }
+    function at(d, h, m) { var x = new Date(d); x.setHours(h, m, 0, 0); return x; }
+    BILLING = [
+      mkClaim({ pid: "p9", patient: nm("p9"), service: "MedsCheck Annual", svc: "medscheck", fee: MC_FEE, first: true, dos: today, at: at(today, 9, 12) }), // Generated today → "Bill today"
+      mkClaim({ pid: "p3", patient: nm("p3"), service: "Vaccination — Influenza", svc: "vaccines", fee: 8.5, dos: daysAgo(1), at: at(daysAgo(1), 14, 5), fax: { state: "failed", at: at(daysAgo(1), 14, 35), to: "416-555-0199", tries: 3 } }),
+      mkClaim({ pid: "p5", patient: nm("p5"), service: "Minor Ailment — Allergic rhinitis", svc: "ailments", fee: 19, dos: daysAgo(1), at: at(daysAgo(1), 16, 40), fax: { state: "sent", at: at(daysAgo(1), 16, 41), to: "416-555-0199" } }), // Sent, never keyed → overdue
+      mkClaim({ pid: "p2", patient: nm("p2"), service: "MedsCheck Annual", svc: "medscheck", fee: MC_FEE, first: true, dos: daysAgo(7), at: at(daysAgo(7), 10, 20), fax: { state: "sent", at: at(daysAgo(7), 10, 21), to: "416-555-0199" }, md: { state: "sent", name: "Dr. A. Osei", to: "416-555-0119", at: at(daysAgo(7), 10, 21) },
+        then: [{ status: "Submitted", at: at(daysAgo(7), 17, 50), by: "Priya Sharma" }] }),
+      mkClaim({ pid: "p6", patient: nm("p6"), service: "MedsCheck Annual", svc: "medscheck", fee: MC_FEE, first: true, dos: daysAgo(4), at: at(daysAgo(4), 11, 5), fax: { state: "sent", at: at(daysAgo(4), 11, 6), to: "416-555-0199" },
+        then: [{ status: "Submitted", at: at(daysAgo(4), 18, 2), by: "Priya Sharma" }, { status: "Rejected", at: at(daysAgo(2), 9, 30), by: "Priya Sharma", reason: "Duplicate service within 365 days", note: "Adjudication says a MedsCheck was billed 370 days ago by another pharmacy." }] }),
+      mkClaim({ pid: "p4", patient: nm("p4"), service: "Minor Ailment — Conjunctivitis", svc: "ailments", fee: 19, dos: daysAgo(13), at: at(daysAgo(13), 13, 15), fax: { state: "sent", at: at(daysAgo(13), 13, 16), to: "416-555-0199" },
+        then: [{ status: "Submitted", at: at(daysAgo(13), 17, 45), by: "Priya Sharma" }, { status: "Paid", at: at(daysAgo(9), 8, 5), by: "Priya Sharma", txn: "ODB-4471921" }] }),
+    ];
+  })();
+  function billSummary() {
+    var open = BILLING.filter(function (c) { return c.status === "Generated" || c.status === "Sent"; }).length;
+    var att = BILLING.filter(function (c) { var a = claimAttention(c); return a && a.tone === "red"; }).length;
+    if (!BILLING.length) return "No claims yet";
+    return (open ? open + " to submit" : "Nothing to submit") + (att ? " · " + att + " need" + (att === 1 ? "s" : "") + " attention" : "");
+  }
+
+  // ---- Work queue (Billing) ----
+  var billFilter = "all", billReturn = null, billFlash = "";
+  var BILL_FILTERS = [["all", "All"], ["open", "To submit"], ["Submitted", "Submitted"], ["Paid", "Paid"], ["Rejected", "Rejected"]];
+  function claimRow(c) {
+    var at = claimAttention(c);
+    return '<div class="txn" role="button" tabindex="0" data-cid="' + c.id + '"><span class="ic ini">' + initialsOf(c.patient) + "</span>" +
+      '<div class="who"><div class="n">' + esc(c.patient) + '</div><div class="d">' + esc(c.service) + " · " + c.date + "</div>" +
+      (at ? '<div class="claim-note ' + at.tone + '">' + at.short + "</div>" : "") + "</div>" +
+      '<div class="amt"><div class="v in">$' + c.fee.toFixed(2) + '</div><div class="k"><span class="stat-pill ' + c.cls + '">' + c.status + "</span></div></div></div>";
+  }
+  function renderBilling(from) {
+    if (typeof from === "string") billReturn = from;
+    var el = document.getElementById("billingPage");
+    var attn = BILLING.filter(function (c) { return !!claimAttention(c); });
+    var list = BILLING.filter(function (c) {
+      if (billFilter === "all") return !claimAttention(c);
+      if (billFilter === "open") return c.status === "Generated" || c.status === "Sent";
+      return c.status === billFilter;
+    });
+    var empty = { all: "No other claims on file.", open: "Nothing waiting to be keyed in.", Submitted: "No claims awaiting payment.", Paid: "No paid claims yet.", Rejected: "No rejected claims." }[billFilter];
+    el.innerHTML =
+      '<div class="section-head left"><button class="filter-btn" id="blBack" aria-label="Back">' + backSvg + "</button>" +
+      '<h2 class="screen-title">Billing</h2></div>' +
+      '<div class="note" style="margin:0 0 12px">Claims work queue · a claim is billed on its date of service, so anything not keyed in by the end of the pharmacy’s day is revenue at risk.</div>' +
+      (billFlash ? '<div class="reassure" style="margin:0 0 12px" role="status">' + okSvgSm2 + billFlash + "</div>" : "") +
+      (attn.length && billFilter === "all"
+        ? '<div class="fieldlab" style="margin-top:0;color:#b8791a">Needs attention · ' + attn.length + "</div>" +
+          '<div class="card txn-card">' + attn.map(claimRow).join("") + "</div>"
+        : "") +
+      '<div class="qf-row scroll" role="group" aria-label="Filter claims">' + BILL_FILTERS.map(function (f) {
+        return '<button class="qf' + (billFilter === f[0] ? " on" : "") + '" type="button" data-f="' + f[0] + '" aria-pressed="' + (billFilter === f[0]) + '">' + f[1] + "</button>";
+      }).join("") + "</div>" +
+      '<div class="fieldlab">' + (billFilter === "all" ? (attn.length ? "Everything else" : "All claims") : BILL_FILTERS.filter(function (f) { return f[0] === billFilter; })[0][1]) + " · " + list.length + "</div>" +
+      (list.length ? '<div class="card txn-card">' + list.map(claimRow).join("") + "</div>"
+                   : '<div class="card" style="padding:16px"><div class="note" style="margin:0">' + empty + "</div></div>") +
+      '<div class="fieldlab" style="margin-top:22px">Month end</div>' +
+      '<button class="btn-outline" id="blExport" type="button" style="display:block;width:100%">Export CSV for reconciliation</button>' +
+      '<div class="note" style="margin:10px 0 0">Every status change is logged with who and when. Submission itself happens in your dispensing system — AgileRx records it, it does not transmit to the ministry.</div>';
+    billFlash = "";
+    document.getElementById("blBack").addEventListener("click", function () { if (billReturn === "scrMore") renderMore(); else showScreen("scrHome"); });
+    el.querySelectorAll(".qf").forEach(function (b) { b.addEventListener("click", function () { billFilter = b.getAttribute("data-f"); renderBilling(); }); });
+    el.querySelectorAll("[data-cid]").forEach(function (row) {
+      function go() { renderClaim(row.getAttribute("data-cid")); }
+      row.addEventListener("click", go);
+      row.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+    document.getElementById("blExport").addEventListener("click", exportClaims);
+    showScreen("scrBilling");
+  }
+  function exportClaims() {
+    var rows = [["Reference", "Date of service", "Patient", "Service", "Fee", "Status", "Pharmacy fax", "Physician fax", "Transaction", "Rejection reason"]];
+    BILLING.forEach(function (c) {
+      rows.push([c.ref, c.dos.toISOString().slice(0, 10), c.patient, c.service, c.fee.toFixed(2), c.status, c.fax.state, c.md.state, c.txn || "", c.reason || ""]);
+    });
+    var csv = rows.map(function (r) { return r.map(function (v) { return '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"'; }).join(","); }).join("\r\n");
+    var inArtifact = /claudeusercontent|claude.ai/.test(location.hostname);
+    if (inArtifact) { billFlash = "CSV prepared for " + BILLING.length + " claims — the download starts when the app runs on a device or on localhost (this preview blocks downloads)."; renderBilling(); return; }
+    try {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+      a.download = "agilerx-claims-" + today.toISOString().slice(0, 10) + ".csv";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      billFlash = "Exported " + BILLING.length + " claims to CSV.";
+    } catch (e) { billFlash = "Export prepared (" + BILLING.length + " claims) — downloads are blocked in this preview."; }
+    renderBilling();
+  }
+
+  // ---- Claim detail: the documents, the delivery state, and ONE action for the current status ----
+  var claimFlash = "";
+  function renderClaim(id, from) {
+    var c = claimById(id); if (!c) { renderBilling(); return; }
+    if (from) billReturn = from === "scrBilling" ? billReturn : from;
+    var el = document.getElementById("claimPage");
+    var p = c.pid ? byId(c.pid) : null;
+    var at = claimAttention(c);
+    var steps = ["Generated", "Sent", "Submitted", c.status === "Rejected" ? "Rejected" : "Paid"];
+    var idx = { Generated: 0, Sent: 1, Submitted: 2, Paid: 3, Rejected: 3 }[c.status];
+    var tl = '<div class="tl">' + steps.map(function (s, i) {
+      var cls = i < idx ? "done" : i === idx ? (s === "Rejected" ? "bad" : c.status === "Paid" ? "done" : "cur") : "";
+      return '<div class="n ' + cls + '"><i></i>' + s + "</div>";
+    }).join("") + "</div>";
+    var badge = at
+      ? '<div class="bill-badge ' + (at.tone === "amber" ? "" : "red") + '">' + warnSm + at.text + "</div>"
+      : c.status === "Paid" ? '<div class="bill-badge green">' + okSvgSm2 + "Paid " + fmtDate(c.history[c.history.length - 1].at) + (c.txn ? " · " + esc(c.txn) : "") + " · settled</div>"
+      : '<div class="bill-badge grey">' + okSvgSm2 + "Submitted " + fmtDate(c.history[c.history.length - 1].at) + " · awaiting adjudication</div>";
+    var docs = claimDocs(c);
+    var docIc = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>';
+    function faxRow() {
+      var f = c.fax, t = "Pharmacy fax", d, cls = "", act = "";
+      if (f.state === "sent") { d = "Faxed to " + f.to + " · " + fmtDate(f.at) + " · confirmation stored"; cls = "green"; }
+      else if (f.state === "failed") { d = "Failed after " + (f.tries || 3) + " retries over 30 minutes — print still works"; cls = "red"; act = '<button class="mini" id="clResend" type="button">Re-send</button>'; }
+      else if (f.state === "sending") { d = "Sending…"; }
+      else if (f.state === "off") { d = "Off — turn on “Fax the documents at session close” in Settings"; act = '<button class="mini" id="clFaxSet" type="button">Settings</button>'; }
+      else { d = "Pharmacy fax line not verified — the owner sets it up once in Settings"; cls = "amber"; act = '<button class="mini" id="clFaxSet" type="button">Settings</button>'; }
+      return '<div class="set-row"><div class="st"><div class="t">' + t + '</div><div class="d ' + cls + '">' + d + "</div></div>" + act + "</div>";
+    }
+    function mdRow() {
+      var m = c.md; if (m.state === "na") return "";
+      var d, cls = "", act = "";
+      if (m.state === "sent") { d = "Notification faxed to " + esc(m.name) + " · " + m.to; cls = "green"; }
+      else if (m.state === "nofax") { d = esc(m.name) + " has no fax number on file — the notification cannot be sent"; cls = "amber"; act = '<button class="mini" id="clAddFax" type="button">Add fax</button>'; }
+      else if (m.state === "none") { d = "No prescriber on the patient’s record"; cls = "amber"; act = p ? '<button class="mini" id="clAddFax" type="button">Add</button>' : ""; }
+      else { d = "Off — turn on “Fax the physician notification” in Settings" + (m.name ? " · " + esc(m.name) : ""); act = '<button class="mini" id="clFaxSet" type="button">Settings</button>'; }
+      return '<div class="set-row"><div class="st"><div class="t">Physician notification</div><div class="d ' + cls + '">' + d + "</div></div>" + act + "</div>";
+    }
+    var cta = "";
+    if (c.status === "Generated" || c.status === "Sent") cta = '<button class="btn-primary" id="clSubmit" type="button">Mark submitted <i class=tri></i></button>';
+    else if (c.status === "Submitted") cta = '<button class="btn-primary" id="clPaid" type="button">Mark paid <i class=tri></i></button><button class="pd-link" id="clReject" type="button" style="display:block;margin:10px auto 0">Mark rejected instead' + chevR + "</button>";
+    else if (c.status === "Rejected") cta = '<button class="btn-primary" id="clRegen" type="button">Correct &amp; regenerate documents <i class=tri></i></button>';
+    el.innerHTML =
+      '<div class="section-head left"><button class="filter-btn" id="clBack" aria-label="Back to Billing">' + backSvg + "</button>" +
+      '<h2 class="screen-title">Claim</h2>' + (p ? '<button class="pd-link" id="clPatient" style="margin-left:auto">Patient' + chevR + "</button>" : "") + "</div>" +
+      (claimFlash ? '<div class="reassure" style="margin:0 0 12px" role="status">' + okSvgSm2 + claimFlash + "</div>" : "") +
+      '<div class="card" style="padding:16px">' +
+        '<div class="claim-head"><span class="ic">' + initialsOf(c.patient) + '</span><div><div class="cn">' + esc(c.patient) + '</div><div class="cs">' + esc(c.service) + "</div></div>" +
+        '<span class="fee">$' + c.fee.toFixed(2) + "</span></div>" +
+        tl + badge +
+        '<div class="kv" style="margin-top:12px"><span class="k">Date of service</span><span class="v">' + c.date + "</span></div>" +
+        '<div class="kv"><span class="k">Reference</span><span class="v">' + c.ref + (c.version > 1 ? " · v" + c.version : "") + "</span></div>" +
+        '<div class="kv"><span class="k">Recorded by</span><span class="v">' + esc(c.history[0].by === "Server" ? PROFILE.name : c.history[0].by) + "</span></div>" +
+        (c.reason ? '<div class="saved-note" style="border-color:#f5c6c5;background:#fdecec"><span class="lab" style="color:#c43734">Rejection reason</span>' + esc(c.reason) + (c.note ? " — " + esc(c.note) : "") + "</div>" : "") +
+      "</div>" +
+      '<div class="fieldlab">Documents · ' + docs.length + "</div>" +
+      '<div class="card set-card">' + docs.map(function (d) {
+        return '<div class="doc-row"><span class="di">' + docIc + '</span><div><div class="dt">' + d.t + '</div><div class="dd">' + d.d + '</div></div><span class="pdf">PDF</span></div>';
+      }).join("") + "</div>" +
+      '<div class="note" style="margin:10px 0 0">Built on the server when the session closed. A partial set is never produced — if a field were missing, the session would name it instead.</div>' +
+      '<div class="fieldlab">Delivery</div>' +
+      '<div class="card set-card">' +
+        '<div class="set-row"><div class="st"><div class="t">Print</div><div class="d' + (c.printed ? " green" : "") + '">' + (c.printed ? "Printed " + fmtDate(c.printed) + " " + fmtTime(c.printed) : "Always available — the fallback when a fax fails") + '</div></div><button class="mini" id="clPrint" type="button">Print</button></div>' +
+        faxRow() + mdRow() +
+      "</div>" +
+      '<div class="note" style="margin:10px 0 0">Delivery follows the pharmacy’s settings. Nothing is asked here.</div>' +
+      '<div class="fieldlab">History</div>' +
+      '<div class="card" style="padding:6px 16px">' + c.history.slice().reverse().map(function (h) {
+        return '<div class="kv"><span class="k">' + h.status + '</span><span class="v" style="font-weight:500;color:#6E6C88">' + fmtDate(h.at) + " " + fmtTime(h.at) + " · " + esc(h.by) + "</span></div>";
+      }).join("") + "</div>" +
+      (cta ? '<div class="next-fixed">' + cta + "</div>" : "");
+    claimFlash = "";
+    document.getElementById("clBack").addEventListener("click", function () { renderBilling(); });
+    var pb = document.getElementById("clPatient"); if (pb) pb.addEventListener("click", function () { openPatient(c.pid); });
+    document.getElementById("clPrint").addEventListener("click", function () {
+      c.printed = new Date();
+      if (c.status === "Generated") setClaimStatus(c, "Sent", { printed: c.printed });
+      claimFlash = "Sent to the device printer (simulated) — " + docs.length + " document" + (docs.length === 1 ? "" : "s") + ".";
+      renderClaim(c.id);
+    });
+    var rs = document.getElementById("clResend"); if (rs) rs.addEventListener("click", function () {
+      c.fax = { state: "sending", to: c.fax.to }; renderClaim(c.id);
+      setTimeout(function () { c.fax = { state: "sent", at: new Date(), to: FAX.verified ? FAX.number : c.fax.to }; if (c.status === "Generated") setClaimStatus(c, "Sent"); claimFlash = "Fax delivered — confirmation stored on the claim."; renderClaim(c.id); }, 1100);
+    });
+    var fs = document.getElementById("clFaxSet"); if (fs) fs.addEventListener("click", function () { renderSettings("scrClaim:" + c.id); });
+    var af = document.getElementById("clAddFax"); if (af) af.addEventListener("click", function () { openPrescriberSheet(c.pid, function () { refreshClaimMd(c); renderClaim(c.id); }); });
+    var sb = document.getElementById("clSubmit"); if (sb) sb.addEventListener("click", function () { openClaimSheet(c, "submit"); });
+    var pd = document.getElementById("clPaid"); if (pd) pd.addEventListener("click", function () { openClaimSheet(c, "paid"); });
+    var rj = document.getElementById("clReject"); if (rj) rj.addEventListener("click", function () { openClaimSheet(c, "reject"); });
+    var rg = document.getElementById("clRegen"); if (rg) rg.addEventListener("click", function () {
+      c.version++; c.reason = null; c.note = null; c.txn = null; c.printed = null;
+      c.fax = faxLiveOn() ? { state: "sent", at: new Date(), to: FAX.number } : { state: FAX.verified ? "off" : "unverified" };
+      setClaimStatus(c, "Generated"); if (c.fax.state === "sent") setClaimStatus(c, "Sent");
+      claimFlash = "Documents regenerated — version " + c.version + ". Key the corrected claim into your dispensing system, then mark it submitted.";
+      renderClaim(c.id);
+    });
+    showScreen("scrClaim");
+  }
+  function applyDeliveryNow(c) {
+    if (c.status !== "Generated" && c.status !== "Sent") return;
+    if ((c.fax.state === "off" || c.fax.state === "unverified") && faxLiveOn()) { c.fax = { state: "sent", at: new Date(), to: FAX.number }; if (c.status === "Generated") setClaimStatus(c, "Sent"); claimFlash = "Documents faxed to " + FAX.number + " \u2014 confirmation stored."; }
+    else if (c.fax.state === "off" && FAX.verified === false) c.fax = { state: "unverified" };
+    else if (c.fax.state === "unverified" && FAX.verified && !DELIV.faxClose) c.fax = { state: "off" };
+    refreshClaimMd(c);
+  }
+  function refreshClaimMd(c) { // after a prescriber gained a fax number
+    if (c.svc !== "medscheck") return;
+    var pr = primaryPrescriber(byId(c.pid));
+    if (!pr) c.md = { state: "none" };
+    else if (!DELIV.faxMD) c.md = { state: "off", name: pr.name };
+    else if (!pr.fax) c.md = { state: "nofax", name: pr.name };
+    else if (c.md.state !== "sent") c.md = { state: "sent", name: pr.name, to: pr.fax, at: new Date() };
+  }
+  function openClaimSheet(c, kind) {
+    var mini = '<div class="card" style="padding:12px 14px;box-shadow:none;border:1px solid #ECEAF5;background:#F8F7FC;margin-top:4px"><div class="claim-head"><div><div class="cn" style="font-size:14.5px">' + esc(c.patient) + '</div><div class="cs">' + esc(c.service) + " · " + c.date + '</div></div><span class="fee" style="font-size:16px">$' + c.fee.toFixed(2) + "</span></div></div>";
+    var body = "", title = "", sub = "", btn = "";
+    if (kind === "submit") {
+      title = "Mark submitted";
+      sub = "Key this claim into your dispensing system first. This records that you did — it does not send anything to the ministry.";
+      btn = '<button class="btn-primary" id="shGo" type="button" style="margin-top:14px">Mark submitted</button>';
+    } else if (kind === "paid") {
+      title = "Mark paid";
+      sub = "Enter the payment reference from your remittance so month-end reconciliation matches line for line.";
+      body = '<div class="fieldlab">Transaction number</div><input class="tinput" id="shTxn" inputmode="text" autocomplete="off" placeholder="e.g. ODB-4471921"><div class="ferr" id="shTxnErr" style="margin-top:6px">Enter the transaction number from the remittance.</div><div id="shGate" style="margin-top:10px"></div>';
+      btn = '<button class="btn-primary" id="shGo" type="button" style="margin-top:6px" disabled>Mark paid</button>';
+    } else {
+      title = "Mark rejected";
+      sub = "Record why adjudication refused it. You can correct the claim afterwards — the documents regenerate as a new version.";
+      body = '<div class="fieldlab">Reason code</div><select class="sh-sel" id="shReason" aria-label="Reason code"><option value="">Choose a reason…</option>' + REJECT_CODES.map(function (r) { return "<option>" + r + "</option>"; }).join("") + "</select>" +
+        '<div class="fieldlab">Note (optional)</div><textarea class="tinput tarea" id="shNote" style="min-height:64px" placeholder="What adjudication said"></textarea><div id="shGate" style="margin-top:10px"></div>';
+      btn = '<button class="btn-red" id="shGo" type="button" style="margin-top:6px" disabled>Mark rejected</button>';
+    }
+    sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">' + title + '</div><div class="sh-s">' + sub + "</div>" + mini + body + btn +
+      '<button class="btn-outline" id="sheetClose" type="button" style="display:block;width:100%;margin-top:10px">Cancel</button>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    document.getElementById("sheetClose").addEventListener("click", closeSheet);
+    var go = document.getElementById("shGo");
+    if (kind === "paid") {
+      var inp = document.getElementById("shTxn"), touched = false;
+      function sync() { var ok = inp.value.trim().length >= 4; go.disabled = !ok; document.getElementById("shGate").innerHTML = gateHtml(ok ? [] : ["transaction number"]); inp.classList.toggle("invalid", touched && !ok); document.getElementById("shTxnErr").classList.toggle("show", touched && !ok); }
+      inp.addEventListener("input", function () { touched = true; sync(); }); inp.addEventListener("blur", function () { touched = true; sync(); }); sync();
+      setTimeout(function () { inp.focus(); }, 60);
+    }
+    if (kind === "reject") {
+      var sel = document.getElementById("shReason");
+      function syncR() { go.disabled = !sel.value; document.getElementById("shGate").innerHTML = gateHtml(sel.value ? [] : ["a reason code"]); }
+      sel.addEventListener("change", syncR); syncR();
+    }
+    go.addEventListener("click", function () {
+      if (go.disabled) return;
+      if (kind === "submit") { setClaimStatus(c, "Submitted"); claimFlash = "Marked submitted — keyed into your dispensing system by " + PROFILE.name + "."; }
+      else if (kind === "paid") { setClaimStatus(c, "Paid", { txn: document.getElementById("shTxn").value.trim() }); claimFlash = "Marked paid — " + c.txn + " recorded for reconciliation."; }
+      else { setClaimStatus(c, "Rejected", { reason: document.getElementById("shReason").value, note: document.getElementById("shNote").value.trim() }); claimFlash = "Marked rejected — correct the claim and regenerate when ready."; }
+      closeSheet(); renderClaim(c.id);
+    });
+  }
+
+  // ---- Settings: claim delivery + this device + diagnostics (rendered into renderSettings) ----
+  function deliverySettingsHtml() {
+    var bioOn = true; try { bioOn = localStorage.getItem("agilerx.bio") !== "off"; } catch (e) {}
+    var faxVal = FAX.verified ? "Verified" : FAX.number ? "Not verified" : "Not set";
+    return '<div class="set-group"><div class="set-title">This device</div><div class="set-help">Choices kept on this phone only.</div>' +
+      '<div class="card set-card">' + swRow("swBio", "Sign in with biometrics", "Anyone whose fingerprint or face is enrolled on this device can open your account — leave this off on a shared counter device.", bioOn) + "</div></div>" +
+      '<div class="set-group"><div class="set-title">Claim delivery</div><div class="set-help">Set this up once. At the close of a session nothing is asked — no fax number, no destination, no confirmation step.</div>' +
+      '<div class="card set-card">' +
+        '<div class="set-row" role="button" tabindex="0" id="stFax"><div class="st"><div class="t">Pharmacy fax line</div><div class="d">' + (FAX.verified ? "Verified " + fmtDate(new Date(FAX.verifiedAt)) + " · " + esc(FAX.number) : "Owner only · verified by a test fax") + '</div></div><span class="val' + (FAX.verified ? "" : " muted") + '">' + faxVal + chevR + "</span></div>" +
+        swRow("swFaxClose", "Fax the documents at session close", FAX.verified ? "They land in your dispensing system’s document queue, whichever system that is." : "Needs a verified pharmacy fax line first.", faxLiveOn(), !FAX.verified, FAX.verified ? "" : "amber") +
+        swRow("swFaxMD", "Fax the physician notification", "MedsCheck only, and only when the prescriber on file has a fax number.", DELIV.faxMD) +
+        '<div class="set-row"><div class="st"><div class="t">Print</div><div class="d">Always available from the claim itself, and the fallback when a fax fails. Nothing to set.</div></div></div>' +
+      "</div></div>" +
+      '<div class="set-group"><div class="set-title">Diagnostics</div>' +
+      '<div class="card set-card">' + swRow("swCrash", "Send crash reports", "Sends the error and the code path to your pharmacy’s own server, so a crash can be fixed. Email addresses, long digit runs and quoted values are removed first. Nothing is sent while this is off.", DELIV.crash) +
+        '<div class="set-row" style="padding-top:4px"><div class="st"><div class="d amber">A name written into an error by hand can survive that removal.</div>' +
+        '<div class="t" style="font-size:13.5px;margin-top:10px">' + (DELIV.crashes ? DELIV.crashes + " crash" + (DELIV.crashes === 1 ? "" : "es") + " recorded on this device" : "No crashes recorded on this device.") + "</div></div>" +
+        (DELIV.crashes ? '<button class="mini" id="stCrashClear" type="button">Clear</button>' : "") + "</div></div></div>";
+  }
+  function bindDeliverySettings() {
+    bindSw("swBio", function (on) { try { localStorage.setItem("agilerx.bio", on ? "on" : "off"); } catch (e) {} });
+    bindSw("swFaxClose", function (on) { DELIV.faxClose = on; saveDeliv(); });
+    bindSw("swFaxMD", function (on) { DELIV.faxMD = on; saveDeliv(); });
+    bindSw("swCrash", function (on) { DELIV.crash = on; saveDeliv(); });
+    var fx = document.getElementById("stFax");
+    fx.addEventListener("click", renderFaxSettings);
+    fx.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); renderFaxSettings(); } });
+    var cc = document.getElementById("stCrashClear"); if (cc) cc.addEventListener("click", function () { DELIV.crashes = 0; saveDeliv(); renderSettings(); });
+  }
+
+  // ---- Pharmacy fax line (owner only; goes live only after a person confirms the test fax) ----
+  var faxFlash = "";
+  function renderFaxSettings() {
+    var el = document.getElementById("settingsPage");
+    var owner = isOwner();
+    var digitsOk = digits(FAX.number).length >= 10;
+    var body;
+    if (!owner) {
+      body = '<div class="card" style="padding:16px"><div class="set-row" style="border:0;padding:0"><div class="st"><div class="t">Only the owner can set the fax line</div><div class="d">Ask ' + esc(ownerName()) + '. Until it is verified, nothing is faxed — print keeps working from every claim.</div></div></div></div>' +
+        (FAX.number ? '<div class="fax-badge ' + (FAX.verified ? "ok" : "warn") + '">' + (FAX.verified ? "Verified · " + esc(FAX.number) : "Not verified — nothing will be sent to " + esc(FAX.number)) + "</div>" : "");
+    } else {
+      body = '<div class="fieldlab" style="margin-top:0">Inbound fax number</div>' +
+        '<input class="tinput" id="fxNum" type="tel" inputmode="tel" autocomplete="off" placeholder="The line your dispensing system watches" value="' + esc(FAX.number) + '">' +
+        '<div class="ferr" id="fxErr" style="margin-top:6px">Enter a fax number with at least 10 digits.</div>' +
+        '<div id="fxBadge">' + faxBadgeHtml() + "</div>" +
+        '<div class="note" style="margin:10px 0 0">A number goes live only after a test fax arrives and you confirm it. Changing the number puts it back to unverified.</div>' +
+        (faxFlash ? '<div class="reassure" style="margin-top:12px" role="status">' + okSvgSm2 + faxFlash + "</div>" : "") +
+        '<div id="fxActions" style="margin-top:14px">' + faxActionsHtml(digitsOk) + "</div>" +
+        '<div class="warn-card" style="margin-top:18px"><div class="wt">' + warnSm + 'Why a person confirms, not a receipt</div><div class="ws">A wrong number sends a patient’s name, health card number and medication review to a stranger. So the number is not enabled by a delivery receipt but by you confirming the test fax arrived.</div></div>';
+    }
+    el.innerHTML =
+      '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="fxBack" aria-label="Back to Settings">' + backSvg + "</button>" +
+      '<h2 class="screen-title">Pharmacy fax</h2></div>' +
+      '<div class="note" style="margin:0 0 14px">Where the claim documents are sent so they land in your dispensing system’s document queue.</div>' + body;
+    faxFlash = "";
+    document.getElementById("fxBack").addEventListener("click", function () { renderSettings(); });
+    if (!owner) { showScreen("scrSettings"); return; }
+    var inp = document.getElementById("fxNum"), touched = false;
+    inp.addEventListener("input", function () {
+      touched = true;
+      var v = inp.value.trim();
+      if (v !== FAX.number) { FAX.number = v; FAX.verified = false; FAX.verifiedAt = null; FAX.test = "idle"; saveFax(); }
+      var ok = digits(v).length >= 10;
+      inp.classList.toggle("invalid", touched && !ok && v.length > 0);
+      document.getElementById("fxErr").classList.toggle("show", touched && !ok && v.length > 0);
+      document.getElementById("fxBadge").innerHTML = faxBadgeHtml();
+      document.getElementById("fxActions").innerHTML = faxActionsHtml(ok);
+      bindFaxActions();
+    });
+    bindFaxActions();
+    showScreen("scrSettings");
+  }
+  function faxBadgeHtml() {
+    if (FAX.verified) return '<div class="fax-badge ok">Verified ' + fmtDate(new Date(FAX.verifiedAt)) + " — faxes go to this number</div>";
+    return '<div class="fax-badge warn">Not verified — nothing will be sent to this number</div>';
+  }
+  function faxActionsHtml(ok) {
+    if (FAX.verified) return '<button class="btn-outline" id="fxTest" type="button" style="display:block;width:100%">Send another test fax</button>';
+    if (FAX.test === "sending") return '<button class="btn-primary" type="button" disabled>Sending test fax…</button>';
+    if (FAX.test === "sent") return '<div class="reassure" style="margin:0 0 12px">' + okSvgSm2 + "Test fax sent to " + esc(FAX.number) + " — check the tray in your dispensing system. (Simulated.)</div>" +
+      '<button class="btn-primary" id="fxConfirm" type="button">I received the test fax</button>' +
+      '<button class="pd-link" id="fxTest" type="button" style="display:block;margin:10px auto 0">Send it again' + chevR + "</button>";
+    return gateHtml(ok ? [] : ["a fax number with at least 10 digits"]) + '<button class="btn-primary" id="fxTest" type="button"' + (ok ? "" : " disabled") + ">Send a test fax</button>";
+  }
+  function bindFaxActions() {
+    var t = document.getElementById("fxTest"); if (t) t.addEventListener("click", function () {
+      FAX.test = "sending"; saveFax(); document.getElementById("fxActions").innerHTML = faxActionsHtml(true);
+      setTimeout(function () { FAX.test = "sent"; saveFax(); if (FAX.verified) { faxFlash = "Test fax sent to " + FAX.number + " (simulated)."; FAX.test = "idle"; saveFax(); renderFaxSettings(); return; } document.getElementById("fxActions").innerHTML = faxActionsHtml(true); bindFaxActions(); }, 1200);
+    });
+    var c = document.getElementById("fxConfirm"); if (c) c.addEventListener("click", function () {
+      FAX.verified = true; FAX.verifiedAt = new Date().toISOString(); FAX.test = "idle"; saveFax();
+      faxFlash = "Fax line verified — you can now turn on faxing at session close in Settings.";
+      renderFaxSettings();
+    });
+  }
+
+  // ---- Fees and PINs (what each service bills, and the ministry PIN it is claimed under) ----
+  // A row cannot be edited or deleted — it is superseded by a new one. Placeholder values are refused (server rule).
+  var FEE_SERVICES = [
+    { svc: "medscheck", label: "MedsCheck Annual" },
+    { svc: "medscheck-fu", label: "MedsCheck Follow-up" },
+    { svc: "ailments", label: "Minor Ailment" },
+    { svc: "vaccines", label: "Vaccination" },
+    { svc: "injections", label: "Injection" },
+  ];
+  var FEES = [
+    { id: "f1", svc: "medscheck", fee: 60, pin: "93899979", code: "PS", source: "MOH Professional Pharmacy Services Guidebook 3.0, Table 1", from: "2026-09-30", to: null, placeholder: false, by: "Priya Sharma" },
+    { id: "f2", svc: "medscheck-fu", fee: 25, pin: "93899982", code: "PS", source: "MOH Professional Pharmacy Services Guidebook 3.0, Table 1", from: "2026-09-30", to: null, placeholder: false, by: "Priya Sharma" },
+  ];
+  try { var _fs = JSON.parse(localStorage.getItem("agilerx.fees") || "null"); if (_fs && _fs.length) FEES = _fs; } catch (e) {}
+  function saveFees() { try { localStorage.setItem("agilerx.fees", JSON.stringify(FEES)); } catch (e) {} }
+  var FEE_MARKERS = ["test", "tbd", "sample", "placeholder", "dummy", "fake", "temp", "todo", "xxx", "n/a", "na", "tba", "pending", "unknown", "example", "demo", "mock", "later", "fill"];
+  function feeMarker(s) {
+    var toks = (s || "").toLowerCase().split(/[^a-z0-9\/]+/);
+    for (var i = 0; i < toks.length; i++) if (toks[i] && FEE_MARKERS.indexOf(toks[i]) >= 0) return toks[i];
+    return null;
+  }
+  function todayKey() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function dayBefore(key) { var d = new Date(key + "T12:00:00"); d.setDate(d.getDate() - 1); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function fmtKey(key) { return fmtDate(new Date(key + "T12:00:00")); }
+  function feeInForce(svc) {
+    var t = todayKey(), hit = null;
+    FEES.forEach(function (f) { if (f.svc === svc && f.from <= t && (!f.to || f.to >= t)) hit = f; });
+    return hit;
+  }
+  function feesMissing() { return FEE_SERVICES.filter(function (s) { return !feeInForce(s.svc); }); }
+  function feesSummary() { var n = feesMissing().length; return n ? n + " service" + (n === 1 ? " has" : "s have") + " no current fee" : "All 5 services have a fee in force"; }
+  var feeFlash = "", feesReturn = null, feeDraft = { svc: "", fee: "", pin: "", code: "", source: "", from: "" };
+  function feeErrors() {
+    var e = {};
+    if (!feeDraft.svc) e.svc = "choose a service";
+    var fee = parseFloat(feeDraft.fee);
+    if (!feeDraft.fee) e.fee = "a fee"; else if (!(fee > 0)) e.fee = "Enter a fee above $0.";
+    var pin = digits(feeDraft.pin);
+    if (!feeDraft.pin.trim()) e.pin = "the ministry PIN";
+    else if (feeMarker(feeDraft.pin)) e.pin = "Looks like a placeholder — enter the real PIN.";
+    else if (pin.length !== 8 || pin !== feeDraft.pin.trim()) e.pin = "Enter the 8-digit PIN.";
+    if (feeDraft.code && feeMarker(feeDraft.code)) e.code = "Looks like a placeholder.";
+    if (!feeDraft.source.trim()) e.source = "the published source";
+    else if (feeMarker(feeDraft.source)) e.source = "Looks like a placeholder — name the ministry notice.";
+    if (!feeDraft.from) e.from = "an effective date";
+    return e;
+  }
+  function feeGateItems(e) {
+    var fix = { fee: "fix the fee", pin: "fix the PIN", source: "fix the source" };
+    var out = [];
+    ["svc", "fee", "pin", "source", "from"].forEach(function (k) { if (e[k]) out.push(/^[a-z]/.test(e[k]) ? e[k] : fix[k]); });
+    if (e.code) out.push("fix the billing code");
+    return out;
+  }
+  function feeRowHtml(s) {
+    var f = feeInForce(s.svc);
+    if (!f) return '<div class="card fee-row"><div class="fee-top"><div class="t">' + s.label + '</div><div class="fee-none">No current fee</div></div></div>';
+    return '<div class="card fee-row' + (f.placeholder ? " ph" : "") + '"><div class="fee-top"><div class="t">' + s.label + '</div><div class="fee-amt">$' + f.fee.toFixed(2) + "</div></div>" +
+      '<div class="fee-meta">PIN ' + esc(f.pin) + (f.code ? " · " + esc(f.code) : "") + " · " + esc(f.source) + "</div>" +
+      '<div class="fee-sub">Since ' + fmtKey(f.from) + " · " + esc(f.by) + (f.placeholder ? ' · <b class="amber">placeholder — not real fee data</b>' : "") + "</div></div>";
+  }
+  function feeFld(id, label, key, extra, e) {
+    var val = feeDraft[key], err = e[key], shown = val && err && !/^[a-z]/.test(err);
+    return '<div class="fld"><div class="fieldlab">' + label + '</div><input class="tinput' + (shown ? " invalid" : "") + '" id="' + id + '" ' + extra + ' value="' + esc(val) + '"><div class="ferr' + (shown ? " show" : "") + '">' + esc(shown ? err : "") + "</div></div>";
+  }
+  function renderFees(from) {
+    if (from === "scrMore") feesReturn = "scrMore";
+    var el = document.getElementById("settingsPage");
+    var owner = isOwner(), miss = feesMissing();
+    el.innerHTML =
+      '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="feeBack" aria-label="Back">' + backSvg + "</button>" +
+      '<h2 class="screen-title">Fees and PINs</h2></div>' +
+      '<div class="note" style="margin:0 0 14px">The fee and ministry PIN for each service. A service without a fee can’t produce claim paperwork.</div>' +
+      (miss.length ? '<div class="fax-badge warn" style="display:block;margin:0 0 14px;padding:11px 14px">' + feesSummary() + ".</div>" : '<div class="reassure" style="margin-bottom:14px">' + okSvgSm2 + feesSummary() + ".</div>") +
+      (feeFlash ? '<div class="reassure" style="margin-bottom:14px" role="status">' + okSvgSm2 + feeFlash + "</div>" : "") +
+      FEE_SERVICES.map(feeRowHtml).join("") +
+      (owner ?
+        '<button class="btn-primary" id="feeOpen" type="button" style="margin-top:18px">Add a fee</button>' +
+        "" :
+        '<div class="card" style="padding:16px;margin-top:18px"><div class="set-row" style="border:0;padding:0"><div class="st"><div class="t">Only the owner can add a fee</div><div class="d">Ask ' + esc(ownerName()) + '.</div></div></div></div>') +
+      '<div style="height:30px"></div>';
+    feeFlash = "";
+    document.getElementById("feeBack").addEventListener("click", function () { if (feesReturn === "scrMore") { feesReturn = null; renderMore(); } else renderSettings(); });
+    if (owner) document.getElementById("feeOpen").addEventListener("click", function () { openFeeSheet(); });
+    showScreen("scrSettings");
+  }
+  function openFeeSheet() {
+    var e = feeErrors(), gate = feeGateItems(e);
+    var keep = sheetEl.hidden ? 0 : sheetEl.scrollTop;
+    sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">Add a fee</div>' +
+      '<div class="sh-s">Replaces the current fee from the date you choose. It can’t be edited later, so check the PIN against the ministry notice.</div>' +
+      '<div class="fieldlab">Service</div><div class="chip-row" id="feeSvc" style="margin-top:0">' + FEE_SERVICES.map(function (sv) {
+        return '<button class="chip' + (feeDraft.svc === sv.svc ? " on" : "") + '" type="button" data-svc="' + sv.svc + '">' + sv.label + "</button>";
+      }).join("") + "</div>" +
+      '<div class="fee-grid">' + feeFld("feeFee", "Fee (CAD)", "fee", 'type="number" inputmode="decimal" min="0" step="0.01" placeholder="60.00"', e) +
+        feeFld("feePin", "Ministry PIN", "pin", 'inputmode="numeric" maxlength="12" placeholder="8 digits"', e) + "</div>" +
+      '<div class="fee-grid">' + feeFld("feeCode", "Billing code", "code", 'maxlength="6" placeholder="PS"', e) +
+        '<div class="fld"><div class="fieldlab">Effective from</div><input class="tinput" id="feeFrom" type="date" value="' + esc(feeDraft.from) + '"></div></div>' +
+      feeFld("feeSource", "Published source", "source", 'placeholder="e.g. MOH Guidebook 3.0, Table 1"', e) +
+      '<div style="height:14px"></div>' + gateHtml(gate) + '<button class="btn-primary" id="feeAdd" type="button"' + (gate.length ? " disabled" : "") + '>Add fee<span class="tri"></span></button>' +
+      '<button class="btn-outline" id="sheetClose" type="button" style="display:block;width:100%;margin-top:10px">Cancel</button>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    sheetEl.scrollTop = keep;
+    document.getElementById("sheetClose").addEventListener("click", closeSheet);
+    sheetEl.querySelectorAll("#feeSvc .chip").forEach(function (b) { b.addEventListener("click", function () { feeDraft.svc = b.getAttribute("data-svc"); openFeeSheet(); }); });
+    function bindTxt(id, key) {
+      var inp = document.getElementById(id);
+      inp.addEventListener("input", function () { feeDraft[key] = inp.value; });
+      inp.addEventListener("blur", function () { openFeeSheet(); });
+      inp.addEventListener("keydown", function (ev) { if (ev.key === "Enter") { ev.preventDefault(); inp.blur(); } });
+    }
+    bindTxt("feeFee", "fee"); bindTxt("feePin", "pin"); bindTxt("feeCode", "code"); bindTxt("feeSource", "source");
+    document.getElementById("feeFrom").addEventListener("change", function () { feeDraft.from = this.value; openFeeSheet(); });
+    document.getElementById("feeAdd").addEventListener("click", function () {
+      if (feeGateItems(feeErrors()).length) { openFeeSheet(); return; }
+      var cur = feeInForce(feeDraft.svc);
+      if (cur) cur.to = dayBefore(feeDraft.from);
+      FEES.push({ id: "f" + Date.now().toString(36), svc: feeDraft.svc, fee: parseFloat(feeDraft.fee), pin: feeDraft.pin.trim(), code: feeDraft.code.trim().toUpperCase(), source: feeDraft.source.trim(), from: feeDraft.from, to: null, placeholder: false, by: PROFILE.name });
+      saveFees();
+      var lbl = FEE_SERVICES.filter(function (sv) { return sv.svc === feeDraft.svc; })[0].label;
+      feeFlash = lbl + " fee added — $" + parseFloat(feeDraft.fee).toFixed(2) + " from " + fmtKey(feeDraft.from) + ".";
+      feeDraft = { svc: "", fee: "", pin: "", code: "", source: "", from: "" };
+      closeSheet();
+      renderFees();
+      document.getElementById("scrSettings").scrollTop = 0;
+    });
+  }
+
+  // ---- Add prescriber (from the patient’s Primary provider row, and from a claim missing a physician fax) ----
+  var patFlash = "";
+  function openPrescriberSheet(pid, after) {
+    var p = byId(pid); if (!p) return;
+    var first = p.name.split(" ")[0];
+    var S = { q: "", sel: null, primary: !p.prescribers.length, add: false, f: { name: "", spec: "", lic: "", phone: "", fax: "" }, touched: false };
+    var onFile = p.prescribers.map(function (d) { return d.name.toLowerCase(); });
+    function results() {
+      var q = S.q.trim().toLowerCase(); if (!q) return [];
+      return PRESCRIBERS.filter(function (d) { return onFile.indexOf(d.name.toLowerCase()) < 0 && (d.name.toLowerCase().indexOf(q) >= 0 || d.lic.toLowerCase().indexOf(q) >= 0 || (digits(q) && digits(d.lic).indexOf(digits(q)) >= 0)); }).slice(0, 4);
+    }
+    function gate() {
+      var g = [];
+      if (!S.sel && !(S.add && S.f.name.trim().length >= 2)) g.push(S.add ? "the prescriber’s name" : "a prescriber from the search, or add one");
+      return g;
+    }
+    function resHtml() {
+      var r = results();
+      if (!S.q.trim()) return "";
+      if (!r.length) return '<div class="note" style="margin:8px 0 0">No match in the directory — add them below.</div>';
+      return r.map(function (d) {
+        var on = S.sel && S.sel.name === d.name;
+        return '<button class="pres-row' + (on ? " on" : "") + '" type="button" data-pn="' + esc(d.name) + '" aria-pressed="' + !!on + '"><div><div class="pn">' + esc(d.name) + '</div><div class="pm">' + esc(d.spec) + " · #" + esc(d.lic) + "</div>" +
+          (d.fax ? '<div class="pm">Fax ' + esc(d.fax) + "</div>" : '<div class="pm nofax">No fax on file — will not receive MedsCheck notifications</div>') + "</div>" + (on ? '<span class="ok">' + okSvg + "</span>" : "") + "</button>";
+      }).join("");
+    }
+    function footHtml() {
+      var g = gate();
+      return gateHtml(g) + '<button class="btn-primary" id="psGo" type="button"' + (g.length ? " disabled" : "") + ">Add to " + esc(first) + "’s record</button>";
+    }
+    sheetEl.innerHTML = '<div class="grab"></div><div class="sh-t" id="sheetTitle">Add prescriber</div>' +
+      '<div class="sh-s">Search by name or licence number. The fax number is how a MedsCheck notification reaches them.</div>' +
+      (p.prescribers.length ? '<div class="fieldlab" style="margin-top:4px">On ' + esc(first) + "’s record</div>" + p.prescribers.map(function (d) {
+        return '<div class="pres-row static"><div><div class="pn">' + esc(d.name) + (d.primary ? ' <span class="stat-pill ready">Primary</span>' : "") + '</div><div class="pm">' + esc(d.role) + (d.fax ? " · Fax " + esc(d.fax) : "") + "</div>" + (d.fax ? "" : '<div class="pm nofax">No fax on file</div>') + "</div></div>";
+      }).join("") : "") +
+      '<div class="fieldlab">Name or licence number</div><input class="tinput" id="psQ" type="search" autocomplete="off" placeholder="e.g. Walsh, or 84210">' +
+      '<div id="psRes"></div>' +
+      '<div class="card check-card" style="margin-top:12px;box-shadow:none;border:1px solid #ECEAF5"><label class="check-row"><input type="checkbox" id="psPrimary"' + (S.primary ? " checked" : "") + (p.prescribers.length ? "" : " disabled") + '>Set as primary provider</label></div>' +
+      '<div class="note" style="margin:6px 0 0">' + (p.prescribers.length ? "A patient has one primary provider. Setting this moves it from whoever holds it now." : "First prescriber on the record — becomes the primary provider.") + "</div>" +
+      '<button class="pd-link" id="psAddTgl" type="button" aria-expanded="false" style="margin:12px 0 0">Not on file? Add them' + chevR + "</button>" +
+      '<div id="psForm" hidden>' +
+        '<div class="fieldlab">Full name</div><input class="tinput" id="psName" autocomplete="off" placeholder="e.g. Dr. Amara Okafor"><div class="ferr" id="psNameErr" style="margin-top:6px">Enter the prescriber’s name.</div>' +
+        '<div class="fieldlab">Specialty (optional)</div><input class="tinput" id="psSpec" autocomplete="off" placeholder="e.g. Family medicine">' +
+        '<div class="fieldlab">Licence number (optional)</div><input class="tinput" id="psLic" autocomplete="off" placeholder="e.g. CPSO-88421">' +
+        '<div class="fieldlab">Fax (optional)</div><input class="tinput" id="psFax" type="tel" inputmode="tel" autocomplete="off" placeholder="e.g. 416-555-0100">' +
+        '<div class="note" style="margin:8px 0 0">Without a fax number they will not receive MedsCheck notifications.</div>' +
+        '<div class="fieldlab">Phone (optional)</div><input class="tinput" id="psPhone" type="tel" inputmode="tel" autocomplete="off" placeholder="e.g. 416-555-0101">' +
+      "</div>" +
+      '<div id="psFoot" style="margin-top:14px"></div>' +
+      '<button class="btn-outline" id="sheetClose" type="button" style="display:block;width:100%;margin-top:10px">Cancel</button>';
+    sheetEl.hidden = false; sheetScrim.hidden = false;
+    document.getElementById("sheetClose").addEventListener("click", closeSheet);
+    var res = document.getElementById("psRes"), foot = document.getElementById("psFoot");
+    function paint() {
+      res.innerHTML = resHtml();
+      res.querySelectorAll("[data-pn]").forEach(function (b) { b.addEventListener("click", function () { var n = b.getAttribute("data-pn"); S.sel = S.sel && S.sel.name === n ? null : dirLookup(n); if (S.sel) { S.add = false; document.getElementById("psForm").hidden = true; document.getElementById("psAddTgl").setAttribute("aria-expanded", "false"); } paint(); }); });
+      foot.innerHTML = footHtml();
+      document.getElementById("psGo").addEventListener("click", add);
+    }
+    document.getElementById("psQ").addEventListener("input", function (e) { S.q = e.target.value; if (S.sel && results().indexOf(S.sel) < 0) S.sel = null; paint(); });
+    document.getElementById("psPrimary").addEventListener("change", function (e) { S.primary = e.target.checked; });
+    document.getElementById("psAddTgl").addEventListener("click", function () {
+      S.add = !S.add; S.sel = S.add ? null : S.sel;
+      document.getElementById("psForm").hidden = !S.add; this.setAttribute("aria-expanded", String(S.add));
+      paint(); if (S.add) setTimeout(function () { document.getElementById("psName").focus(); }, 40);
+    });
+    [["psName", "name"], ["psSpec", "spec"], ["psLic", "lic"], ["psFax", "fax"], ["psPhone", "phone"]].forEach(function (f) {
+      var i = document.getElementById(f[0]);
+      i.addEventListener("input", function () { S.f[f[1]] = i.value; if (f[1] === "name") { S.touched = true; var bad = i.value.trim().length < 2; i.classList.toggle("invalid", bad); document.getElementById("psNameErr").classList.toggle("show", bad); } foot.innerHTML = footHtml(); document.getElementById("psGo").addEventListener("click", add); });
+    });
+    function add() {
+      if (gate().length) return;
+      var d = S.sel ? { name: S.sel.name, role: S.sel.spec, fax: S.sel.fax, lic: S.sel.lic }
+                    : { name: S.f.name.trim(), role: S.f.spec.trim() || "Prescriber", fax: S.f.fax.trim(), lic: S.f.lic.trim() };
+      if (!S.sel) PRESCRIBERS.push({ name: d.name, spec: d.role, lic: d.lic || "—", fax: d.fax, phone: S.f.phone.trim() });
+      if (S.primary || !p.prescribers.length) { p.prescribers.forEach(function (x) { x.primary = false; }); d.primary = true; p.prescribers.unshift(d); }
+      else p.prescribers.push(d);
+      closeSheet();
+      patFlash = d.name + " added" + (d.primary ? " as primary provider" : "") + (d.fax ? " · fax " + d.fax : " · no fax — notifications cannot be sent");
+      if (after) after(); else openPatient(pid);
+    }
+    paint();
+    setTimeout(function () { document.getElementById("psQ").focus(); }, 60);
+  }
+
+  // ---- Vaccination / injection session: product → screening & consent → administer ----
+  var VAX_CATALOGUE = [
+    { name: "Influenza", funding: "Publicly funded", fee: 8.5 },
+    { name: "COVID-19", funding: "Publicly funded", fee: 13 },
+    { name: "Pneumococcal", funding: "Publicly funded", fee: 13 },
+    { name: "Tdap booster", funding: "Publicly funded", fee: 13 },
+    { name: "HPV", funding: "Publicly funded", fee: 13 },
+    { name: "Shingrix", funding: "Private pay", fee: 25 },
+    { name: "Japanese encephalitis", funding: "Private pay", fee: 25 },
+  ];
+  var VAX_SCREEN = [
+    "Known allergy or previous severe reaction to this medication or its components",
+    "Moderate or severe acute illness, with or without fever, today",
+    "Bleeding disorder or anticoagulant concern not manageable in pharmacy",
+  ];
+  var VAX_SITES = ["Left deltoid", "Right deltoid", "Left thigh", "Right thigh", "Abdomen", "Other"];
+  var VX = {};
+  function vxSess(p, mod) {
+    if (!VX[p.id]) {
+      VX[p.id] = { mod: mod, step: 1, prod: null, ans: {}, consent: false, first: true, defer: "", closed: null, lot: "", site: null, route: "Intramuscular", notes: "" };
+      VAX_SCREEN.forEach(function (q) { VX[p.id].ans[q] = false; }); // default No, like Minor Ailments (client 2026-09-07)
+    }
+    return VX[p.id];
+  }
+  function vxProducts(p, mod) {
+    if (mod === "injections") return (p.injections || []).map(function (i) { var due = dayDiff(today, i.due) >= 0; return { name: i.name, funding: "Scheduled dose" + (due ? "" : " · " + fmtDate(i.due)), fee: null, due: due, dueName: i.name }; });
+    return VAX_CATALOGUE.map(function (c) {
+      var m = p.vaccines.filter(function (v) { return v.name.toLowerCase().indexOf(c.name.toLowerCase()) === 0; })[0];
+      return { name: c.name, funding: c.funding, fee: c.fee, due: !!m && dayDiff(today, m.due) >= 0, dueToday: !!m && dayDiff(today, m.due) === 0, dueName: m ? m.name : null };
+    }).sort(function (a, b) { return (b.due ? 1 : 0) - (a.due ? 1 : 0); });
+  }
+  function renderVax(p, mod) {
+    var s = vxSess(p, mod), TOTAL = 3, el = document.getElementById("sessionPage");
+    el.className = "page pf";
+    var name = MODULES[mod].name, prodName = s.prod ? (s.prod.dueName || s.prod.name) : "";
+    var flagged = VAX_SCREEN.filter(function (q) { return s.ans[q] === true; });
+    function gate() {
+      var g = [];
+      if (s.step === 1 && !s.prod) g.push("a product");
+      if (s.step === 2 && !s.consent) g.push("consent");
+      if (s.step === 3 && !s.site) g.push("an injection site");
+      return g;
+    }
+    var body = "", cta = "", showFoot = true;
+    var crumb = '<div class="note" style="margin:0 0 14px">' + esc(p.name) + " · " + age(p) + " · " + name + (s.prod ? " · <b style=\"color:#2B2A44\">" + esc(prodName) + "</b>" : "") + "</div>";
+    if (s.closed === "deferred") {
+      showFoot = false;
+      body = '<div class="step-title">Deferred — no claim</div>' +
+        '<div class="card" style="padding:14px 16px">' +
+          '<div class="kv"><span class="k">Patient</span><span class="v">' + esc(p.name) + "</span></div>" +
+          '<div class="kv"><span class="k">Product</span><span class="v">' + esc(prodName) + "</span></div>" +
+          '<div class="kv"><span class="k">Screening</span><span class="v" style="color:#c43734">' + esc(s.closed2) + "</span></div>" +
+          '<div class="kv"><span class="k">Claim</span><span class="v">None — not given</span></div>' +
+        "</div>" +
+        '<div class="fieldlab">Reason for deferral</div><div class="saved-note">' + esc(s.defer) + "</div>" +
+        '<div class="reassure" style="margin-top:14px">' + okSvgSm2 + "Recorded on the file. " + esc(p.name.split(" ")[0]) + " keeps their place in the schedule — rebook when the reason clears.</div>" +
+        '<div class="next-fixed"><button class="btn-primary" id="vxDone" type="button">Done <i class=tri></i></button></div>';
+    } else if (s.step === 1) {
+      cta = "Continue to screening";
+      var prods = vxProducts(p, mod);
+      body = '<div class="step-title">Choose the product</div>' +
+        '<div class="note" style="margin:0 0 4px">' + (mod === "injections" ? "Scheduled doses on " + esc(p.name.split(" ")[0]) + "’s record." : "From your pharmacy’s catalogue · funding and fee shown. Due items first.") + "</div>" +
+        (prods.length ? prods.map(function (x) {
+          var on = s.prod && s.prod.name === x.name;
+          return '<button class="prod' + (on ? " on" : "") + '" type="button" data-prod="' + esc(x.name) + '" aria-pressed="' + !!on + '"><div><div class="pt">' + esc(x.dueName || x.name) + (x.due ? '<span class="stat-pill ' + (x.dueToday ? "warn" : "ready") + '">' + (x.dueToday ? "Due today" : "Due") + "</span>" : "") + '</div><div class="ps">' + esc(x.funding) + "</div></div>" +
+            (x.fee != null ? '<span class="pf">$' + x.fee.toFixed(2) + "</span>" : '<span class="pf na">Fee per pharmacy schedule</span>') + "</button>";
+        }).join("") : '<div class="card" style="padding:16px;margin-top:10px"><div class="note" style="margin:0">Nothing scheduled on the record.</div></div>');
+    } else if (s.step === 2) {
+      cta = "Continue to administration";
+      showFoot = !flagged.length;
+      body = '<div class="step-title">Screening &amp; consent</div>' +
+        '<div class="note" style="margin:0 0 4px">Answer for this patient today. A Yes to any question means the dose is not given now.</div>' +
+        VAX_SCREEN.map(function (q) {
+          var v = s.ans[q];
+          return '<div class="vq' + (v === true ? " bad" : "") + '"><div class="q">' + q + '</div><span class="ma-yn" data-q="' + esc(q) + '">' +
+            '<button type="button" class="no' + (v === false ? " on" : "") + '" data-v="no" aria-pressed="' + (v === false) + '">No</button>' +
+            '<button type="button" class="yes' + (v === true ? " on" : "") + '" data-v="yes" aria-pressed="' + (v === true) + '">Yes</button></span></div>';
+        }).join("") +
+        '<div class="card check-card" style="margin-top:12px">' +
+          '<label class="check-row"><input type="checkbox" id="vxConsent"' + (s.consent ? " checked" : "") + ">Consent recorded</label>" +
+          '<label class="check-row"><input type="checkbox" id="vxFirst"' + (s.first ? " checked" : "") + ">This is the first dose of " + esc(prodName) + "</label>" +
+        "</div>" +
+        (flagged.length
+          ? '<div class="redflag-card"><div class="t">Do not administer today</div>' +
+            '<div class="s">A screening answer rules this dose out. Record why it was deferred — the patient keeps their place in the schedule.</div>' +
+            '<div class="fieldlab" style="margin:12px 0 6px">Reason for deferral</div>' +
+            '<textarea class="tinput tarea" id="vxDefer" style="min-height:64px" placeholder="e.g. Febrile illness today — rebook in two weeks">' + esc(s.defer) + "</textarea>" +
+            '<div id="vxDeferGate" style="margin-top:10px">' + gateHtml(s.defer.trim() ? [] : ["the reason for deferral"]) + "</div>" +
+            '<button type="button" class="btn-red" id="vxDeferGo"' + (s.defer.trim() ? "" : " disabled") + ">Record deferral (no claim)</button></div>"
+          : "");
+    } else {
+      cta = "Administer & file";
+      body = '<div class="step-title">Administer</div>' +
+        '<div class="note" style="margin:0 0 4px">Recorded on the patient’s file' + (s.prod.fee != null ? ", and billed · $" + s.prod.fee.toFixed(2) : "") + ".</div>" +
+        '<div class="fieldlab">Lot number (optional)</div><input class="tinput" id="vxLot" autocomplete="off" placeholder="From the vial" value="' + esc(s.lot) + '">' +
+        '<div class="fieldlab">Injection site</div><div class="card" style="padding:0">' + VAX_SITES.map(function (x) {
+          var on = s.site === x;
+          return '<button class="opt' + (on ? " on" : "") + '" type="button" data-site="' + x + '" aria-pressed="' + on + '">' + x + (on ? '<span class="ok">' + okSvg + "</span>" : "") + "</button>";
+        }).join("") + "</div>" +
+        '<div class="fieldlab">Route</div>' + seglHtml("route", ["Intramuscular", "Subcutaneous"], s.route) +
+        '<div class="fieldlab">Notes (optional)</div><textarea class="tinput tarea" id="vxNotes" style="min-height:60px" placeholder="Anything worth keeping on the record">' + esc(s.notes) + "</textarea>";
+    }
+    var g = gate();
+    el.innerHTML =
+      '<div class="section-head left"><button class="filter-btn" id="vxBack" aria-label="Back">' + backSvg + "</button>" +
+      '<h2 class="screen-title">' + name + "</h2></div>" +
+      (s.closed ? "" : '<div class="pbar">' + [1, 2, 3].map(function (i) { return '<span class="' + (i <= s.step ? "fill" : "") + '"></span>'; }).join("") + "</div>" +
+        '<div class="note" style="margin:-8px 0 6px">Step ' + s.step + " of " + TOTAL + "</div>") +
+      crumb + body +
+      (showFoot ? '<div class="next-fixed"><div id="vxGate">' + gateHtml(g) + '</div><button class="btn-primary" id="vxNext" type="button"' + (g.length ? " disabled" : "") + ">" + cta + " <i class=tri></i></button></div>" : "");
+    function refreshFoot() { var gg = gate(); var gt = document.getElementById("vxGate"), nx = document.getElementById("vxNext"); if (gt) gt.innerHTML = gateHtml(gg); if (nx) nx.disabled = gg.length > 0; }
+    document.getElementById("vxBack").addEventListener("click", function () {
+      if (s.closed) { goBackFromSession(p.id); return; }
+      if (s.step > 1) { s.step--; renderVax(p, mod); } else goBackFromSession(p.id);
+    });
+    var dn = document.getElementById("vxDone"); if (dn) dn.addEventListener("click", function () { delete VX[p.id]; goBackFromSession(p.id); });
+    el.querySelectorAll("[data-prod]").forEach(function (b) { b.addEventListener("click", function () { s.prod = vxProducts(p, mod).filter(function (x) { return x.name === b.getAttribute("data-prod"); })[0]; renderVax(p, mod); }); });
+    el.querySelectorAll(".ma-yn[data-q] button").forEach(function (b) { b.addEventListener("click", function () { s.ans[b.parentNode.getAttribute("data-q")] = b.getAttribute("data-v") === "yes"; renderVax(p, mod); }); });
+    var cs = document.getElementById("vxConsent"); if (cs) cs.addEventListener("change", function () { s.consent = cs.checked; refreshFoot(); });
+    var fd = document.getElementById("vxFirst"); if (fd) fd.addEventListener("change", function () { s.first = fd.checked; });
+    var df = document.getElementById("vxDefer"); if (df) df.addEventListener("input", function () { s.defer = df.value; document.getElementById("vxDeferGate").innerHTML = gateHtml(s.defer.trim() ? [] : ["the reason for deferral"]); document.getElementById("vxDeferGo").disabled = !s.defer.trim(); });
+    var dg = document.getElementById("vxDeferGo"); if (dg) dg.addEventListener("click", function () { if (!s.defer.trim()) return; s.closed = "deferred"; s.closed2 = flagged[0]; renderVax(p, mod); });
+    var lot = document.getElementById("vxLot"); if (lot) lot.addEventListener("input", function () { s.lot = lot.value; });
+    var nt = document.getElementById("vxNotes"); if (nt) nt.addEventListener("input", function () { s.notes = nt.value; });
+    el.querySelectorAll("[data-site]").forEach(function (b) { b.addEventListener("click", function () { s.site = b.getAttribute("data-site"); renderVax(p, mod); }); });
+    el.querySelectorAll('.segl[data-seg="route"] button').forEach(function (b) { b.addEventListener("click", function () { s.route = b.getAttribute("data-v"); el.querySelectorAll('.segl[data-seg="route"] button').forEach(function (x) { x.classList.toggle("on", x === b); }); }); });
+    var nx = document.getElementById("vxNext"); if (nx) nx.addEventListener("click", function () {
+      if (gate().length) return;
+      if (s.step < 3) { s.step++; renderVax(p, mod); return; }
+      // Administer & file: record on the file, then the claim packet is built at close.
+      var given = { name: prodName, date: today, lot: s.lot.trim(), site: s.site, route: s.route, notes: s.notes.trim(), first: s.first, by: PROFILE.name };
+      p.vaxLog = (p.vaxLog || []).concat(given);
+      if (mod === "injections") p.injections = (p.injections || []).filter(function (i) { return i.name !== prodName; });
+      else p.vaccines = p.vaccines.filter(function (v) { return v.name !== (s.prod.dueName || "\u0000"); });
+      var fee = s.prod.fee;
+      delete VX[p.id];
+      if (fee != null) {
+        var c = fileClaim({ pid: p.id, patient: p.name, service: (mod === "injections" ? "Injection — " : "Vaccination — ") + prodName, svc: mod, fee: fee });
+        claimFlash = prodName + " administered and recorded — claim documents generated.";
+        renderClaim(c.id, "scrBilling");
+      } else {
+        patFlash = prodName + " administered and recorded on the file — no claim (no fee defined for injections).";
+        openPatient(p.id);
+      }
+    });
+  }
+
+  // ---- Set up this device (once per device, after the first password sign-in) ----
+  function showDevice() {
+    var el = document.getElementById("device");
+    var bio = false, crash = DELIV.crash;
+    el.innerHTML = brandHtml +
+      '<h1 class="ob-h">Set up this device.</h1>' +
+      '<p class="ob-p">Two quick choices for this phone. Both can be changed later in Settings.</p>' +
+      '<div class="dev-card"><div class="t">Sign in with biometrics</div><div class="d">Skip the password on this device. Anyone whose fingerprint or face is enrolled on it will be able to open your account, so leave this off on a shared counter device.</div>' +
+        '<div class="row"><span id="dvBioLbl">Off</span>' + swHtml("dvBio", false, false, "Sign in with biometrics") + "</div></div>" +
+      '<div class="dev-card"><div class="t">Send crash reports</div><div class="d">Sends the error and the code path to your pharmacy’s own server so a crash can be fixed. Identifiers are stripped first. Off until you say otherwise.</div>' +
+        '<div class="row"><span id="dvCrashLbl">' + (crash ? "On" : "Off") + "</span>" + swHtml("dvCrash", crash, false, "Send crash reports") + "</div></div>" +
+      '<button class="btn-grad" id="dvGo" type="button" style="margin-top:22px">Continue</button>' +
+      '<div class="auth-foot">Signed in as ' + esc(PROFILE.name) + " · " + esc(PROFILE.pharmacy) + "</div>";
+    bindSw("dvBio", function (on) { bio = on; document.getElementById("dvBioLbl").textContent = on ? "On" : "Off"; });
+    bindSw("dvCrash", function (on) { crash = on; document.getElementById("dvCrashLbl").textContent = on ? "On" : "Off"; });
+    document.getElementById("dvGo").addEventListener("click", function () {
+      DELIV.crash = crash; saveDeliv();
+      try { localStorage.setItem("agilerx.bio", bio ? "on" : "off"); localStorage.setItem("agilerx.device", new Date().toISOString()); } catch (e) {}
+      enterApp();
+    });
+    setPreApp("device");
+  }
+  function afterSignIn() { var done = false; try { done = !!localStorage.getItem("agilerx.device"); } catch (e) {} if (done) enterApp(); else showDevice(); }
+
+  // ---- "App version too old" (server declares a minimum; no store link on purpose) ----
+  function showOutdated(serverMsg) {
+    var el = document.getElementById("outdated");
+    var msg = serverMsg || "This version of AgileRx is no longer supported. Version 2.4.0 or later is required to connect.";
+    el.innerHTML = brandHtml +
+      '<div class="pre-icon" style="background:#fdf0dc;color:#f6a723"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.7 3.3c-.75-1.3-2.65-1.3-3.4 0L1.2 19a2 2 0 0 0 1.7 3h18.2a2 2 0 0 0 1.7-3L13.7 3.3z"></path><rect x="11.1" y="9" width="1.8" height="6" rx="0.9" fill="#fdf0dc"></rect><circle cx="12" cy="18" r="1.2" fill="#fdf0dc"></circle></svg></div>' +
+      '<h1 class="ob-h" style="margin-top:16px">This version of AgileRx is too old.</h1>' +
+      '<div class="out-msg q"><span class="lab">From your pharmacy server</span>' + esc(msg) + "</div>" +
+      '<p class="ob-p">Installed: <b style="color:#2B2A44">' + APP_VERSION + "</b></p>" +
+      '<div id="outNote"></div>' +
+      '<button class="btn-grad plain" id="outRetry" type="button" style="margin-top:18px">Try again</button>' +
+      '<div class="auth-foot">There is no update link here on purpose — ask your pharmacy administrator for the current build.<br><button type="button" class="auth-link" id="outSignOut" style="margin-top:8px">Sign out</button></div>';
+    document.getElementById("outRetry").addEventListener("click", function () {
+      var b = this; b.disabled = true; b.textContent = "Checking…"; document.getElementById("outNote").innerHTML = "";
+      setTimeout(function () { b.disabled = false; b.textContent = "Try again"; document.getElementById("outNote").innerHTML = '<div class="out-msg">The server still asks for a newer version.</div>'; }, 900);
+    });
+    document.getElementById("outSignOut").addEventListener("click", function () { try { sessionStorage.removeItem("agilerx.signedin"); localStorage.removeItem("agilerx.signedin"); } catch (e) {} goAuth(); });
+    setPreApp("outdated");
+  }
 
   // AI draft — composes from what the session has actually flagged: worksheet
   // flags/DTPs when the Worksheet is built (PRE[pid].worksheet.flags), else
@@ -4006,31 +4994,13 @@
     document.getElementById("nfDone").addEventListener("click", function () {
       if (followup && !nf.note.trim()) return;
       nf.done = true;
-      BILLING.unshift({
-        patient: p.name, service: "MedsCheck Annual", fee: MC_FEE,
-        status: "Ready", cls: "ready", date: fmtDate(today),
-      });
-      renderBilling();
+      var mcClaim = fileClaim({ pid: p.id, patient: p.name, service: "MedsCheck Annual", svc: "medscheck", fee: MC_FEE, first: true });
+      claimFlash = "MedsCheck completed \u2014 claim documents generated. Key it into your dispensing system, then mark it submitted.";
+      renderClaim(mcClaim.id, "scrBilling");
     });
     showScreen("scrSession");
   }
 
-  function renderBilling() {
-    var el = document.getElementById("billingPage");
-    el.innerHTML =
-      '<div class="section-head left"><button class="filter-btn" id="blBack" aria-label="Back">' + backSvg + "</button>" +
-      '<h2 class="screen-title">Billing</h2></div>' +
-      '<div class="note" style="margin:0 0 14px">Claims and their status</div>' +
-      '<div class="card txn-card">' + BILLING.map(function (c) {
-        var parts = c.patient.split(" ");
-        var ini = (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-        return '<div class="txn"><span class="ic ini">' + ini + "</span>" +
-          '<div class="who"><div class="n">' + c.patient + '</div><div class="d">' + c.service + " · " + c.date + "</div></div>" +
-          '<div class="amt"><div class="v in">$' + c.fee.toFixed(2) + '</div><div class="k"><span class="stat-pill ' + c.cls + '">' + c.status + "</span></div></div></div>";
-      }).join("") + "</div>";
-    document.getElementById("blBack").addEventListener("click", function () { showScreen("scrHome"); });
-    showScreen("scrBilling");
-  }
 
   // Single session entry point — used by every path (patient flow, home tiles,
   // in-module patient search). One code path by design.
@@ -4351,14 +5321,10 @@
       if (nx) nx.addEventListener("click", function () {
         if (gate().length) return;
         if (s.step === 6) {
-          BILLING.unshift({
-            patient: p.name,
-            service: "Minor Ailment \u2014 UTI" + (s.outcome === "refer" ? " (SSC 4)" : ""),
-            fee: s.fee || 19,
-            status: "Ready", cls: "ready", date: fmtDate(today),
-          });
+          var maClaim = fileClaim({ pid: p.id, patient: p.name, service: "Minor Ailment \u2014 UTI" + (s.outcome === "refer" ? " (SSC 4)" : ""), svc: "ailments", fee: s.fee || 19 });
           delete MA[p.id];
-          renderBilling();
+          claimFlash = "Filed to Fillware \u2014 claim documents generated. Key it into your dispensing system, then mark it submitted.";
+          renderClaim(maClaim.id, "scrBilling");
           return;
         }
         s.step++; renderMA(p);
@@ -4565,6 +5531,11 @@
     }
     if (mod === "ailments" && p) {
       renderMA(p);
+      showScreen("scrSession");
+      return;
+    }
+    if ((mod === "vaccines" || mod === "injections") && p) { // 3-step session: product → screening & consent → administer
+      renderVax(p, mod);
       showScreen("scrSession");
       return;
     }
@@ -5627,8 +6598,11 @@
     });
     // Billing events
     BILLING.forEach(function (c, i) {
-      if (c.status === "Ready") out.push({ id: "bill-ready-" + i, group: "Today", tone: "g", icon: "bill", billing: true,
-        t: "Claim ready to submit · " + c.patient, s: c.service + " · $" + c.fee.toFixed(2), tm: "just now" });
+      var att = claimAttention(c);
+      if (att && c.status !== "Rejected") out.push({ id: "bill-att-" + c.id, group: "Today", tone: att.tone === "red" ? "a" : "g", icon: "bill", billing: true,
+        t: (att.tone === "red" ? "Claim needs attention · " : "Claim ready to submit · ") + c.patient, s: c.service + " · $" + c.fee.toFixed(2) + " · " + att.short, tm: att.tone === "red" ? c.date : "just now" });
+      if (c.status === "Rejected") out.push({ id: "bill-rej-" + c.id, group: "Today", tone: "a", icon: "bill", billing: true,
+        t: "Claim rejected · " + c.patient, s: c.service + " · " + (c.reason || "correct and regenerate"), tm: c.date });
       if (c.status === "Paid") out.push({ id: "bill-paid-" + i, group: "Earlier", tone: "g", icon: "bill", billing: true,
         t: "Claim paid · " + c.patient, s: c.service + " · $" + c.fee.toFixed(2) + " · " + c.date, tm: c.date });
       if (c.status === "Submitted") out.push({ id: "bill-sub-" + i, group: "Earlier", tone: "b", icon: "bill", billing: true,
@@ -5740,9 +6714,10 @@
   function renderMore() {
     var el = document.getElementById("morePage");
     var rows = [
-      { id: "mrBilling", icon: ICON.folder, t: "Billing", d: BILLING.length + " claim" + (BILLING.length === 1 ? "" : "s") + " on file", go: renderBilling },
+      { id: "mrBilling", icon: ICON.folder, t: "Billing", d: billSummary(), go: function () { renderBilling("scrMore"); } },
       { id: "mrNotifs", icon: ICON.clip, t: "Notifications", d: "Vaccines, appointments, claims", go: renderNotifs },
       { id: "mrInc", icon: ICON.shield, t: "Incident reporting", d: incOpen().length ? incOpen().length + " event" + (incOpen().length === 1 ? " needs" : "s need") + " action" : "All events documented", go: function () { renderSafety("scrMore"); } },
+      { id: "mrFees", icon: ICON.folder, t: "Fees and PINs", d: feesSummary(), go: function () { renderFees("scrMore"); } },
       { id: "mrSettings", icon: ICON.person, t: "Settings", d: "Profile, AI draft style, appearance", go: renderSettings },
     ];
     el.innerHTML =
@@ -5761,7 +6736,7 @@
 
   var settingsReturn = null;
   function renderSettings(from) {
-    settingsReturn = from === "scrHome" ? "scrHome" : null;
+    settingsReturn = from === "scrHome" || (typeof from === "string" && from.indexOf("scrClaim:") === 0) ? from : null;
     var el = document.getElementById("settingsPage");
     el.innerHTML =
       '<div class="section-head left" style="margin-top:0"><button class="filter-btn" id="stBack" aria-label="Back to More">' + backSvg + "</button>" +
@@ -5781,9 +6756,12 @@
       '<div class="set-group"><div class="set-title">Appearance</div>' +
         '<div class="set-help">System follows your device setting.</div>' +
         seglHtml("theme", THEMES, SETTINGS.theme) + "</div>" +
+      deliverySettingsHtml() +
       '<div class="set-signout"><button class="btn-outline" id="stSignOut" type="button">Sign out</button></div>';
     document.getElementById("stBack").addEventListener("click", function () {
-      if (settingsReturn === "scrHome") showScreen("scrHome"); else renderMore();
+      if (settingsReturn === "scrHome") showScreen("scrHome");
+      else if (settingsReturn && settingsReturn.indexOf("scrClaim:") === 0) { var rc = claimById(settingsReturn.slice(9)); if (rc) { applyDeliveryNow(rc); renderClaim(rc.id); } else renderBilling(); }
+      else renderMore();
     });
     document.getElementById("stEdit").addEventListener("click", renderEditProfile);
     document.getElementById("stSwitch").addEventListener("click", openSwitchSheet);
@@ -5801,6 +6779,7 @@
         });
       });
     });
+    bindDeliverySettings();
     document.getElementById("stSignOut").addEventListener("click", function () {
       try { sessionStorage.removeItem("agilerx.signedin"); localStorage.removeItem("agilerx.signedin"); } catch (e) {}
       showScreen("scrHome");
@@ -6157,6 +7136,8 @@
     resetEl.hidden = state !== "reset";
     setupEl.hidden = state !== "setup";
     lockEl.hidden = state !== "lock";
+    document.getElementById("device").hidden = state !== "device";
+    document.getElementById("outdated").hidden = state !== "outdated";
     var inside = !state;
     // Respect session focus mode: coming back inside (e.g. after the idle
     // lock) must NOT restore the nav over a clinical session / booking screen.
@@ -6354,6 +7335,8 @@
 
   function goAuth() {
     try { sessionStorage.setItem("agilerx.onboarded", "1"); } catch (e) {}
+    var bioOff = false; try { bioOff = localStorage.getItem("agilerx.bio") === "off"; } catch (e) {}
+    document.querySelector(".bio-duo").hidden = bioOff; document.querySelector(".bio-or").hidden = bioOff;
     document.getElementById("authErr").hidden = true;
     setPreApp("auth");
   }
@@ -6391,7 +7374,7 @@
       } catch (e) {}
       document.getElementById("auPass").value = "";
       formValidate(AUTH);
-      enterApp(); // straight to Home — terms & pharmacy setup cancelled per client
+      afterSignIn(); // first sign-in on this device → "Set up this device"; otherwise straight to Home
     }, 600);
   }
   formBind(AUTH, submitAuth);
@@ -6494,6 +7477,8 @@
       '<input class="tinput" id="stName" type="text" placeholder="Full name" autocomplete="off"><div class="ferr" id="stNameErr" style="margin-top:6px"></div>' +
       '<div class="fieldlab">Email</div>' +
       '<input class="tinput" id="stEmail" type="email" inputmode="email" placeholder="name@pharmacy.ca" autocomplete="off"><div class="ferr" id="stEmailErr" style="margin-top:6px"></div>' +
+      '<div class="fieldlab">Role</div>' + seglHtml("role", ROLES, staffRoleSel) +
+      '<div class="role-help' + (staffRoleSel === "Owner" ? " amber" : "") + '" id="stRoleHelp">' + ROLE_HELP[staffRoleSel] + '</div>' +
       '<div id="stGate" style="margin-top:12px"></div>' +
       '<div class="sigrow" style="margin-top:10px"><button class="btn-primary" id="stSend" type="button" style="width:auto;padding:11px 18px;font-size:13.5px" disabled>Send invite</button></div>' +
       (staffFlash ? '<div class="reassure" style="margin-top:12px;color:#1db871" role="status">' + okSvgSm2 + staffFlash + "</div>" : "") +
@@ -6501,7 +7486,7 @@
       '<div class="card txn-card">' + STAFF.map(function (x) {
         return '<div class="txn staff-row"><span class="ic ini">' + initialsOf(x.name) + "</span>" +
           '<div class="who"><div class="n">' + esc(x.name) + (x.creds ? ", " + esc(x.creds) : "") + (x.owner ? ' <span style="font-weight:500;color:#8A88A3">· you</span>' : "") + '</div><div class="d">' + esc(x.email) + "</div></div>" +
-          '<span class="stat-pill ' + (x.status === "Active" ? "paid" : "sub") + '">' + x.status + "</span></div>";
+          '<span class="stat-pill sub" style="margin-right:6px">' + staffRole(x) + '</span><span class="stat-pill ' + (x.status === "Active" ? "paid" : "sub") + '">' + x.status + "</span></div>";
       }).join("") + "</div>";
   }
   function bindStaff(onChange) {
@@ -6515,7 +7500,8 @@
     var send = function () {
       if (formRevealErrors(spec)) return;
       var name = document.getElementById("stName").value.trim(), email = document.getElementById("stEmail").value.trim();
-      STAFF.push({ name: name, creds: "RPh", email: email, status: "Invited" });
+      STAFF.push({ name: name, creds: staffRoleSel === "Technician" ? "RPhT" : "RPh", email: email, status: "Invited", role: staffRoleSel });
+      staffRoleSel = "Pharmacist"; // least privilege again for the next invite
       saveStaff();
       staffFlash = "Invite sent to " + email + " (simulated).";
       onChange();
@@ -6523,6 +7509,13 @@
     };
     formBind(spec, send);
     document.getElementById("stSend").addEventListener("click", send);
+    document.querySelectorAll('.segl[data-seg="role"] button').forEach(function (b) {
+      b.addEventListener("click", function () {
+        staffRoleSel = b.getAttribute("data-v");
+        document.querySelectorAll('.segl[data-seg="role"] button').forEach(function (x) { x.classList.toggle("on", x === b); });
+        var h = document.getElementById("stRoleHelp"); h.textContent = ROLE_HELP[staffRoleSel]; h.classList.toggle("amber", staffRoleSel === "Owner");
+      });
+    });
   }
 
   // ================= 0.3 / 0.4 First-time pharmacy setup =================
@@ -6724,6 +7717,8 @@
     if (h === "reset-new") { showReset("new", "priya@lakeviewpharmacy.ca"); return; }
     var sm = h.match(/^setup(?:-([1-5]))?$/); if (sm) { showSetup(sm[1] ? +sm[1] : 1); return; }
     if (h === "lock") { setPreApp(null); showLock(); return; }
+    if (h === "device") { showDevice(); return; }
+    if (h === "outdated") { showOutdated(); return; }
     if (h) { setPreApp(null); idleReset(); return; }
     if (signed) { setPreApp(null); idleReset(); return; } // pharmacy setup cancelled — never routed
     // Sales-led B2B: provisioned accounts go straight to Sign in. Intro slides live at #onboarding.
@@ -6739,7 +7734,12 @@
     if (h === "modules") { segButtons[1].click(); return; }
     if (h === "patients") { renderPatients(); showScreen("scrPatients"); return; }
     if (h === "notifications") { renderNotifs(); return; }
-    if (h === "billing") { renderBilling(); return; }
+    if (h === "billing" || h === "claims") { renderBilling(); return; }
+    if (h === "fax") { renderSettings(); renderFaxSettings(); return; }
+    if (h === "fees") { renderSettings(); renderFees(); return; }
+    if (h === "delivery") { renderSettings(); return; }
+    m = h.match(/^claim-(\w+)$/); if (m) { renderClaim(m[1]); return; }
+    m = h.match(/^prescriber-(\w+)$/); if (m) { openPatient(m[1]); openPrescriberSheet(m[1]); return; }
     if (h === "more") { renderMore(); return; }
     if (h === "settings") { renderSettings(); return; }
     if (h === "calendar") { renderCalendar(); return; }
@@ -6758,7 +7758,11 @@
     if (m) {
       if (m[2] !== "none") {
         var pp = byId(m[2]);
-        if (pp && m[3] && m[1] === "ailments") {
+        if (pp && m[3] && (m[1] === "vaccines" || m[1] === "injections")) {
+          var vs = vxSess(pp, m[1]); vs.step = +m[3];
+          if (vs.step > 1) vs.prod = vxProducts(pp, m[1])[0] || null;
+          if (vs.step > 2) vs.consent = true;
+        } else if (pp && m[3] && m[1] === "ailments") {
           var ms = maSess(pp); ms.step = +m[3];
           if (ms.step > 1) ms.cond = MA_GUIDED;
           if (ms.step > 2) { ms.attest = true; ms.consent = "Verbal consent"; ms.modality = "In person \u2014 $19"; ms.fee = 19; }
